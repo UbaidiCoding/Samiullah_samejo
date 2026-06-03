@@ -9,6 +9,8 @@ export const PERSONAL_INFO = {
   github: "https://github.com/UbaidiCoding",
   linkedin: "https://linkedin.com/in/devsamiubaidi",
   youtube: "https://youtube.com/@CodeWithSamiUbaidi", // YouTube handle
+  facebook: "https://www.facebook.com/sami.samejo.75/",
+  instagram: "https://www.instagram.com/sami_ubaidi/",
   bio: "Highly accomplished Full-Stack Developer, Cybersecurity Analyst, and Digital Marketer. Founder of Ubaidi IT Community, Ubaidi IT Solutions, and CodeWithSamiUbaidi. Dedicated to building secure, scalable, and conversion-optimized digital products for global businesses.",
   summary: "A versatile computer systems practitioner and security analyst with deep experience in designing performant full-stack systems, deploying secure network architectures, and implementing technical SEO structures. Passionate about empowering the next generation of Pakistan's tech talent through active mentorship and accessible community learning.",
 };
@@ -129,17 +131,17 @@ export const EDUCATION_TIMELINE: EducationItem[] = [
     id: "edu-1",
     degree: "Intermediate in Pre-Engineering",
     institution: "Government Degree College, Sukkur",
-    duration: "2020 - 2022",
+    duration: "2022 - 2024",
     location: "Sukkur, Sindh, Pakistan",
-    grade: "Grade A",
+    grade: "Grade B",
   },
   {
     id: "edu-2",
-    degree: "Matriculation (Computer Science)",
+    degree: "Matriculation (Science)",
     institution: "Public School / High Secondary Board, Sukkur",
-    duration: "2018 - 2020",
+    duration: "2020 - 2022",
     location: "Sukkur, Sindh, Pakistan",
-    grade: "A-One Grade",
+    grade: "B- Grade",
   },
 ];
 
@@ -319,34 +321,42 @@ Our long-term commitment at the **Ubaidi IT Community** is to cultivate a highly
   },
   {
     id: "b-5",
-    slug: "practical-security-auditing-checklist-developers",
-    title: "The Practical Security Auditing Checklist for Junior Web Developers",
-    excerpt: "Ensure your apps are protected before they go live with this straightforward, high-impact checklist including CORS, rate limiting, and HTTP headers.",
-    category: "Cybersecurity",
+    slug: "the-story-behind-samiubaidi-personal-branding-and-ai-philosophy",
+    title: "The Story Behind 'SamiUbaidi' & My Multi-Disciplinary Services in the AI Era",
+    excerpt: "Discover the deep personal meaning behind 'SamiUbaidi', how I manage various digital handles, and how we deliver website/mobile development, SEO, and social management powered by AI.",
+    category: "Freelancing",
     publishDate: "February 2026",
-    readTime: "7 min read",
-    tags: ["Security", "OWASP", "Checklist", "Webdev"],
-    content: `## Before You Run "npm run build": The Security Gatekeeper
+    readTime: "6 min read",
+    tags: ["Personal Brand", "AI Era", "SEO", "Development"],
+    content: `## Fusing Ancestral Legacy with Tech Identity: Fictional vs. Real Names
 
-A major misbelief is that cyber defense is exclusively for systems administrators or infrastructure teams. Secure coding starts in the developer IDE. Here are four baseline metrics to review prior to every release:
+Have you ever wondered where the brand name **SamiUbaidi** comes from? It represents a fusion of family honor and clear digital identity. 
 
-### 1. Robust CORS Definition
-Never use wildcards (\`Access-Control-Allow-Origin: *\`) inside APIs handling session credentials or private databases. Always set strict whitelist arrays.
+### Why 'Ubaidi'?
+My full name is **Samiullah Samejo** (often shortened to **Sami Samejo** or **Samiullah Ubaidi**), and my caste is **Samejo**. My beloved father's name is **Ubaid Ullah**. To pay homage to my father and build a highly memorable, short, and distinctive name for my freelance services and tech community, I took my name "Samiullah" and his name "Ubaid", creating the moniker **Samiubaid**. I then added one more 'i' to craft the ultimate professional identity: **SamiUbaidi**.
 
-### 2. Implement Rate-Limiting
-Defend public endpoints from DDoS attempts or script scraping. Node.js applications should deploy \`express-rate-limit\` on login and mail funnels:
-\`\`\`typescript
-import rateLimit from "express-rate-limit";
+This name acts as a central bridge on my social media accounts and networks, allowing me to combine **Samiullah Samejo** (my main legal name) with my unique nickname/tech handle **SamiUbaidi** (devsamiubaidi).
 
-export const apiLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // Limit each IP to 100 requests per window
-  message: "Too many requests from this IP"
-});
-\`\`\`
+### My Central Digital Handles
+- **GitHub Handle**: [@UbaidiCoding](https://github.com/UbaidiCoding) — My absolute center-stage open-source repository where I publish full-stack packages.
+- **YouTube Handle**: [@CodeWithSamiUbaidi](https://youtube.com/@CodeWithSamiUbaidi) — Displaying public title **CodeWithSami**, where I share tech guides on coding and cyber safety.
 
-### 3. Helmet Security Headers
-Inject standard armor headers like Content-Security-Policy (CSP), Strict-Transport-Security, and X-Frame-Options effortlessly using Helmet.`,
+---
+
+## My Multi-Disciplinary Services in the AI Era
+
+I am a full-stack, multidisciplinary coder delivering end-to-end digital transformations. Operating under the brand **Ubaidi IT Solutions**, I specialize in:
+
+1. **Full-Stack & Website Development**: High-conversion React endpoints, Node.js servers, and elegant database schemas.
+2. **Mobile App Development**: Cross-platform responsive mobile applications with secure code bases.
+3. **Advanced Branding & Graphic Direction**: Launch assets, logo guides, and custom corporate graphics.
+4. **Social Media Management**: Strategic planning, audience conversion rate optimization, and community hub building.
+5. **Technical SEO Copywriting**: Data-driven visibility optimizations, meta analytics, and search visibility.
+
+### Fusing Power with AI Tools
+We are living in the **AI Era**. Rather than resisting change, I actively deliver all these comprehensive services with the advanced assistance of state-of-the-art AI. I leverage AI to accelerate security vetting, draft pristine layouts, optimize page indexations, and generate high-engagement social material rapidly. This allows me to act as an entire agency in one developer, passing extreme speed and cost efficiency down to my clients. 
+
+At *Ubaidi IT Solutions*, AI is not a crutch; it is our force multiplier for premium excellence.`,
   }
 ];
 

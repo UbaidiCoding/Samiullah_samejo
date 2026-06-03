@@ -35,6 +35,7 @@ import ContactFunnel from "./components/ContactFunnel";
 import Navigation from "./components/Navigation";
 import GitHubHeatmap from "./components/GitHubHeatmap";
 import TestimonialsSection from "./components/TestimonialsSection";
+import SocialFootprint from "./components/SocialFootprint";
 
 // Data
 import { PERSONAL_INFO, EXPERIENCES } from "./data/portfolioData";
@@ -528,6 +529,11 @@ Generated securely from SamiUbaidi Official Hub Portfolio
 
             <TestimonialsSection />
 
+            {/* Social Footprint Live Embed Plugins Block */}
+            <div className="mt-16 pt-16 border-t border-white/5">
+              <SocialFootprint />
+            </div>
+
           </div>
         </section>
 
@@ -612,7 +618,17 @@ Generated securely from SamiUbaidi Official Hub Portfolio
               </li>
               <li>
                 <a href={PERSONAL_INFO.youtube} target="_blank" rel="noopener noreferrer" className="hover:text-red-400 transition-colors">
-                  YouTube Channel
+                  YouTube (@CodeWithSami)
+                </a>
+              </li>
+              <li>
+                <a href={PERSONAL_INFO.facebook} target="_blank" rel="noopener noreferrer" className="hover:text-blue-500 transition-colors">
+                  Facebook (@sami.samejo.75)
+                </a>
+              </li>
+              <li>
+                <a href={PERSONAL_INFO.instagram} target="_blank" rel="noopener noreferrer" className="hover:text-pink-400 transition-colors">
+                  Instagram (@sami_ubaidi)
                 </a>
               </li>
             </ul>
