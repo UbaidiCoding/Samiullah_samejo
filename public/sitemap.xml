@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Homepage -->
+  <url>
+    <loc>https://devsamiubaidi.netlify.app/</loc>
+    <lastmod>2026-06-16</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <!-- About Section -->
+  <url>
+    <loc>https://devsamiubaidi.netlify.app/#about</loc>
+    <lastmod>2026-06-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Projects -->
+  <url>
+    <loc>https://devsamiubaidi.netlify.app/#projects</loc>
+    <lastmod>2026-06-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <!-- Experience -->
+  <url>
+    <loc>https://devsamiubaidi.netlify.app/#experience</loc>
+    <lastmod>2026-06-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Testimonials -->
+  <url>
+    <loc>https://devsamiubaidi.netlify.app/#testimonials</loc>
+    <lastmod>2026-06-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Blog Section -->
+  <url>
+    <loc>https://devsamiubaidi.netlify.app/#blog</loc>
+    <lastmod>2026-06-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <!-- Blog Post 1 -->
+  <url>
+    <loc>https://devsamiubaidi.netlify.app/blog/securing-modern-react-api-integrations</loc>
+    <lastmod>2026-06-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Blog Post 2 -->
+  <url>
+    <loc>https://devsamiubaidi.netlify.app/blog/boosting-saas-conversions-with-interactive-funnels</loc>
+    <lastmod>2026-06-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Blog Post 3 -->
+  <url>
+    <loc>https://devsamiubaidi.netlify.app/blog/understanding-ai-grounding-and-prompting</loc>
+    <lastmod>2026-06-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Blog Post 4 -->
+  <url>
+    <loc>https://devsamiubaidi.netlify.app/blog/empowering-pakistan-next-gen-builders-ubaidi</loc>
+    <lastmod>2026-06-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Blog Post 5 -->
+  <url>
+    <loc>https://devsamiubaidi.netlify.app/blog/the-story-behind-samiubaidi-personal-branding-and-ai-philosophy</loc>
+    <lastmod>2026-06-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+</urlset>
