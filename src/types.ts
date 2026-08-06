@@ -6,6 +6,8 @@ export interface Certificate {
   verificationUrl: string;
   credentialId?: string;
   category: "Development" | "Cybersecurity" | "Design" | "Marketing";
+  tasks?: string[];
+  platform?: string;
 }
 
 export interface Project {

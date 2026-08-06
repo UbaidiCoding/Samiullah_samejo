@@ -77,14 +77,28 @@ export default function CertificatesSection() {
             </div>
 
             {/* Core details */}
-            <div className="mb-4">
+            <div className="mb-4 space-y-2">
               <h4 className="text-sm font-semibold text-white group-hover:text-purple-300 transition-colors tracking-tight line-clamp-2 min-h-[40px] font-display">
                 {cert.title}
               </h4>
-              <p className="text-xs text-slate-400 flex items-center gap-1.5 mt-1">
+              <p className="text-xs text-slate-400 flex items-center gap-1.5">
                 <Landmark className="w-3.5 h-3.5 text-slate-500" />
                 {cert.issuer}
+                {cert.platform && <span className="text-[10px] text-purple-400/80 font-mono">({cert.platform})</span>}
               </p>
+
+              {cert.tasks && cert.tasks.length > 0 && (
+                <div className="pt-1 flex flex-wrap gap-1">
+                  {cert.tasks.map((task, idx) => (
+                    <span
+                      key={idx}
+                      className="text-[10px] bg-purple-500/10 text-purple-300 border border-purple-500/20 px-2 py-0.5 rounded-md font-mono"
+                    >
+                      ✓ {task}
+                    </span>
+                  ))}
+                </div>
+              )}
             </div>
 
             {/* Credential Token or Verification ID inside card footer */}
@@ -212,6 +226,20 @@ export default function CertificatesSection() {
                     <span className="text-[10px] font-mono text-slate-500 uppercase block">Year Certified</span>
                     <p className="text-xs font-mono text-slate-300">{activeCert.issueDate}</p>
                   </div>
+
+                  {activeCert.tasks && activeCert.tasks.length > 0 && (
+                    <div>
+                      <span className="text-[10px] font-mono text-slate-500 uppercase block mb-1">Practical Tasks Completed</span>
+                      <ul className="space-y-1">
+                        {activeCert.tasks.map((task, idx) => (
+                          <li key={idx} className="text-xs text-purple-300 flex items-start gap-1 font-sans">
+                            <span className="text-purple-400 font-bold">•</span>
+                            <span>{task}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
 
                   <div className="pt-2">
                     <span className="flex items-center gap-1.5 text-xs text-emerald-400 font-semibold mb-2">

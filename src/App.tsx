@@ -40,6 +40,55 @@ import SocialFootprint from "./components/SocialFootprint";
 // Data
 import { PERSONAL_INFO, EXPERIENCES } from "./data/portfolioData";
 
+// Advanced Section-Based SEO Metadata Mapping
+const SECTION_SEO_MAP: Record<string, { title: string; description: string; keywords: string }> = {
+  hero: {
+    title: "Samiullah Samejo (SamiUbaidi) | Full Stack Developer Pakistan & Cybersecurity Analyst Sukkur",
+    description: "Official portfolio of Samiullah Samejo (SamiUbaidi) - Lead Full Stack Developer in Pakistan & Cybersecurity Analyst in Sukkur, Sindh. Founder of Ubaidi IT Community.",
+    keywords: "Full Stack Developer Pakistan, Cybersecurity Analyst Sukkur, Samiullah Samejo, SamiUbaidi, Web Developer Sukkur, AI Engineer Sindh, Ubaidi IT Community, Freelancer Pakistan",
+  },
+  about: {
+    title: "About Samiullah Samejo | Top Full Stack Developer Pakistan & AI Specialist",
+    description: "Discover the journey of Samiullah Samejo (SamiUbaidi), CEO of Ubaidi IT Community, acclaimed Full Stack Developer in Pakistan and Cybersecurity Analyst in Sukkur.",
+    keywords: "Samiullah Samejo Bio, Full Stack Developer Pakistan, Cybersecurity Analyst Sukkur, SamiUbaidi, Tech Mentor Sindh, Ubaidi IT Solutions, Founder Ubaidi IT Community",
+  },
+  education: {
+    title: "Education & IT Mentorship | Samiullah Samejo - Developer & Security Analyst Sukkur",
+    description: "Academic achievements, cybersecurity training, and software development mentorship led by Samiullah Samejo in Sukkur, Sindh, Pakistan.",
+    keywords: "Samiullah Samejo Education, IT Mentorship Sukkur, Full Stack Developer Pakistan, Computer Science Sindh, Cybersecurity Training Pakistan",
+  },
+  certifications: {
+    title: "Certifications & Credentials | Skyscanner, HPE, Google | SamiUbaidi Pakistan",
+    description: "Verified certifications in Software Engineering, Front-End Development, and Cybersecurity earned by Samiullah Samejo (Full Stack Developer Pakistan & Cybersecurity Analyst Sukkur).",
+    keywords: "Samiullah Samejo Certificates, Skyscanner Software Engineering, HPE RESTful Web Services, Full Stack Developer Pakistan, Certified Cybersecurity Analyst Sukkur",
+  },
+  projects: {
+    title: "Full Stack Projects & SaaS Portfolio | Developer Pakistan - Samiullah Samejo",
+    description: "Browse high-impact web apps, open-source repositories, and security-hardened SaaS tools built by Samiullah Samejo, leading Full Stack Developer in Pakistan.",
+    keywords: "Samiullah Samejo Projects, Full Stack Developer Pakistan, React Node SaaS Apps, Cybersecurity Analyst Sukkur, Open Source Portfolio, SamiUbaidi GitHub",
+  },
+  experience: {
+    title: "Experience & Security Audits | Cybersecurity Analyst Sukkur & Lead Engineer Pakistan",
+    description: "Proven work experience of Samiullah Samejo in full-stack architecture, vulnerability auditing, penetration testing, and IT community leadership in Sukkur, Pakistan.",
+    keywords: "Cybersecurity Analyst Sukkur, Full Stack Developer Pakistan, Ubaidi IT Community Experience, Penetration Testing Sindh, Security Audit Freelancer",
+  },
+  testimonials: {
+    title: "Client Testimonials & Community Feedback | Full Stack Developer Pakistan | SamiUbaidi",
+    description: "Read real client reviews and student endorsements for Samiullah Samejo (SamiUbaidi), trusted Full Stack Developer in Pakistan & Cybersecurity Analyst in Sukkur.",
+    keywords: "Samiullah Samejo Reviews, Full Stack Developer Pakistan Testimonials, Cybersecurity Analyst Sukkur Endorsements, Client Feedback Ubaidi IT",
+  },
+  blog: {
+    title: "Tech & Cybersecurity Blog | Full Stack Developer Pakistan - Samiullah Samejo",
+    description: "Insights on React full-stack security, API hardening, AI grounding, and modern web development by Samiullah Samejo (SamiUbaidi) from Sukkur, Pakistan.",
+    keywords: "SamiUbaidi Blog, Tech Articles Pakistan, Full Stack Developer Pakistan, Cybersecurity Analyst Sukkur, React Security Tips, Web Development Guide",
+  },
+  contact: {
+    title: "Hire Samiullah Samejo | Full Stack Developer Pakistan & Cybersecurity Analyst Sukkur",
+    description: "Book custom full-stack web development, mobile apps, or cybersecurity audits with Samiullah Samejo (SamiUbaidi) in Sukkur, Sindh, Pakistan.",
+    keywords: "Hire Full Stack Developer Pakistan, Hire Cybersecurity Analyst Sukkur, Contact Samiullah Samejo, SamiUbaidi Email, DevSamiUbaidi Services",
+  },
+};
+
 export default function App() {
   const [activeSection, setActiveSection] = useState("hero");
 
@@ -71,6 +120,80 @@ export default function App() {
       });
     };
   }, []);
+
+  // Dynamic Head Metadata & SEO Manager based on Active Section
+  useEffect(() => {
+    const seoData = SECTION_SEO_MAP[activeSection] || SECTION_SEO_MAP.hero;
+
+    // Update document title
+    document.title = seoData.title;
+
+    // Helper to dynamically update meta element attributes
+    const updateMetaTag = (selector: string, content: string, attr = "content") => {
+      let el = document.querySelector(selector) as HTMLMetaElement | HTMLLinkElement | null;
+      if (el) {
+        el.setAttribute(attr, content);
+      } else {
+        el = document.createElement("meta");
+        if (selector.startsWith('meta[name=')) {
+          const name = selector.match(/meta\[name="([^"]+)"\]/)?.[1];
+          if (name) el.setAttribute("name", name);
+        } else if (selector.startsWith('meta[property=')) {
+          const prop = selector.match(/meta\[property="([^"]+)"\]/)?.[1];
+          if (prop) el.setAttribute("property", prop);
+        }
+        el.setAttribute(attr, content);
+        document.head.appendChild(el);
+      }
+    };
+
+    updateMetaTag('meta[name="description"]', seoData.description);
+    updateMetaTag('meta[name="keywords"]', seoData.keywords);
+    updateMetaTag('meta[property="og:title"]', seoData.title);
+    updateMetaTag('meta[property="og:description"]', seoData.description);
+    updateMetaTag('meta[name="twitter:title"]', seoData.title);
+    updateMetaTag('meta[name="twitter:description"]', seoData.description);
+
+    // Update Canonical URL link tag for section indexing
+    const canonicalUrl = activeSection === "hero" 
+      ? "https://devsamiubaidi.netlify.app"
+      : `https://devsamiubaidi.netlify.app/#${activeSection}`;
+
+    let canonicalLink = document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
+    if (canonicalLink) {
+      canonicalLink.setAttribute("href", canonicalUrl);
+    }
+
+    // Dynamic JSON-LD injection for section-specific Schema.org metadata
+    let scriptTag = document.getElementById("dynamic-section-jsonld") as HTMLScriptElement | null;
+    if (!scriptTag) {
+      scriptTag = document.createElement("script");
+      scriptTag.id = "dynamic-section-jsonld";
+      scriptTag.type = "application/ld+json";
+      document.head.appendChild(scriptTag);
+    }
+
+    scriptTag.text = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "WebPageElement",
+      "@id": canonicalUrl,
+      "name": seoData.title,
+      "description": seoData.description,
+      "keywords": seoData.keywords,
+      "isPartOf": {
+        "@type": "WebSite",
+        "@id": "https://devsamiubaidi.netlify.app/#website",
+        "name": "Samiullah Samejo Portfolio",
+        "url": "https://devsamiubaidi.netlify.app"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Samiullah Samejo",
+        "jobTitle": "Full Stack Developer Pakistan & Cybersecurity Analyst Sukkur",
+        "url": "https://devsamiubaidi.netlify.app"
+      }
+    });
+  }, [activeSection]);
 
   // Automatic Text-Based ATS Resume Generator
   const handleDownloadResume = () => {

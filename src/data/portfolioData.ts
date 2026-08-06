@@ -124,6 +124,33 @@ export const CERTIFICATIONS: Certificate[] = [
     credentialId: "ACD477EOEE34",
     category: "Development",
   },
+  {
+    id: "cert-13",
+    title: "Front-End Software Engineering Job Simulation",
+    issuer: "Skyscanner",
+    issueDate: "August 6, 2026",
+    verificationUrl: "https://www.theforage.com/simulations/skyscanner/front-end-software-engineering-6a750602274fe2888e51dc4a",
+    credentialId: "6a750602274fe2888e51dc4a",
+    category: "Development",
+    platform: "Forage",
+    tasks: ["Create a Backpack React Web App"],
+  },
+  {
+    id: "cert-14",
+    title: "Software Engineering Job Simulation",
+    issuer: "HPE (Hewlett Packard Enterprise)",
+    issueDate: "August 6, 2026",
+    verificationUrl: "https://www.theforage.com/simulations/hpe/software-engineering-6a7409646120def69ba7e914",
+    credentialId: "6a7409646120def69ba7e914",
+    category: "Development",
+    platform: "Forage",
+    tasks: [
+      "Create a Proposal for a RESTful Web Service",
+      "Build a Basic RESTful Web Service",
+      "Implement the Ability to Upload Data",
+      "Create Unit Tests"
+    ],
+  },
 ];
 
 export const EDUCATION_TIMELINE: EducationItem[] = [
@@ -357,6 +384,45 @@ I am a full-stack, multidisciplinary coder delivering end-to-end digital transfo
 We are living in the **AI Era**. Rather than resisting change, I actively deliver all these comprehensive services with the advanced assistance of state-of-the-art AI. I leverage AI to accelerate security vetting, draft pristine layouts, optimize page indexations, and generate high-engagement social material rapidly. This allows me to act as an entire agency in one developer, passing extreme speed and cost efficiency down to my clients. 
 
 At *Ubaidi IT Solutions*, AI is not a crutch; it is our force multiplier for premium excellence.`,
+  },
+  {
+    id: "b-6",
+    slug: "from-code-to-community-the-inspiring-journey-of-samiullah-samejo",
+    title: "From Code to Community: The Inspiring Journey of Samiullah Samejo",
+    excerpt: "How Sukkur-based developer & CEO Samiullah Samejo (SamiUbaidi, samisamejo) built Ubaidi IT Community, Sukkur Runners, mastered 100+ skills, and aims for global tech leadership.",
+    category: "Programming",
+    publishDate: "August 2026",
+    readTime: "7 min read",
+    tags: ["Samiullah Samejo", "samisamejo", "Sukkur", "Community", "Software Engineering", "Global Tech Dreams"],
+    content: `## From Code to Community: The Inspiring Journey of Samiullah Samejo
+
+In the rapidly evolving tech landscape of Pakistan, few names resonate within the local grass-roots community quite like **Samiullah Samejo** (widely recognized across digital platforms as **SamiUbaidi** / **samisamejo**). This Sukkur-based full-stack software engineer and mobile application developer is actively redefining what it means to be a modern tech professional. His inspiring journey highlights a powerful fusion of self-taught technical excellence, digital entrepreneurship, and a deep-rooted commitment to community building.
+
+---
+
+### Crafting Code and Empowering Local Youth
+Samejo’s expertise spans the entire software development spectrum. From backend database architectures to sleek, responsive cross-platform mobile interfaces built with Flutter and React, he has mastered a highly versatile engineering stack. As a self-taught programmer, he did not wait for a traditional academic degree roadmap to dictate his potential. Instead, he independently mastered over 100 distinct digital skills through hands-on practice, freelance problem-solving, and continuous learning.
+
+However, coding in isolation was never his ultimate goal. Recognizing the immense untapped potential within the Sindh region, Samejo founded the **Ubaidi IT Community**. Serving as its CEO, he has built a powerful, collaborative platform that guides upcoming developers, shares critical freelancing strategies, and opens doors for students trying to break into the global tech sector. Through mentorship, he turns solitary learning into a shared triumph.
+
+---
+
+### A Balanced Blueprint: Mental and Physical Wellness
+What truly sets Samejo apart from the typical software developer stereotype is his firm belief in holistic lifestyle growth. He understands that prolonged hours in front of computer screens require a structured physical counter-balance to maintain long-term productivity. To address this social need, he successfully founded **Sukkur Runners**, a prominent community group aimed at promoting outdoor running, core athletics, and physical health among local youth.
+
+He continuously practices what he preaches, frequently participating in local athletic training programs, such as the *Lok Sahaita Camp* at the Sukkur Sports Complex. By intentionally bridging the gap between digital literacy and physical wellness, he inspires a healthier lifestyle for the next generation of Pakistani IT professionals.
+
+---
+
+### Dreams, Global Vision & Industry Aspirations
+Driven by an unyielding spirit of ambition, Samiullah Samejo sets his sights on joining global startup ecosystems and industry tech giants like **Google, Microsoft, Oracle, Meta, and TikTok**. 
+
+His dream workspaces span top innovation hubs across **Saudi Arabia, Dubai (UAE), Germany, Finland, Paris (France), the United States, the United Kingdom**, and beyond. With a steadfast mindset, he holds the vision to grow from Software Engineer to CEO of a global tech venture one day, proving that with passion, grit, and community impact, every dream can be won.
+
+---
+
+### Moving Forward
+Samiullah Samejo’s story clearly shows that true professional success lies in lifting others as you climb. By combining technology with community wellness, he remains an important leader to watch as Pakistan's regional tech ecosystem continues to expand globally. His modern approach serves as a blueprint for young programmers nationwide.`,
   }
 ];
 

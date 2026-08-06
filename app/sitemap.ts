@@ -14,7 +14,8 @@ export default function sitemap(): SitemapItem[] {
     "boosting-saas-conversions-with-interactive-funnels",
     "understanding-ai-grounding-and-prompting",
     "the-story-behind-samiubaidi-personal-branding-and-ai-philosophy",
-    "empowering-pakistan-next-gen-builders-ubaidi"
+    "empowering-pakistan-next-gen-builders-ubaidi",
+    "from-code-to-community-the-inspiring-journey-of-samiullah-samejo"
   ];
 
   const blogUrls = blogSlugs.map((slug) => ({
