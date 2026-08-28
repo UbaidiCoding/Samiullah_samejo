@@ -32,6 +32,9 @@ import {
   HeartHandshake,
   Building2,
   Compass,
+  ChevronDown,
+  ChevronUp,
+  FolderOpen,
 } from "lucide-react";
 
 // Lightweight High-Performance Components
@@ -104,6 +107,7 @@ export default function App() {
   const [activeSection, setActiveSection] = useState("hero");
   const [resumeModalOpen, setResumeModalOpen] = useState(false);
   const [copiedEmail, setCopiedEmail] = useState(false);
+  const [isProjectsOpen, setIsProjectsOpen] = useState(true);
 
   // Dynamic Head Metadata & SEO Manager based on Active Section
   useEffect(() => {
@@ -200,7 +204,12 @@ export default function App() {
       {/* 2. Top Sticky Navigation */}
       <Navigation
         activeSection={activeSection}
-        onNavigate={(id) => setActiveSection(id)}
+        onNavigate={(id) => {
+          setActiveSection(id);
+          if (id === "projects") {
+            setIsProjectsOpen(true);
+          }
+        }}
         onOpenResume={() => setResumeModalOpen(true)}
       />
 
@@ -510,23 +519,59 @@ export default function App() {
         </section>
 
         {/* ========================================================================= */}
-        {/* PRODUCTION PROJECTS SECTION */}
+        {/* PRODUCTION PROJECTS SECTION (COLLAPSIBLE / DROPDOWN CONTROLLED) */}
         {/* ========================================================================= */}
         <section id="projects" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
           <div className="space-y-8">
-            <div className="text-center space-y-2 max-w-2xl mx-auto">
-              <span className="text-xs font-mono uppercase tracking-widest text-cyan-400 bg-cyan-950/40 border border-cyan-500/20 px-3 py-1 rounded-full font-bold">
-                Featured Work
-              </span>
-              <h2 className="text-2xl sm:text-4xl font-extrabold text-white font-display">
+            {/* Interactive Section Header with Dropdown / Accordion Controller */}
+            <div className="text-center space-y-3 max-w-3xl mx-auto">
+              <div className="inline-flex items-center gap-2">
+                <button
+                  onClick={() => setIsProjectsOpen((prev) => !prev)}
+                  className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-cyan-400 bg-cyan-950/40 hover:bg-cyan-900/50 border border-cyan-500/30 hover:border-cyan-400 px-3.5 py-1 rounded-full font-bold transition-all cursor-pointer shadow-sm group"
+                  title="Click to toggle Featured Work catalog"
+                >
+                  <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
+                  <span>Featured Work</span>
+                  <span className="text-[10px] text-cyan-300/70 lowercase border-l border-cyan-500/30 pl-2">
+                    {isProjectsOpen ? "▼ click to collapse" : "▲ click to open"}
+                  </span>
+                </button>
+              </div>
+
+              <h2
+                onClick={() => setIsProjectsOpen((prev) => !prev)}
+                className="text-2xl sm:text-4xl font-extrabold text-white font-display cursor-pointer hover:text-cyan-400 transition-colors inline-block"
+              >
                 Production Projects & Android Apps
               </h2>
-              <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
+              
+              <p className="text-xs sm:text-sm text-slate-400 leading-relaxed max-w-2xl mx-auto">
                 Shipped 15+ solutions with real downloads, sub-second latency, and verified source code repositories.
               </p>
+
+              {/* Quick Toggle / Open Status Bar */}
+              <div className="pt-1 flex items-center justify-center gap-3">
+                <button
+                  onClick={() => setIsProjectsOpen((prev) => !prev)}
+                  className="inline-flex items-center gap-2 px-4 py-1.5 rounded-xl bg-cyan-500/10 hover:bg-cyan-500/20 border border-cyan-500/30 text-cyan-300 font-mono text-xs transition-all cursor-pointer group"
+                >
+                  <FolderOpen className="w-3.5 h-3.5 text-cyan-400 group-hover:scale-110 transition-transform" />
+                  <span>{isProjectsOpen ? "Collapse Projects View" : "Click to Open Featured Work (15+ Shipped)"}</span>
+                  {isProjectsOpen ? (
+                    <ChevronUp className="w-3.5 h-3.5 text-cyan-400" />
+                  ) : (
+                    <ChevronDown className="w-3.5 h-3.5 text-emerald-400 animate-bounce" />
+                  )}
+                </button>
+              </div>
             </div>
 
-            <GitHubProjects />
+            {/* Interactive GitHubProjects Component with Dropdown Filter Menu */}
+            <GitHubProjects
+              isSectionOpen={isProjectsOpen}
+              onToggleSection={() => setIsProjectsOpen((prev) => !prev)}
+            />
           </div>
         </section>
 

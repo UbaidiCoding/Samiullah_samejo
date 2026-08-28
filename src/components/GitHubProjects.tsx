@@ -1,5 +1,29 @@
-import React, { useState, useEffect } from "react";
-import { FolderGit2, Star, Link, ExternalLink, Search, Cpu, ShieldAlert, Layers, Smartphone, Globe, ShoppingBag, FileCode2, Sparkles, X, CheckCircle2, Code2 } from "lucide-react";
+import React, { useState, useEffect, useRef } from "react";
+import {
+  FolderGit2,
+  Star,
+  Link,
+  ExternalLink,
+  Search,
+  Cpu,
+  ShieldAlert,
+  Layers,
+  Smartphone,
+  Globe,
+  ShoppingBag,
+  FileCode2,
+  Sparkles,
+  X,
+  CheckCircle2,
+  Code2,
+  ChevronDown,
+  ChevronUp,
+  SlidersHorizontal,
+  FolderOpen,
+  Filter,
+  Eye,
+  Check,
+} from "lucide-react";
 import { Project } from "../types";
 
 // Production Verified Projects matching Samiullah's Resume & GitHub
@@ -90,12 +114,45 @@ const FEATURED_PROJECTS: (Project & { highlight?: string; metric?: string; techS
   }
 ];
 
-export default function GitHubProjects() {
+export type CategoryFilter = "All" | "Mobile" | "Web" | "Cybersecurity" | "AI" | "SaaS";
+
+const CATEGORY_OPTIONS: { id: CategoryFilter; label: string; icon: any; countNote: string }[] = [
+  { id: "All", label: "All Projects (15+ Shipped)", icon: Layers, countNote: "15+ Repos" },
+  { id: "Mobile", label: "Mobile Apps (Android & Kotlin)", icon: Smartphone, countNote: "StepFit Pro (1k+)" },
+  { id: "Web", label: "Full-Stack Web & E-Commerce", icon: Globe, countNote: "Next.js & Supabase" },
+  { id: "Cybersecurity", label: "Cybersecurity & OWASP Tools", icon: ShieldAlert, countNote: "Risk Audits" },
+  { id: "AI", label: "AI Grounded & Agent Systems", icon: Sparkles, countNote: "Google GenAI" },
+  { id: "SaaS", label: "SaaS & High-Perf Utilities", icon: Cpu, countNote: "MB2KB Converter" },
+];
+
+interface GitHubProjectsProps {
+  isSectionOpen?: boolean;
+  onToggleSection?: () => void;
+  initialFilter?: CategoryFilter;
+}
+
+export default function GitHubProjects({
+  isSectionOpen = true,
+  onToggleSection,
+  initialFilter = "All",
+}: GitHubProjectsProps) {
   const [projects, setProjects] = useState(FEATURED_PROJECTS);
-  const [loading, setLoading] = useState<boolean>(false);
   const [searchQuery, setSearchQuery] = useState<string>("");
-  const [activeFilter, setActiveFilter] = useState<"All" | "Mobile" | "Web" | "Cybersecurity" | "AI" | "SaaS">("All");
+  const [activeFilter, setActiveFilter] = useState<CategoryFilter>(initialFilter);
   const [selectedProject, setSelectedProject] = useState<typeof FEATURED_PROJECTS[0] | null>(null);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  // Close dropdown on click outside
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setDropdownOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   useEffect(() => {
     async function fetchAdditionalRepos() {
@@ -171,114 +228,266 @@ export default function GitHubProjects() {
     return matchesFilter && matchesSearch;
   });
 
+  const handleSelectDropdownCategory = (cat: CategoryFilter) => {
+    setActiveFilter(cat);
+    setDropdownOpen(false);
+    if (!isSectionOpen && onToggleSection) {
+      onToggleSection();
+    }
+  };
+
+  const currentCategoryObj = CATEGORY_OPTIONS.find((c) => c.id === activeFilter) || CATEGORY_OPTIONS[0];
+  const CurrentIcon = currentCategoryObj.icon;
+
   return (
-    <div id="github-projects-showcase" className="space-y-8">
-      {/* Search and Filters Bar */}
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-        {/* Filter Pills */}
-        <div className="flex flex-wrap items-center gap-1.5 p-1 bg-white/5 border border-white/10 rounded-xl w-full sm:w-auto">
-          {(["All", "Mobile", "Web", "Cybersecurity", "AI", "SaaS"] as const).map((tab) => (
+    <div id="github-projects-showcase" className="space-y-6">
+      {/* Top Action & Dropdown Controls Bar */}
+      <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3 glass-morph p-3.5 sm:p-4 rounded-2xl border border-white/10">
+        
+        {/* Left: Interactive Category Dropdown Menu */}
+        <div className="relative" ref={dropdownRef}>
+          <div className="flex items-center gap-2">
             <button
-              key={tab}
-              onClick={() => setActiveFilter(tab)}
-              className={`px-3 py-1.5 rounded-lg text-xs font-mono transition-all cursor-pointer ${
-                activeFilter === tab
-                  ? "bg-cyan-500 text-black font-bold shadow-sm"
-                  : "text-slate-400 hover:text-white"
-              }`}
+              id="projects-category-dropdown-btn"
+              onClick={() => setDropdownOpen(!dropdownOpen)}
+              className="flex items-center gap-2.5 px-4 py-2.5 rounded-xl bg-gradient-to-r from-cyan-500/15 via-blue-500/10 to-purple-500/15 hover:from-cyan-500/25 hover:to-purple-500/25 border border-cyan-500/30 hover:border-cyan-400 text-white font-mono text-xs transition-all cursor-pointer shadow-md group w-full sm:w-auto justify-between"
+              aria-expanded={dropdownOpen}
+              aria-haspopup="true"
             >
-              {tab === "Mobile" ? "📱 Mobile Apps" : tab}
+              <div className="flex items-center gap-2">
+                <CurrentIcon className="w-4 h-4 text-cyan-400" />
+                <span className="font-semibold">{currentCategoryObj.label}</span>
+              </div>
+              <ChevronDown
+                className={`w-4 h-4 text-cyan-400 transition-transform duration-200 ${
+                  dropdownOpen ? "rotate-180" : ""
+                }`}
+              />
             </button>
-          ))}
-        </div>
 
-        {/* Search input */}
-        <div className="relative w-full sm:w-72">
-          <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
-          <input
-            type="text"
-            placeholder="Search 15+ projects or stacks..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full bg-[#0c0d14] border border-white/10 rounded-xl pl-9 pr-4 py-2 text-xs text-white placeholder:text-slate-500 focus:outline-none focus:border-cyan-500/50 font-mono transition-colors"
-          />
-        </div>
-      </div>
-
-      {/* Projects Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-        {filteredProjects.map((project) => {
-          const isMobile = project.topics?.includes("android") || project.name.includes("StepFit");
-          return (
-            <div
-              key={project.id}
-              onClick={() => setSelectedProject(project)}
-              className="group glass-morph hover:border-cyan-500/30 p-5 rounded-2xl transition-all duration-200 flex flex-col justify-between cursor-pointer relative overflow-hidden"
-            >
-              {/* Subtle top accent line */}
-              <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-cyan-500/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-
-              <div className="space-y-3.5">
-                {/* Header Badge */}
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <span className="w-8 h-8 rounded-lg bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 flex items-center justify-center font-mono">
-                      {isMobile ? <Smartphone className="w-4 h-4" /> : <Code2 className="w-4 h-4" />}
-                    </span>
-                    <span className="text-[11px] font-mono text-cyan-400 font-semibold">
-                      {project.language}
-                    </span>
-                  </div>
-
-                  {project.highlight && (
-                    <span className="text-[10px] font-mono font-medium px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-500/25">
-                      {project.highlight}
-                    </span>
-                  )}
-                </div>
-
-                {/* Project Title & Description */}
-                <div>
-                  <h3 className="text-base font-bold text-white group-hover:text-cyan-400 transition-colors font-display">
-                    {project.name}
-                  </h3>
-                  <p className="text-xs text-slate-400 mt-1.5 line-clamp-3 leading-relaxed">
-                    {project.description}
-                  </p>
-                </div>
-
-                {/* Tech Tags */}
-                {project.techStack && (
-                  <div className="flex flex-wrap gap-1.5 pt-1">
-                    {project.techStack.slice(0, 4).map((tech, i) => (
-                      <span
-                        key={i}
-                        className="text-[10px] font-mono bg-white/[0.04] text-slate-300 px-2 py-0.5 rounded border border-white/5"
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
+            {onToggleSection && (
+              <button
+                onClick={onToggleSection}
+                className="hidden sm:flex items-center gap-1.5 px-3 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 hover:text-white font-mono text-xs transition-colors cursor-pointer"
+                title={isSectionOpen ? "Collapse Projects View" : "Expand Projects View"}
+              >
+                {isSectionOpen ? (
+                  <>
+                    <ChevronUp className="w-3.5 h-3.5 text-cyan-400" />
+                    <span>Collapse</span>
+                  </>
+                ) : (
+                  <>
+                    <ChevronDown className="w-3.5 h-3.5 text-emerald-400 animate-bounce" />
+                    <span>Open Featured Work</span>
+                  </>
                 )}
+              </button>
+            )}
+          </div>
+
+          {/* Floating Dropdown Menu */}
+          {dropdownOpen && (
+            <div className="absolute top-full left-0 mt-2 w-72 sm:w-80 bg-[#090b14]/98 border border-white/15 rounded-2xl shadow-2xl backdrop-blur-2xl p-2 z-50 animate-fade-in font-mono space-y-1">
+              <div className="px-3 py-1.5 text-[10px] text-slate-400 uppercase tracking-wider font-semibold border-b border-white/5 flex items-center justify-between">
+                <span>Select Project Domain</span>
+                <span className="text-cyan-400">15+ Total Apps</span>
               </div>
 
-              {/* Card Footer */}
-              <div className="pt-4 mt-4 border-t border-white/5 flex items-center justify-between text-xs text-slate-400 font-mono">
-                <span className="flex items-center gap-1 text-[11px]">
-                  <Star className="w-3.5 h-3.5 text-amber-400" />
-                  {project.metric || `${project.stargazers_count} Stars`}
-                </span>
+              {CATEGORY_OPTIONS.map((opt) => {
+                const Icon = opt.icon;
+                const isSelected = activeFilter === opt.id;
+                return (
+                  <button
+                    key={opt.id}
+                    onClick={() => handleSelectDropdownCategory(opt.id)}
+                    className={`w-full flex items-center justify-between p-2.5 rounded-xl text-xs transition-all cursor-pointer ${
+                      isSelected
+                        ? "bg-cyan-500 text-black font-bold shadow-sm"
+                        : "text-slate-300 hover:bg-white/10 hover:text-white"
+                    }`}
+                  >
+                    <div className="flex items-center gap-2.5">
+                      <Icon className={`w-4 h-4 ${isSelected ? "text-black" : "text-cyan-400"}`} />
+                      <span className="truncate">{opt.label}</span>
+                    </div>
+                    {isSelected ? (
+                      <Check className="w-3.5 h-3.5 text-black shrink-0" />
+                    ) : (
+                      <span className="text-[10px] text-slate-400 opacity-80 shrink-0">
+                        {opt.countNote}
+                      </span>
+                    )}
+                  </button>
+                );
+              })}
 
-                <div className="flex items-center gap-2">
-                  <span className="text-[11px] text-cyan-400 group-hover:translate-x-0.5 transition-transform flex items-center gap-1">
-                    Details →
-                  </span>
-                </div>
+              <div className="pt-1.5 border-t border-white/5 px-2 text-[10px] text-slate-500 flex items-center justify-between">
+                <span>Click category to filter catalog</span>
+                <span className="text-emerald-400">● Live Code</span>
               </div>
             </div>
-          );
-        })}
+          )}
+        </div>
+
+        {/* Right: Quick Filter Pills & Search Input */}
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5">
+          {/* Quick Pill Tabs for Desktop */}
+          <div className="hidden lg:flex items-center gap-1 p-1 bg-black/40 border border-white/5 rounded-xl">
+            {(["All", "Mobile", "Web", "Cybersecurity", "AI", "SaaS"] as const).map((tab) => (
+              <button
+                key={tab}
+                onClick={() => setActiveFilter(tab)}
+                className={`px-2.5 py-1 rounded-lg text-xs font-mono transition-all cursor-pointer ${
+                  activeFilter === tab
+                    ? "bg-cyan-500 text-black font-bold shadow-sm"
+                    : "text-slate-400 hover:text-white"
+                }`}
+              >
+                {tab === "Mobile" ? "📱 Mobile" : tab}
+              </button>
+            ))}
+          </div>
+
+          {/* Search input */}
+          <div className="relative w-full sm:w-60">
+            <Search className="w-3.5 h-3.5 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+            <input
+              type="text"
+              placeholder="Search 15+ projects..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full bg-[#0c0d14] border border-white/10 rounded-xl pl-8 pr-3 py-1.5 text-xs text-white placeholder:text-slate-500 focus:outline-none focus:border-cyan-500/50 font-mono transition-colors"
+            />
+          </div>
+        </div>
       </div>
+
+      {/* Collapsed State Teaser Banner */}
+      {!isSectionOpen && (
+        <div
+          onClick={onToggleSection}
+          className="glass-morph p-6 rounded-2xl border border-cyan-500/20 hover:border-cyan-400/50 transition-all duration-300 cursor-pointer group text-center space-y-3 relative overflow-hidden bg-gradient-to-r from-cyan-950/20 via-[#0a0b14] to-purple-950/20"
+        >
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/25 text-cyan-300 text-xs font-mono font-bold">
+            <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
+            Featured Work Dropdown Menu Ready
+          </div>
+          <h3 className="text-lg sm:text-xl font-bold text-white font-display group-hover:text-cyan-400 transition-colors">
+            Explore 15+ Production Apps, StepFit Pro & Security Tools
+          </h3>
+          <p className="text-xs text-slate-400 max-w-xl mx-auto">
+            Click here to open the full interactive project catalog with live demos, GitHub repositories, and performance metrics.
+          </p>
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              if (onToggleSection) onToggleSection();
+            }}
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-black font-bold text-xs font-mono transition-all shadow-lg shadow-cyan-500/20 cursor-pointer mt-1"
+          >
+            <FolderOpen className="w-4 h-4" />
+            Click to Open Featured Work (15+ Apps)
+            <ChevronDown className="w-4 h-4" />
+          </button>
+        </div>
+      )}
+
+      {/* Expanded Projects Grid & Catalog */}
+      {isSectionOpen && (
+        <div className="space-y-6 animate-fade-in">
+          {filteredProjects.length === 0 ? (
+            <div className="text-center py-12 glass-morph rounded-2xl border border-white/10 p-6 space-y-3">
+              <p className="text-slate-400 text-xs font-mono">
+                No projects matched "{searchQuery}" under "{activeFilter}" category.
+              </p>
+              <button
+                onClick={() => {
+                  setSearchQuery("");
+                  setActiveFilter("All");
+                }}
+                className="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/15 text-xs font-mono text-cyan-400 transition-colors cursor-pointer"
+              >
+                Reset Search & Filter
+              </button>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+              {filteredProjects.map((project) => {
+                const isMobile = project.topics?.includes("android") || project.name.includes("StepFit");
+                return (
+                  <div
+                    key={project.id}
+                    onClick={() => setSelectedProject(project)}
+                    className="group glass-morph hover:border-cyan-500/30 p-5 rounded-2xl transition-all duration-200 flex flex-col justify-between cursor-pointer relative overflow-hidden"
+                  >
+                    {/* Subtle top accent line */}
+                    <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-cyan-500/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+
+                    <div className="space-y-3.5">
+                      {/* Header Badge */}
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                          <span className="w-8 h-8 rounded-lg bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 flex items-center justify-center font-mono">
+                            {isMobile ? <Smartphone className="w-4 h-4" /> : <Code2 className="w-4 h-4" />}
+                          </span>
+                          <span className="text-[11px] font-mono text-cyan-400 font-semibold">
+                            {project.language}
+                          </span>
+                        </div>
+
+                        {project.highlight && (
+                          <span className="text-[10px] font-mono font-medium px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-500/25">
+                            {project.highlight}
+                          </span>
+                        )}
+                      </div>
+
+                      {/* Project Title & Description */}
+                      <div>
+                        <h3 className="text-base font-bold text-white group-hover:text-cyan-400 transition-colors font-display">
+                          {project.name}
+                        </h3>
+                        <p className="text-xs text-slate-400 mt-1.5 line-clamp-3 leading-relaxed">
+                          {project.description}
+                        </p>
+                      </div>
+
+                      {/* Tech Tags */}
+                      {project.techStack && (
+                        <div className="flex flex-wrap gap-1.5 pt-1">
+                          {project.techStack.slice(0, 4).map((tech, i) => (
+                            <span
+                              key={i}
+                              className="text-[10px] font-mono bg-white/[0.04] text-slate-300 px-2 py-0.5 rounded border border-white/5"
+                            >
+                              {tech}
+                            </span>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Card Footer */}
+                    <div className="pt-4 mt-4 border-t border-white/5 flex items-center justify-between text-xs text-slate-400 font-mono">
+                      <span className="flex items-center gap-1 text-[11px]">
+                        <Star className="w-3.5 h-3.5 text-amber-400" />
+                        {project.metric || `${project.stargazers_count} Stars`}
+                      </span>
+
+                      <div className="flex items-center gap-2">
+                        <span className="text-[11px] text-cyan-400 group-hover:translate-x-0.5 transition-transform flex items-center gap-1">
+                          Details →
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </div>
+      )}
 
       {/* Quick View Project Modal */}
       {selectedProject && (
