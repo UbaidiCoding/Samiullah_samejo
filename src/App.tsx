@@ -1,11 +1,11 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Github,
   Linkedin,
   Youtube,
   Mail,
   Terminal,
-  ShieldAlert,
+  ShieldCheck,
   Globe,
   Sparkles,
   Calendar,
@@ -16,110 +16,94 @@ import {
   Award,
   BookOpen,
   MapPin,
-  FlameKindling,
+  Flame,
   Cpu,
   Bookmark,
   Share2,
   ArrowUpRight,
+  Phone,
+  CheckCircle2,
+  Layers,
+  Smartphone,
+  Copy,
+  Check,
+  FileText,
+  UserCheck,
+  HeartHandshake,
+  Building2,
+  Compass,
 } from "lucide-react";
 
-// Components
-import ParticleBackground from "./components/ParticleBackground";
-import Hero3DScene from "./components/Hero3DScene";
-import TypingText from "./components/TypingText";
-import EducationTimeline from "./components/EducationTimeline";
-import CertificatesSection from "./components/CertificatesSection";
+// Lightweight High-Performance Components
+import LightweightAmbientBackground from "./components/LightweightAmbientBackground";
+import HeroCodeHud from "./components/HeroCodeHud";
+import Navigation from "./components/Navigation";
+import ResumeModal from "./components/ResumeModal";
+import SkillsMatrix from "./components/SkillsMatrix";
 import GitHubProjects from "./components/GitHubProjects";
+import CertificatesSection from "./components/CertificatesSection";
+import EducationTimeline from "./components/EducationTimeline";
+import SocialFootprint from "./components/SocialFootprint";
+import TestimonialsSection from "./components/TestimonialsSection";
 import BlogSection from "./components/BlogSection";
 import ContactFunnel from "./components/ContactFunnel";
-import Navigation from "./components/Navigation";
-import GitHubHeatmap from "./components/GitHubHeatmap";
-import TestimonialsSection from "./components/TestimonialsSection";
-import SocialFootprint from "./components/SocialFootprint";
 
 // Data
 import { PERSONAL_INFO, EXPERIENCES } from "./data/portfolioData";
 
-// Advanced Section-Based SEO Metadata Mapping
+// Comprehensive Section-Based SEO Metadata Mapping for Google, Bing & AI Engines
 const SECTION_SEO_MAP: Record<string, { title: string; description: string; keywords: string }> = {
   hero: {
-    title: "Samiullah Samejo (SamiUbaidi) | Full Stack Developer Pakistan & Cybersecurity Analyst Sukkur",
-    description: "Official portfolio of Samiullah Samejo (SamiUbaidi) - Lead Full Stack Developer in Pakistan & Cybersecurity Analyst in Sukkur, Sindh. Founder of Ubaidi IT Community.",
-    keywords: "Full Stack Developer Pakistan, Cybersecurity Analyst Sukkur, Samiullah Samejo, SamiUbaidi, Web Developer Sukkur, AI Engineer Sindh, Ubaidi IT Community, Freelancer Pakistan",
+    title: "Samiullah Samejo (SamiUbaidi) | Full Stack & Mobile Developer Pakistan | Cybersecurity Analyst Sukkur",
+    description: "Official portfolio of Samiullah Samejo (SamiUbaidi) - Full-Stack & Mobile Developer in Pakistan & Cybersecurity Analyst in Sukkur, Sindh. Shipped 15+ apps including StepFit Pro. Founder of Ubaidi IT Community.",
+    keywords: "Full Stack Developer Pakistan, Mobile Developer Sukkur, Cybersecurity Analyst Sukkur, Samiullah Samejo, SamiUbaidi, Kotlin Developer Pakistan, React Next.js Developer Sindh, StepFit Pro, Ubaidi IT Community",
   },
   about: {
-    title: "About Samiullah Samejo | Top Full Stack Developer Pakistan & AI Specialist",
-    description: "Discover the journey of Samiullah Samejo (SamiUbaidi), CEO of Ubaidi IT Community, acclaimed Full Stack Developer in Pakistan and Cybersecurity Analyst in Sukkur.",
-    keywords: "Samiullah Samejo Bio, Full Stack Developer Pakistan, Cybersecurity Analyst Sukkur, SamiUbaidi, Tech Mentor Sindh, Ubaidi IT Solutions, Founder Ubaidi IT Community",
+    title: "About Samiullah Samejo | Full Stack & Mobile Developer Pakistan | Founder Ubaidi IT",
+    description: "Learn about Samiullah Samejo (SamiUbaidi), self-taught software engineer, CEO of Ubaidi IT Community, and founder of Sukkur Runners from Sukkur, Sindh, Pakistan.",
+    keywords: "Samiullah Samejo Bio, Full Stack Developer Pakistan, Mobile App Developer Sukkur, SamiUbaidi Story, Ubaidi IT Community CEO, Sukkur Runners Founder",
   },
-  education: {
-    title: "Education & IT Mentorship | Samiullah Samejo - Developer & Security Analyst Sukkur",
-    description: "Academic achievements, cybersecurity training, and software development mentorship led by Samiullah Samejo in Sukkur, Sindh, Pakistan.",
-    keywords: "Samiullah Samejo Education, IT Mentorship Sukkur, Full Stack Developer Pakistan, Computer Science Sindh, Cybersecurity Training Pakistan",
-  },
-  certifications: {
-    title: "Certifications & Credentials | Skyscanner, HPE, Google | SamiUbaidi Pakistan",
-    description: "Verified certifications in Software Engineering, Front-End Development, and Cybersecurity earned by Samiullah Samejo (Full Stack Developer Pakistan & Cybersecurity Analyst Sukkur).",
-    keywords: "Samiullah Samejo Certificates, Skyscanner Software Engineering, HPE RESTful Web Services, Full Stack Developer Pakistan, Certified Cybersecurity Analyst Sukkur",
+  skills: {
+    title: "Technical Skills & Architecture | Samiullah Samejo - React, Kotlin, Node.js & Security",
+    description: "Explore 100+ master skills of Samiullah Samejo across JavaScript, TypeScript, Kotlin, Python, React, Next.js, Android Studio, Firebase, Supabase, and OWASP security.",
+    keywords: "Samiullah Samejo Skills, Full Stack Developer Pakistan Tech Stack, Kotlin Mobile Developer, Next.js Supabase PostgreSQL, Cybersecurity Analyst Sukkur",
   },
   projects: {
-    title: "Full Stack Projects & SaaS Portfolio | Developer Pakistan - Samiullah Samejo",
-    description: "Browse high-impact web apps, open-source repositories, and security-hardened SaaS tools built by Samiullah Samejo, leading Full Stack Developer in Pakistan.",
-    keywords: "Samiullah Samejo Projects, Full Stack Developer Pakistan, React Node SaaS Apps, Cybersecurity Analyst Sukkur, Open Source Portfolio, SamiUbaidi GitHub",
+    title: "Production Projects & Mobile Apps | StepFit Pro, E-Commerce & SaaS | Samiullah Samejo",
+    description: "Browse featured production applications built by Samiullah Samejo: StepFit Pro Android App (1k+ downloads), Next.js E-Commerce, MB2KB Converter (98+ Lighthouse), and Cyber Risk Analyzer.",
+    keywords: "StepFit Pro Android, Samiullah Samejo Projects, Full Stack Developer Pakistan Portfolio, MB2KB Converter, Ubaidi Cyber Risk Analyzer, Next.js PostgreSQL",
+  },
+  certifications: {
+    title: "Verified Certifications & Simulations | Skyscanner, HPE, Sukkur IBA, Google | SamiUbaidi",
+    description: "View verified industry credentials earned by Samiullah Samejo: Skyscanner Front-End Simulation, HPE Software Engineering, Sukkur IBA Mobile/Python/Java, and Google Cybersecurity.",
+    keywords: "Samiullah Samejo Certificates, Skyscanner Software Engineering, HPE RESTful Simulation, Sukkur IBA PITP, Google Cybersecurity Coursera, Verified Developer Pakistan",
   },
   experience: {
-    title: "Experience & Security Audits | Cybersecurity Analyst Sukkur & Lead Engineer Pakistan",
-    description: "Proven work experience of Samiullah Samejo in full-stack architecture, vulnerability auditing, penetration testing, and IT community leadership in Sukkur, Pakistan.",
-    keywords: "Cybersecurity Analyst Sukkur, Full Stack Developer Pakistan, Ubaidi IT Community Experience, Penetration Testing Sindh, Security Audit Freelancer",
+    title: "Professional Experience & Leadership | Freelance Developer & CEO Ubaidi IT Community",
+    description: "Work history of Samiullah Samejo as Freelance Full-Stack & Mobile Developer, CEO of Ubaidi IT Community (5,000+ members), and technical content creator at CodeWithSamiUbaidi.",
+    keywords: "Samiullah Samejo Experience, Freelance Developer Pakistan, Ubaidi IT Community CEO, Sukkur Tech Leader, Cybersecurity Auditing Sindh",
   },
-  testimonials: {
-    title: "Client Testimonials & Community Feedback | Full Stack Developer Pakistan | SamiUbaidi",
-    description: "Read real client reviews and student endorsements for Samiullah Samejo (SamiUbaidi), trusted Full Stack Developer in Pakistan & Cybersecurity Analyst in Sukkur.",
-    keywords: "Samiullah Samejo Reviews, Full Stack Developer Pakistan Testimonials, Cybersecurity Analyst Sukkur Endorsements, Client Feedback Ubaidi IT",
+  education: {
+    title: "Education & Academic Background | Intermediate Pre-Engineering Sukkur | Samiullah Samejo",
+    description: "Academic qualifications of Samiullah Samejo: Intermediate (HSC) in Pre-Engineering at Govt. Comprehensive Higher Secondary School Sukkur and Matriculation (Science).",
+    keywords: "Samiullah Samejo Education, Govt Comprehensive Higher Secondary School Sukkur, Pre-Engineering Sindh, Computer Science Training Pakistan",
   },
   blog: {
-    title: "Tech & Cybersecurity Blog | Full Stack Developer Pakistan - Samiullah Samejo",
-    description: "Insights on React full-stack security, API hardening, AI grounding, and modern web development by Samiullah Samejo (SamiUbaidi) from Sukkur, Pakistan.",
-    keywords: "SamiUbaidi Blog, Tech Articles Pakistan, Full Stack Developer Pakistan, Cybersecurity Analyst Sukkur, React Security Tips, Web Development Guide",
+    title: "Articles & Tech Insights | From Code to Community & Security Guides | SamiUbaidi",
+    description: "Read in-depth tech articles by Samiullah Samejo covering full-stack architecture, OWASP security, AI search grounding, community leadership, and career growth.",
+    keywords: "Samiullah Samejo Blog, From Code to Community, React Security Guide, Ubaidi IT Blueprint, Full Stack Developer Pakistan Insights, Sukkur Tech",
   },
   contact: {
-    title: "Hire Samiullah Samejo | Full Stack Developer Pakistan & Cybersecurity Analyst Sukkur",
-    description: "Book custom full-stack web development, mobile apps, or cybersecurity audits with Samiullah Samejo (SamiUbaidi) in Sukkur, Sindh, Pakistan.",
-    keywords: "Hire Full Stack Developer Pakistan, Hire Cybersecurity Analyst Sukkur, Contact Samiullah Samejo, SamiUbaidi Email, DevSamiUbaidi Services",
+    title: "Hire Samiullah Samejo | Full-Stack, Mobile & Security Consultation | Sukkur Pakistan",
+    description: "Hire Samiullah Samejo (SamiUbaidi) for full-stack web development, Kotlin Android applications, and cybersecurity auditing. Contact via Email or WhatsApp.",
+    keywords: "Hire Full Stack Developer Pakistan, Hire Mobile Developer Sukkur, Contact Samiullah Samejo, devsamiubaidi@gmail.com, WhatsApp Developer Pakistan",
   },
 };
 
 export default function App() {
   const [activeSection, setActiveSection] = useState("hero");
-
-  // Intersection Observer for scroll tracking
-  useEffect(() => {
-    const sections = ["hero", "about", "education", "certifications", "projects", "experience", "testimonials", "blog", "contact"];
-    const observers = sections.map((id) => {
-      const element = document.getElementById(id);
-      if (!element) return null;
-
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              setActiveSection(id);
-            }
-          });
-        },
-        { threshold: 0.25, rootMargin: "-80px 0px -40px 0px" }
-      );
-
-      observer.observe(element);
-      return { observer, element };
-    });
-
-    return () => {
-      observers.forEach((obs) => {
-        if (obs) obs.observer.unobserve(obs.element);
-      });
-    };
-  }, []);
+  const [resumeModalOpen, setResumeModalOpen] = useState(false);
+  const [copiedEmail, setCopiedEmail] = useState(false);
 
   // Dynamic Head Metadata & SEO Manager based on Active Section
   useEffect(() => {
@@ -154,660 +138,624 @@ export default function App() {
     updateMetaTag('meta[name="twitter:title"]', seoData.title);
     updateMetaTag('meta[name="twitter:description"]', seoData.description);
 
-    // Update Canonical URL link tag for section indexing
-    const canonicalUrl = activeSection === "hero" 
-      ? "https://devsamiubaidi.netlify.app"
-      : `https://devsamiubaidi.netlify.app/#${activeSection}`;
-
-    let canonicalLink = document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
+    // Update Canonical URL
+    const canonicalLink = document.querySelector('link[rel="canonical"]');
     if (canonicalLink) {
-      canonicalLink.setAttribute("href", canonicalUrl);
+      const sectionHash = activeSection === "hero" ? "" : `#${activeSection}`;
+      canonicalLink.setAttribute("href", `https://devsamiubaidi.netlify.app/${sectionHash}`);
     }
-
-    // Dynamic JSON-LD injection for section-specific Schema.org metadata
-    let scriptTag = document.getElementById("dynamic-section-jsonld") as HTMLScriptElement | null;
-    if (!scriptTag) {
-      scriptTag = document.createElement("script");
-      scriptTag.id = "dynamic-section-jsonld";
-      scriptTag.type = "application/ld+json";
-      document.head.appendChild(scriptTag);
-    }
-
-    scriptTag.text = JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "WebPageElement",
-      "@id": canonicalUrl,
-      "name": seoData.title,
-      "description": seoData.description,
-      "keywords": seoData.keywords,
-      "isPartOf": {
-        "@type": "WebSite",
-        "@id": "https://devsamiubaidi.netlify.app/#website",
-        "name": "Samiullah Samejo Portfolio",
-        "url": "https://devsamiubaidi.netlify.app"
-      },
-      "author": {
-        "@type": "Person",
-        "name": "Samiullah Samejo",
-        "jobTitle": "Full Stack Developer Pakistan & Cybersecurity Analyst Sukkur",
-        "url": "https://devsamiubaidi.netlify.app"
-      }
-    });
   }, [activeSection]);
 
-  // Automatic Text-Based ATS Resume Generator
-  const handleDownloadResume = () => {
-    const textContent = `========================================================================
-SAMIULLAH SAMEJO (SamiUbaidi / DevSamiUbaidi)
-========================================================================
-Full-Stack Developer, Cybersecurity Analyst, and Digital Marketer
-Location: Sukkur, Sindh, Pakistan 🇵🇰
-Email: devsamiubaidi@gmail.com
-GitHub: https://github.com/UbaidiCoding
-LinkedIn: https://linkedin.com/in/devsamiubaidi
-YouTube: https://youtube.com/@CodeWithSamiUbaidi
-Founder: Ubaidi IT Community | Ubaidi IT Solutions
+  // Optimized Intersection Observer for Section Tracking
+  useEffect(() => {
+    const sections = ["hero", "about", "skills", "projects", "certifications", "experience", "education", "testimonials", "blog", "contact"];
+    const observers = sections.map((id) => {
+      const element = document.getElementById(id);
+      if (!element) return null;
 
-------------------------------------------------------------------------
-PROFESSIONAL SUMMARY
-------------------------------------------------------------------------
-Highly accomplished computative developer, security assessor, and digital
-branding technician. Proven developer with comprehensive proficiency in
-structuring robust web designs, orchestrating modular component matrices,
-configuring technical search optimizations, and implementing application defensive 
-controls in client and server bounds.
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              setActiveSection(id);
+            }
+          });
+        },
+        { threshold: 0.2, rootMargin: "-70px 0px -40px 0px" }
+      );
 
-------------------------------------------------------------------------
-CORE TECH STACK & COMPETENCY
-------------------------------------------------------------------------
-* Languages: JavaScript (ES6+), TypeScript, Python, Java
-* Web Systems: React, Next.js, Node.js, Express, WordPress
-* Security: OWASP Core Audit Protocols, Risk Appraisals, JWT Security
-* Marketing: Digital Funnel Creation, Technical SEO, Metadata Architectures
+      observer.observe(element);
+      return { observer, element };
+    });
 
-------------------------------------------------------------------------
-FOUNDER & CORPORATE OUTCOMES
-------------------------------------------------------------------------
-* Founder & Lead Architect | Ubaidi IT Solutions (2023 - Present)
-  - Deployed dozen glassmorphic systems and server-backed web apps.
-  - Implemented secure API wrappers and customized lead funnels to bypass
-    third-party logging engines securely.
+    return () => {
+      observers.forEach((obs) => {
+        if (obs) obs.observer.unobserve(obs.element);
+      });
+    };
+  }, []);
 
-* Founder & Director | Ubaidi IT Community (2022 - Present)
-  - Established Sukkur regional hub of tech learners and enthusiasts.
-  - Formulated bootcamps, security directives, and code reviews.
+  const handleCopyEmail = () => {
+    navigator.clipboard.writeText(PERSONAL_INFO.email);
+    setCopiedEmail(true);
+    setTimeout(() => setCopiedEmail(false), 2000);
+  };
 
-* Educator & Creator | CodeWithSamiUbaidi (2021 - Present)
-  - Authored over 100 deep tutorial lectures detailing Java backend paradigms,
-    Python coding, Canva styling, and security basics.
-
-------------------------------------------------------------------------
-ACADEMIC PATHWAY
-------------------------------------------------------------------------
-* Government Degree College, Sukkur
-  Intermediate in Pre-Engineering (2020 - 2022) | Board Grade A
-* Public School Board, Sukkur
-  Matriculation in Computer Science (2018 - 2020) | A-One Grade
-
-------------------------------------------------------------------------
-CREDENTIAL CERTIFICATIONS (VERIFIED)
-------------------------------------------------------------------------
-- Coursera Canva Social Media Design [70SGFEAM1XT7]
-- Coursera Jira Automation [889PB9HXWPSW]
-- Coursera Security Risks Management [DL196U3N7TED]
-- Coursera Foundations of Cybersecurity [RS0ETHEK6650]
-- Coursera WordPress Website Building [ASUFO7BGIJA5]
-- Coursera Canva Design Advanced [70SGFEAM1XTZ]
-- PITP (Sukkur IBA University) Java Developer [311043]
-- PITP (Sukkur IBA University) Python Developer [110434]
-- PITP (Sukkur IBA University) Mobile App Developer [210838]
-- DigiSkills Freelancing Profession [GKWHAPZMK]
-- DigiSkills WordPress Profession [M6JSM6FMK]
-- HackerRank CSS Basics [ACD477EOEE34]
-
-========================================================================
-Generated securely from SamiUbaidi Official Hub Portfolio
-========================================================================`;
-
-    const blob = new Blob([textContent], { type: "text/plain;charset=utf-8" });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = "Samiullah_Samejo_Resume_ATS.txt";
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
+  const scrollToSection = (id: string) => {
+    const el = document.getElementById(id);
+    if (el) {
+      const offset = 80;
+      const bodyRect = document.body.getBoundingClientRect().top;
+      const elementRect = el.getBoundingClientRect().top;
+      const offsetPosition = elementRect - bodyRect - offset;
+      window.scrollTo({ top: offsetPosition, behavior: "smooth" });
+    }
   };
 
   return (
-    <div className="relative min-h-screen bg-[#050505] text-[#e0e0e0] font-sans selection:bg-purple-500/30 selection:text-purple-300 pb-20 lg:pb-0 overflow-hidden">
-      {/* Background Decorative Elements (Elegant Dark Theme Aura Blobs) */}
-      <div className="absolute top-[-10%] right-[-10%] w-[500px] h-[500px] bg-cyan-400/10 rounded-full blur-[120px] pointer-events-none z-0"></div>
-      <div className="absolute bottom-[-5%] left-[-5%] w-[400px] h-[400px] bg-purple-600/10 rounded-full blur-[100px] pointer-events-none z-0"></div>
-      <div className="absolute inset-x-0 top-0 h-full opacity-15 pointer-events-none z-0" style={{ backgroundImage: "radial-gradient(#222 1px, transparent 1px)", backgroundSize: "32px 32px" }}></div>
+    <div className="min-h-screen bg-[#07080d] text-slate-200 font-sans selection:bg-cyan-500/30 selection:text-cyan-200 relative">
+      {/* 1. Ultra-Lightweight GPU composited ambient background */}
+      <LightweightAmbientBackground />
 
-      {/* Dynamic particles in the sky */}
-      <ParticleBackground />
-
-      {/* Navigation Layer */}
+      {/* 2. Top Sticky Navigation */}
       <Navigation
         activeSection={activeSection}
         onNavigate={(id) => setActiveSection(id)}
+        onOpenResume={() => setResumeModalOpen(true)}
       />
 
-      {/* Core Wrapper */}
-      <main className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-20 z-10">
+      {/* 3. Main Content Wrapper */}
+      <main className="relative z-10 pt-20">
         
-        {/* ================= HERO SECTION ================= */}
-        <section id="hero" className="py-8 lg:py-16 scroll-mt-28">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        {/* ========================================================================= */}
+        {/* HERO SECTION */}
+        {/* ========================================================================= */}
+        <section id="hero" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-20">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
             
-            {/* Left intro text info */}
+            {/* Left Column: Developer Persona & Identity */}
             <div className="lg:col-span-7 space-y-6">
-              <div className="inline-flex items-center gap-2 px-3 py-1 bg-cyan-500/10 border border-cyan-500/20 rounded-full text-cyan-400 text-xs font-mono mb-2 uppercase tracking-widest">
-                <span className="flex h-2 w-2 rounded-full bg-cyan-400 animate-pulse"></span>
-                Available for Projects & Consulting
+              
+              {/* Availability Badge */}
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/25 text-emerald-300 text-xs font-mono">
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                <span>Open for Full-Stack, Mobile & Security Opportunities</span>
               </div>
 
+              {/* Title & Name */}
               <div className="space-y-2">
-                <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold leading-tight tracking-tight text-white">
-                  Samiullah <br />
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 block sm:inline">
-                    Samejo
-                  </span>
+                <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight font-display">
+                  Samiullah <span className="bg-gradient-to-r from-cyan-400 via-teal-300 to-purple-400 bg-clip-text text-transparent">Samejo</span>
                 </h1>
-                
-                <h2 className="text-lg sm:text-xl font-mono text-white/60 flex items-center gap-2">
-                  <span>I am a</span>
-                  <TypingText />
-                </h2>
+                <p className="text-base sm:text-xl font-mono text-cyan-300 font-medium">
+                  Full-Stack & Mobile Developer • Cybersecurity Analyst
+                </p>
+                <p className="text-xs sm:text-sm font-mono text-slate-400 flex items-center gap-2">
+                  <MapPin className="w-4 h-4 text-rose-400" />
+                  <span>Sukkur, Sindh, Pakistan 🇵🇰</span>
+                  <span className="text-slate-600">•</span>
+                  <span className="text-slate-300">Also known as <strong>SamiUbaidi</strong> (devsamiubaidi)</span>
+                </p>
               </div>
 
-              <p className="text-sm text-white/70 leading-relaxed max-w-xl">
-                Highly accomplished computer systems practitioner, security analyst, and digital marketing expert centered in{" "}
-                <span className="text-cyan-400 font-semibold font-mono">Sukkur, Sindh, Pakistan 🇵🇰</span>.
-                Fusing professional engineering standards with secure code patterns, optimized customer acquisition funnels, and enterprise application defense.
+              {/* Short Bio */}
+              <p className="text-sm sm:text-base text-slate-300 leading-relaxed max-w-2xl">
+                Versatile software engineer with 2+ years of hands-on experience building production web and Android applications. Shipped <strong>15+ projects</strong> across React, Next.js, Kotlin, and Python. Published <strong>StepFit Pro</strong> on Google Play with 1,000+ real users. Consistent <strong>90+ Lighthouse</strong> performance scores. Founder & CEO of <strong>Ubaidi IT Community</strong>.
               </p>
 
-              {/* Action Buttons */}
-              <div className="flex flex-wrap items-center gap-3 pt-2">
-                <a
-                  href="#projects"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" });
-                  }}
-                  className="px-6 py-3.5 bg-cyan-500 text-black font-bold rounded-xl hover:bg-cyan-400 shadow-[0_0_20px_rgba(34,211,238,0.3)] transition-all flex items-center gap-1.5 text-xs uppercase tracking-wider font-sans cursor-pointer"
-                >
-                  Explore Projects
-                  <ChevronRight className="w-4 h-4" />
-                </a>
-
-                {/* Instant downloadable ATS Text summary of credentials */}
-                <button
-                  id="download-ats-resume-cta"
-                  onClick={handleDownloadResume}
-                  className="px-6 py-3.5 bg-white/5 border border-white/10 backdrop-blur-lg text-white font-bold rounded-xl hover:bg-white/10 transition-all text-xs uppercase tracking-wider font-sans flex items-center gap-1.5 cursor-pointer"
-                >
-                  <Download className="w-4 h-4 text-purple-400" />
-                  Get ATS Resume
-                </button>
-
-                <a
-                  href="#contact"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
-                  }}
-                  className="px-6 py-3.5 bg-white/5 border border-white/10 backdrop-blur-lg text-white font-bold rounded-xl hover:bg-white/10 transition-all text-xs uppercase tracking-wider font-sans cursor-pointer"
-                >
-                  Book Appointment
-                </a>
+              {/* Verified Metrics Counter Grid */}
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
+                <div className="glass-card p-3 rounded-xl border border-white/10 text-center">
+                  <span className="text-xl sm:text-2xl font-extrabold text-white font-mono block">15+</span>
+                  <span className="text-[10px] font-mono text-slate-400 uppercase">Shipped Apps</span>
+                </div>
+                <div className="glass-card p-3 rounded-xl border border-white/10 text-center">
+                  <span className="text-xl sm:text-2xl font-extrabold text-cyan-400 font-mono block">1,000+</span>
+                  <span className="text-[10px] font-mono text-slate-400 uppercase">App Downloads</span>
+                </div>
+                <div className="glass-card p-3 rounded-xl border border-white/10 text-center">
+                  <span className="text-xl sm:text-2xl font-extrabold text-emerald-400 font-mono block">90+</span>
+                  <span className="text-[10px] font-mono text-slate-400 uppercase">Lighthouse Avg</span>
+                </div>
+                <div className="glass-card p-3 rounded-xl border border-white/10 text-center">
+                  <span className="text-xl sm:text-2xl font-extrabold text-purple-400 font-mono block">5,000+</span>
+                  <span className="text-[10px] font-mono text-slate-400 uppercase">Community</span>
+                </div>
               </div>
 
-              {/* Social badges toolbar */}
-              <div className="flex flex-wrap items-center gap-3.5 pt-4 text-slate-400 text-xs font-mono">
-                <span className="text-[10px] uppercase text-slate-500 font-bold tracking-widest block sm:inline">Connect on:</span>
-                
+              {/* CTAs Row */}
+              <div className="flex flex-wrap items-center gap-3 pt-3">
+                <button
+                  onClick={() => setResumeModalOpen(true)}
+                  className="flex items-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-black font-bold text-xs font-mono transition-all shadow-lg shadow-cyan-500/20 cursor-pointer"
+                >
+                  <FileText className="w-4 h-4" />
+                  View ATS Resume
+                </button>
+
+                <button
+                  onClick={() => scrollToSection("projects")}
+                  className="flex items-center gap-2 px-5 py-3 rounded-xl bg-white/10 hover:bg-white/15 border border-white/15 text-white font-mono text-xs transition-all cursor-pointer"
+                >
+                  <Layers className="w-4 h-4 text-cyan-400" />
+                  Explore Projects
+                </button>
+
+                <button
+                  onClick={handleCopyEmail}
+                  className="flex items-center gap-2 px-4 py-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 hover:text-white font-mono text-xs transition-all cursor-pointer"
+                  title="Copy email address"
+                >
+                  {copiedEmail ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
+                  <span>{copiedEmail ? "Email Copied!" : "Copy Email"}</span>
+                </button>
+              </div>
+
+              {/* Social Channels */}
+              <div className="flex items-center gap-3 pt-2 text-slate-400">
+                <span className="text-xs font-mono text-slate-500">Connect:</span>
                 <a
                   href={PERSONAL_INFO.github}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-1 hover:text-white transition-colors"
+                  className="p-2 rounded-lg bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white transition-colors"
+                  aria-label="GitHub Profile"
                 >
-                  <Github className="w-4 h-4 text-slate-400 hover:text-cyan-400 transition-colors" />
-                  GitHub
+                  <Github className="w-4 h-4" />
                 </a>
-
                 <a
                   href={PERSONAL_INFO.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-1 hover:text-white transition-colors"
+                  className="p-2 rounded-lg bg-white/5 hover:bg-white/10 text-slate-400 hover:text-cyan-400 transition-colors"
+                  aria-label="LinkedIn Profile"
                 >
-                  <Linkedin className="w-4 h-4 text-slate-400 hover:text-purple-400 transition-colors" />
-                  LinkedIn
+                  <Linkedin className="w-4 h-4" />
                 </a>
-
                 <a
                   href={PERSONAL_INFO.youtube}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-1 hover:text-white transition-colors animate-pulse"
+                  className="p-2 rounded-lg bg-white/5 hover:bg-white/10 text-slate-400 hover:text-rose-400 transition-colors"
+                  aria-label="YouTube Channel"
                 >
-                  <Youtube className="w-4 h-4 text-red-500" />
-                  YouTube
+                  <Youtube className="w-4 h-4" />
+                </a>
+                <a
+                  href="https://wa.me/923420372799"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-2 rounded-lg bg-white/5 hover:bg-white/10 text-slate-400 hover:text-emerald-400 transition-colors"
+                  aria-label="WhatsApp Contact"
+                >
+                  <Phone className="w-4 h-4" />
                 </a>
               </div>
             </div>
 
-            {/* Right Interactive 3D Cube Canvas wrapper */}
-            <div className="lg:col-span-5 h-[360px] lg:h-[450px]">
-              <Hero3DScene />
-            </div>
-
-          </div>
-        </section>
-
-
-        {/* ================= ABOUT SECTION ================= */}
-        <section id="about" className="py-16 scroll-mt-24 border-t border-slate-950">
-          <div className="max-w-3xl mx-auto space-y-12">
-            
-            {/* Header */}
-            <div className="text-center space-y-2">
-              <span className="text-[10px] font-mono tracking-widest text-purple-400 uppercase font-semibold">
-                Who stands behind Ubaidi Coding?
-              </span>
-              <h3 className="text-2xl font-bold font-display text-white">
-                About Samiullah Samejo
-              </h3>
-              <p className="text-xs font-mono text-slate-500">
-                Sukkur, Pakistan • Full Stack • Technical Safeguards
-              </p>
-            </div>
-
-            {/* Summary card slots */}
-            <div className="glass-morph p-6 md:p-8 rounded-3xl border border-slate-800/85 space-y-6">
-              <p className="text-slate-300 text-sm leading-relaxed">
-                {PERSONAL_INFO.bio}
-              </p>
+            {/* Right Column: High-Res Portrait + Developer Terminal HUD */}
+            <div className="lg:col-span-5 space-y-5">
               
-              <p className="text-slate-300 text-sm leading-relaxed">
-                {PERSONAL_INFO.summary}
-              </p>
-
-              {/* Founder badges slots */}
-              <div className="pt-6 border-t border-slate-900 grid grid-cols-1 sm:grid-cols-3 gap-4">
-                <div className="p-4 rounded-xl bg-purple-950/15 border border-purple-500/20 text-center">
-                  <h5 className="text-purple-400 font-bold font-mono text-xs">Ubaidi IT Community</h5>
-                  <p className="text-[10px] text-slate-400 mt-1">Founder & Mentor</p>
-                </div>
-                <div className="p-4 rounded-xl bg-cyan-950/15 border border-cyan-500/20 text-center">
-                  <h5 className="text-cyan-400 font-bold font-mono text-xs">Ubaidi IT Solutions</h5>
-                  <p className="text-[10px] text-slate-400 mt-1">Lead SaaS Developer</p>
-                </div>
-                <div className="p-4 rounded-xl bg-emerald-950/15 border border-emerald-500/20 text-center">
-                  <h5 className="text-emerald-400 font-bold font-mono text-xs">CodeWithSamiUbaidi</h5>
-                  <p className="text-[10px] text-slate-400 mt-1">Tech Content Creator</p>
+              {/* Profile Portrait Card */}
+              <div className="glass-morph p-4 rounded-3xl border border-white/12 relative overflow-hidden shadow-2xl group">
+                <div className="relative rounded-2xl overflow-hidden bg-slate-900 aspect-square max-h-[300px] sm:max-h-[340px] w-full flex items-center justify-center">
+                  <img
+                    src="/profile.jpg"
+                    alt="Samiullah Samejo (SamiUbaidi) - Full-Stack Developer & Cybersecurity Analyst"
+                    className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
+                    loading="eager"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#07080d] via-transparent to-transparent opacity-60" />
+                  
+                  {/* Floating Tag */}
+                  <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between p-2.5 rounded-xl bg-black/70 backdrop-blur-md border border-white/15 text-xs font-mono">
+                    <div className="flex items-center gap-2">
+                      <span className="w-2.5 h-2.5 rounded-full bg-cyan-400" />
+                      <span className="text-white font-bold">Samiullah Samejo</span>
+                    </div>
+                    <span className="text-cyan-300 text-[11px]">Sukkur, Pakistan 🇵🇰</span>
+                  </div>
                 </div>
               </div>
+
+              {/* Interactive Telemetry Terminal */}
+              <HeroCodeHud />
             </div>
 
-            {/* Grid of Skill Badges */}
-            <div className="space-y-4">
-              <h4 className="text-center text-xs font-mono font-bold text-slate-500 uppercase tracking-widest">
-                Technical Expertise Grid
-              </h4>
+          </div>
+        </section>
 
-              <div className="flex flex-wrap items-center justify-center gap-2">
-                {[
-                  { name: "JavaScript", icon: "🛡️" },
-                  { name: "Python", icon: "🔑" },
-                  { name: "Java", icon: "☕" },
-                  { name: "React", icon: "⚛️" },
-                  { name: "Node.js", icon: "🟢" },
-                  { name: "Next.js", icon: "⚡" },
-                  { name: "Cybersecurity", icon: "🛡️" },
-                  { name: "SEO Audit", icon: "📈" },
-                  { name: "APIs Integration", icon: "🧱" },
-                  { name: "Tailwind CSS", icon: "🎨" },
-                  { name: "Framer Motion", icon: "🌌" },
-                  { name: "Technical Writing", icon: "📝" },
-                ].map((skill) => (
-                  <span
-                    key={skill.name}
-                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-950 border border-slate-850/80 text-xs text-slate-300 font-mono"
-                  >
-                    <span>{skill.icon}</span>
-                    {skill.name}
+        {/* ========================================================================= */}
+        {/* GLOBAL VISION & DREAM COMPANIES BANNER */}
+        {/* ========================================================================= */}
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+          <div className="glass-morph p-6 sm:p-8 rounded-3xl border border-white/12 relative overflow-hidden bg-gradient-to-r from-purple-950/20 via-[#0a0b14] to-cyan-950/20">
+            <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
+              
+              <div className="space-y-2 max-w-xl">
+                <div className="flex items-center gap-2 text-xs font-mono text-cyan-400 font-semibold uppercase tracking-wider">
+                  <Flame className="w-4 h-4 text-amber-400" />
+                  <span>Global Tech Ambition & Career Vision</span>
+                </div>
+                <h3 className="text-lg sm:text-xl font-bold text-white font-display">
+                  From Software Engineer to Tech Founder & CEO
+                </h3>
+                <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                  Driven by relentless curiosity and community impact, aiming to join world-class startup ecosystems and tech giants.
+                </p>
+              </div>
+
+              {/* Companies & Hubs Chips */}
+              <div className="space-y-3 w-full lg:w-auto">
+                <div>
+                  <span className="text-[10px] font-mono uppercase tracking-widest text-slate-400 block mb-1.5">
+                    Target Organizations:
                   </span>
-                ))}
+                  <div className="flex flex-wrap gap-1.5">
+                    {["Google", "Microsoft", "Oracle", "Meta", "TikTok", "AI Startups"].map((co) => (
+                      <span
+                        key={co}
+                        className="px-3 py-1 rounded-lg bg-white/5 border border-white/10 text-xs font-mono text-white font-medium hover:border-cyan-500/40 transition-colors"
+                      >
+                        {co}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                <div>
+                  <span className="text-[10px] font-mono uppercase tracking-widest text-slate-400 block mb-1.5">
+                    Target Global Workspaces:
+                  </span>
+                  <div className="flex flex-wrap gap-1.5 text-xs font-mono">
+                    <span className="px-2.5 py-1 rounded-lg bg-cyan-950/30 text-cyan-300 border border-cyan-800/30">Saudi Arabia 🇸🇦</span>
+                    <span className="px-2.5 py-1 rounded-lg bg-purple-950/30 text-purple-300 border border-purple-800/30">Dubai / UAE 🇦🇪</span>
+                    <span className="px-2.5 py-1 rounded-lg bg-blue-950/30 text-blue-300 border border-blue-800/30">Germany 🇩🇪</span>
+                    <span className="px-2.5 py-1 rounded-lg bg-emerald-950/30 text-emerald-300 border border-emerald-800/30">Finland 🇫🇮</span>
+                    <span className="px-2.5 py-1 rounded-lg bg-rose-950/30 text-rose-300 border border-rose-800/30">Paris 🇫🇷</span>
+                    <span className="px-2.5 py-1 rounded-lg bg-amber-950/30 text-amber-300 border border-amber-800/30">USA 🇺🇸 & UK 🇬🇧</span>
+                  </div>
+                </div>
               </div>
+
+            </div>
+          </div>
+        </section>
+
+        {/* ========================================================================= */}
+        {/* ABOUT & COMMUNITY LEADERSHIP SECTION */}
+        {/* ========================================================================= */}
+        <section id="about" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+          <div className="space-y-10">
+            
+            {/* Header */}
+            <div className="text-center space-y-2 max-w-2xl mx-auto">
+              <span className="text-xs font-mono uppercase tracking-widest text-cyan-400 bg-cyan-950/40 border border-cyan-500/20 px-3 py-1 rounded-full font-bold">
+                About & Bio
+              </span>
+              <h2 className="text-2xl sm:text-4xl font-extrabold text-white font-display">
+                Engineering with Community Purpose
+              </h2>
+              <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
+                Combining self-taught technical grit, regional open-source empowerment, and athletic wellness.
+              </p>
+            </div>
+
+            {/* 3-Column Highlights */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              
+              {/* Card 1: Technical Craft */}
+              <div className="glass-morph p-6 rounded-2xl border border-white/10 hover:border-cyan-500/30 transition-all space-y-4">
+                <div className="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 flex items-center justify-center font-bold">
+                  <Code2 className="w-5 h-5" />
+                </div>
+                <h3 className="text-base font-bold text-white font-display">
+                  Self-Taught & Multi-Disciplinary
+                </h3>
+                <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                  Mastered over 100 digital skills independently across full-stack web, Kotlin Android development, database architectures, and technical SEO. Consistent 90+ Lighthouse score benchmarks on production apps.
+                </p>
+              </div>
+
+              {/* Card 2: Ubaidi IT Community */}
+              <div className="glass-morph p-6 rounded-2xl border border-white/10 hover:border-purple-500/30 transition-all space-y-4">
+                <div className="w-10 h-10 rounded-xl bg-purple-500/10 border border-purple-500/20 text-purple-400 flex items-center justify-center font-bold">
+                  <Building2 className="w-5 h-5" />
+                </div>
+                <h3 className="text-base font-bold text-white font-display">
+                  Founder & CEO — Ubaidi IT Community
+                </h3>
+                <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                  Founded Sukkur's most active open tech network with 5,000+ members. Organizing free developer bootcamps, code reviews, and freelancing roadmaps for regional youth in Sindh, Pakistan.
+                </p>
+              </div>
+
+              {/* Card 3: Wellness & Sukkur Runners */}
+              <div className="glass-morph p-6 rounded-2xl border border-white/10 hover:border-emerald-500/30 transition-all space-y-4">
+                <div className="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold">
+                  <HeartHandshake className="w-5 h-5" />
+                </div>
+                <h3 className="text-base font-bold text-white font-display">
+                  Founder — Sukkur Runners & Wellness
+                </h3>
+                <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                  Advocating for physical and mental counter-balance for software engineers. Active participant in local athletic training and youth empowerment camps like the <em>Lok Sahaita Camp</em> at Sukkur Sports Complex.
+                </p>
+              </div>
+
             </div>
 
           </div>
         </section>
 
-
-        {/* ================= EDUCATION SECTION ================= */}
-        <section id="education" className="py-16 scroll-mt-24 border-t border-slate-950">
-          <div className="space-y-12">
-            
-            {/* Header */}
-            <div className="text-center space-y-2">
-              <span className="text-[10px] font-mono tracking-widest text-cyan-400 uppercase font-semibold">
-                Academic Framework
+        {/* ========================================================================= */}
+        {/* SKILLS MATRIX SECTION */}
+        {/* ========================================================================= */}
+        <section id="skills" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+          <div className="space-y-8">
+            <div className="text-center space-y-2 max-w-2xl mx-auto">
+              <span className="text-xs font-mono uppercase tracking-widest text-purple-400 bg-purple-950/40 border border-purple-500/20 px-3 py-1 rounded-full font-bold">
+                Skills & Matrix
               </span>
-              <h3 className="text-2xl font-bold font-display text-white">
-                Education History
-              </h3>
-              <p className="text-xs text-slate-400 max-w-sm mx-auto">
-                Primary and pre-engineering benchmarks satisfied under Sukkur Board directories.
+              <h2 className="text-2xl sm:text-4xl font-extrabold text-white font-display">
+                Comprehensive Technical Competencies
+              </h2>
+              <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
+                Categorized breakdown of programming languages, frameworks, cloud databases, mobile stacks, and security protocols.
               </p>
             </div>
 
-            {/* Vertical timeline */}
-            <EducationTimeline />
-
+            <SkillsMatrix />
           </div>
         </section>
 
-
-        {/* ================= CERTIFICATIONS SECTION ================= */}
-        <section id="certifications" className="py-16 scroll-mt-24 border-t border-slate-950">
-          <div className="space-y-12">
-            
-            {/* Header */}
-            <div className="text-center space-y-2">
-              <span className="text-[10px] font-mono tracking-widest text-purple-400 uppercase font-semibold">
-                Validation & Audits
+        {/* ========================================================================= */}
+        {/* PRODUCTION PROJECTS SECTION */}
+        {/* ========================================================================= */}
+        <section id="projects" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+          <div className="space-y-8">
+            <div className="text-center space-y-2 max-w-2xl mx-auto">
+              <span className="text-xs font-mono uppercase tracking-widest text-cyan-400 bg-cyan-950/40 border border-cyan-500/20 px-3 py-1 rounded-full font-bold">
+                Featured Work
               </span>
-              <h3 className="text-2xl font-bold font-display text-white">
-                Professional Certifications
-              </h3>
-              <p className="text-xs text-slate-400 max-w-sm mx-auto">
-                Hover to glow • Click cards to open the live vector proof modal.
+              <h2 className="text-2xl sm:text-4xl font-extrabold text-white font-display">
+                Production Projects & Android Apps
+              </h2>
+              <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
+                Shipped 15+ solutions with real downloads, sub-second latency, and verified source code repositories.
               </p>
             </div>
 
-            {/* Live Filterable block */}
-            <CertificatesSection />
-
-          </div>
-        </section>
-
-
-        {/* ================= PROJECTS SECTION ================= */}
-        <section id="projects" className="py-16 scroll-mt-24 border-t border-slate-950">
-          <div className="space-y-12">
-            
-            {/* Header */}
-            <div className="text-center space-y-2">
-              <span className="text-[10px] font-mono tracking-widest text-cyan-400 uppercase font-semibold">
-                Dynamic Repository Puller
-              </span>
-              <h3 className="text-2xl font-bold font-display text-white">
-                Featured Open Source Projects
-              </h3>
-              <p className="text-xs text-slate-400 max-w-md mx-auto">
-                Queried directly from Github developers REST API for <span className="text-cyan-400 font-semibold font-mono">UbaidiCoding</span>.
-              </p>
-            </div>
-
-            {/* Grid display with falling system */}
             <GitHubProjects />
-
-            {/* Comprehensive interactive contribution track record */}
-            <div className="mt-12">
-              <GitHubHeatmap />
-            </div>
-
           </div>
         </section>
 
-
-        {/* ================= EXPERIENCE SECTION ================= */}
-        <section id="experience" className="py-16 scroll-mt-24 border-t border-slate-950">
-          <div className="max-w-3xl mx-auto space-y-12">
-            
-            {/* Header */}
-            <div className="text-center space-y-2">
-              <span className="text-[10px] font-mono tracking-widest text-purple-400 uppercase font-semibold">
-                Active Milestones
+        {/* ========================================================================= */}
+        {/* VERIFIED CERTIFICATIONS SECTION */}
+        {/* ========================================================================= */}
+        <section id="certifications" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+          <div className="space-y-8">
+            <div className="text-center space-y-2 max-w-2xl mx-auto">
+              <span className="text-xs font-mono uppercase tracking-widest text-purple-400 bg-purple-950/40 border border-purple-500/20 px-3 py-1 rounded-full font-bold">
+                Verified Credentials
               </span>
-              <h3 className="text-2xl font-bold font-display text-white">
-                Professional Experience
-              </h3>
-              <p className="text-xs text-slate-400 max-w-sm mx-auto">
-                Consulting history, business roles, and mentorship directives.
+              <h2 className="text-2xl sm:text-4xl font-extrabold text-white font-display">
+                Certifications & Engineering Simulations
+              </h2>
+              <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
+                Accredited certificates from Skyscanner, HPE, Sukkur IBA University, Google, Coursera, DigiSkills, and HackerRank.
               </p>
             </div>
 
-            <div className="space-y-8">
+            <CertificatesSection />
+          </div>
+        </section>
+
+        {/* ========================================================================= */}
+        {/* EXPERIENCE & LEADERSHIP TIMELINE */}
+        {/* ========================================================================= */}
+        <section id="experience" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+          <div className="space-y-10">
+            <div className="text-center space-y-2 max-w-2xl mx-auto">
+              <span className="text-xs font-mono uppercase tracking-widest text-yellow-400 bg-yellow-950/40 border border-yellow-500/20 px-3 py-1 rounded-full font-bold">
+                Career Milestones
+              </span>
+              <h2 className="text-2xl sm:text-4xl font-extrabold text-white font-display">
+                Work Experience & Leadership
+              </h2>
+              <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
+                Building client solutions, orchestrating regional tech initiatives, and mentoring aspiring developers.
+              </p>
+            </div>
+
+            <div className="max-w-3xl mx-auto space-y-6">
               {EXPERIENCES.map((exp) => (
                 <div
                   key={exp.id}
-                  id={`experience-block-${exp.id}`}
-                  className="glass-morph p-6 rounded-2xl border border-slate-800/80 hover:border-purple-500/20 transition-all duration-300"
+                  className="glass-morph p-6 sm:p-7 rounded-2xl border border-white/10 hover:border-cyan-500/30 transition-all space-y-4"
                 >
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 border-b border-white/5 pb-3">
                     <div>
-                      <h4 className="text-base font-bold text-white font-display">
+                      <h3 className="text-base sm:text-lg font-bold text-white font-display">
                         {exp.role}
-                      </h4>
-                      <p className="text-xs text-purple-400 font-mono mt-0.5">
+                      </h3>
+                      <span className="text-xs font-mono text-cyan-400 font-semibold">
                         {exp.company}
-                      </p>
+                      </span>
                     </div>
-
-                    <span className="px-3 py-1 rounded-full bg-slate-900 border border-slate-800 text-[10px] text-slate-400 font-mono tracking-wide max-w-fit">
-                      📅 {exp.duration}
+                    <span className="text-xs font-mono text-slate-400 bg-white/5 px-2.5 py-1 rounded-lg border border-white/5 w-fit">
+                      {exp.duration}
                     </span>
                   </div>
 
-                  <ul className="space-y-2.5 mb-5 pl-1.5">
-                    {exp.description.map((desc, i) => (
-                      <li key={i} className="text-xs text-slate-300/90 leading-relaxed flex items-start gap-2">
-                        <span className="text-purple-500 select-none mt-1 shrink-0">•</span>
-                        <span>{desc}</span>
+                  <ul className="space-y-2 text-xs sm:text-sm text-slate-300">
+                    {exp.description.map((item, idx) => (
+                      <li key={idx} className="flex items-start gap-2 leading-relaxed">
+                        <CheckCircle2 className="w-4 h-4 text-cyan-400 shrink-0 mt-0.5" />
+                        <span>{item}</span>
                       </li>
                     ))}
                   </ul>
 
-                  {/* Badges */}
-                  <div className="pt-3 border-t border-slate-900/60 flex flex-wrap gap-1.5">
-                    {exp.skills.map((skill) => (
-                      <span key={skill} className="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-900/60 text-slate-400 border border-slate-800/50">
+                  <div className="flex flex-wrap gap-1.5 pt-2">
+                    {exp.skills.map((skill, idx) => (
+                      <span
+                        key={idx}
+                        className="text-[10px] font-mono bg-white/5 text-slate-300 px-2 py-0.5 rounded border border-white/5"
+                      >
                         {skill}
                       </span>
                     ))}
                   </div>
-
                 </div>
               ))}
             </div>
-
           </div>
         </section>
 
-
-        {/* ================= TESTIMONIALS SECTION ================= */}
-        <section id="testimonials" className="py-16 scroll-mt-24 border-t border-white/5 bg-[#050505]/20">
-          <div className="space-y-12">
-            
-            {/* Header */}
-            <div className="text-center space-y-2">
-              <span className="text-[10px] font-mono tracking-widest text-cyan-400 uppercase font-bold">
-                Student Achievements & Client Feedback
+        {/* ========================================================================= */}
+        {/* EDUCATION SECTION */}
+        {/* ========================================================================= */}
+        <section id="education" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+          <div className="space-y-8">
+            <div className="text-center space-y-2 max-w-2xl mx-auto">
+              <span className="text-xs font-mono uppercase tracking-widest text-cyan-400 bg-cyan-950/40 border border-cyan-500/20 px-3 py-1 rounded-full font-bold">
+                Academic Foundation
               </span>
-              <h3 className="text-2xl font-bold font-display text-white">
-                Trusted Endorsements
-              </h3>
-              <p className="text-xs text-white/50 max-w-sm mx-auto">
-                Real feedback from corporate SaaS contracts and successful regional trainees under Sami's active mentorship.
+              <h2 className="text-2xl sm:text-4xl font-extrabold text-white font-display">
+                Education & Academic Record
+              </h2>
+              <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
+                Formal secondary and higher secondary qualifications in Science and Pre-Engineering.
+              </p>
+            </div>
+
+            <EducationTimeline />
+          </div>
+        </section>
+
+        {/* ========================================================================= */}
+        {/* SOCIAL PRESS & MEDIA FOOTPRINT */}
+        {/* ========================================================================= */}
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <div className="space-y-6">
+            <div className="text-center space-y-2 max-w-2xl mx-auto">
+              <span className="text-xs font-mono uppercase tracking-widest text-emerald-400 bg-emerald-950/40 border border-emerald-500/20 px-3 py-1 rounded-full font-bold">
+                Regional Recognition
+              </span>
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-white font-display">
+                Media Features & Press Coverage
+              </h2>
+            </div>
+
+            <SocialFootprint />
+          </div>
+        </section>
+
+        {/* ========================================================================= */}
+        {/* TESTIMONIALS SECTION */}
+        {/* ========================================================================= */}
+        <section id="testimonials" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+          <div className="space-y-8">
+            <div className="text-center space-y-2 max-w-2xl mx-auto">
+              <span className="text-xs font-mono uppercase tracking-widest text-purple-400 bg-purple-950/40 border border-purple-500/20 px-3 py-1 rounded-full font-bold">
+                Client & Peer Feedback
+              </span>
+              <h2 className="text-2xl sm:text-4xl font-extrabold text-white font-display">
+                Endorsements & Recommendations
+              </h2>
+              <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
+                Verifying technical diligence, proactive communication, and real-world results.
               </p>
             </div>
 
             <TestimonialsSection />
-
-            {/* Social Footprint Live Embed Plugins Block */}
-            <div className="mt-16 pt-16 border-t border-white/5">
-              <SocialFootprint />
-            </div>
-
           </div>
         </section>
 
-
-        {/* ================= BLOG SECTION ================= */}
-        <section id="blog" className="py-16 scroll-mt-24 border-t border-slate-950">
-          <div className="space-y-12">
-            
-            {/* Header */}
-            <div className="text-center space-y-2">
-              <span className="text-[10px] font-mono tracking-widest text-emerald-400 uppercase font-semibold">
-                Tech Guide Articles
+        {/* ========================================================================= */}
+        {/* BLOG & ARTICLES SECTION */}
+        {/* ========================================================================= */}
+        <section id="blog" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+          <div className="space-y-8">
+            <div className="text-center space-y-2 max-w-2xl mx-auto">
+              <span className="text-xs font-mono uppercase tracking-widest text-cyan-400 bg-cyan-950/40 border border-cyan-500/20 px-3 py-1 rounded-full font-bold">
+                Technical Articles
               </span>
-              <h3 className="text-2xl font-bold font-display text-white">
-                MDX Blog Space
-              </h3>
-              <p className="text-xs text-slate-400 max-w-sm mx-auto">
-                Advanced guidelines regarding web security systems, SEO, and AI paradigms.
+              <h2 className="text-2xl sm:text-4xl font-extrabold text-white font-display">
+                Engineering Articles & Guides
+              </h2>
+              <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
+                Practical handbooks on React security, SaaS lead funnels, AI search grounding, and community building.
               </p>
             </div>
 
-            {/* Blog engine rendered */}
             <BlogSection />
-
           </div>
         </section>
 
-
-        {/* ================= CONTACT SECTION ================= */}
-        <section id="contact" className="py-16 scroll-mt-24 border-t border-slate-950">
-          <div className="space-y-12">
-            
-            {/* Header */}
-            <div className="text-center space-y-3">
-              <span className="text-[10px] font-mono tracking-widest text-cyan-400 uppercase font-semibold">
-                Conversion Funnel
+        {/* ========================================================================= */}
+        {/* CONTACT & PROJECT ESTIMATOR SECTION */}
+        {/* ========================================================================= */}
+        <section id="contact" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+          <div className="space-y-8">
+            <div className="text-center space-y-2 max-w-2xl mx-auto">
+              <span className="text-xs font-mono uppercase tracking-widest text-emerald-400 bg-emerald-950/40 border border-emerald-500/20 px-3 py-1 rounded-full font-bold">
+                Get In Touch
               </span>
-              <h3 className="text-2xl font-bold font-display text-white">
-                Let's Build Something Secure Together
-              </h3>
-              <p className="text-xs text-slate-400 max-w-md mx-auto">
-                Initiate a free consultation. Select your target service category below to customize email templates and WhatsApp redirections securely.
+              <h2 className="text-2xl sm:text-4xl font-extrabold text-white font-display">
+                Let's Build Something Exceptional
+              </h2>
+              <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
+                Available for full-time engineering roles, freelance contracts, or technical security audits.
               </p>
             </div>
 
-            {/* Funnel form */}
             <ContactFunnel />
-
           </div>
         </section>
 
       </main>
 
-      {/* ================= FOOTER ================= */}
-      <footer className="relative mt-24 border-t border-white/5 bg-[#050505]/40 backdrop-blur-md pt-14 pb-28 lg:pb-14 text-white/60 text-xs font-mono select-none">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-12 gap-8 mb-10">
-          
-          <div className="md:col-span-5 space-y-4">
-            <span className="text-lg font-bold tracking-tighter uppercase font-sans text-white block">
-              Sami<span className="text-cyan-400">Ubaidi</span>
-            </span>
-            <p className="text-white/55 leading-relaxed max-w-sm text-[11px]">
-              Full-Stack Developer, Cybersecurity Analyst, and Digital Marketer based in Sukkur, Pakistan. Constructing high-conversion SaaS architectures with military-grade threat mitigations.
-            </p>
-            <p className="text-[10px] text-purple-400 font-semibold font-sans">
-              Founder: Ubaidi IT Community • Solutions
-            </p>
-          </div>
-
-          <div className="md:col-span-3 space-y-3">
-            <span className="text-white font-bold text-xs uppercase block tracking-wider font-sans">Digital Hubs</span>
-            <ul className="space-y-2 text-[11px] text-white/45">
-              <li>
-                <a href={PERSONAL_INFO.github} target="_blank" rel="noopener noreferrer" className="hover:text-cyan-400 transition-colors">
-                  GitHub Profile (@UbaidiCoding)
-                </a>
-              </li>
-              <li>
-                <a href={PERSONAL_INFO.linkedin} target="_blank" rel="noopener noreferrer" className="hover:text-purple-400 transition-colors">
-                  LinkedIn Network
-                </a>
-              </li>
-              <li>
-                <a href={PERSONAL_INFO.youtube} target="_blank" rel="noopener noreferrer" className="hover:text-red-400 transition-colors">
-                  YouTube (@CodeWithSami)
-                </a>
-              </li>
-              <li>
-                <a href={PERSONAL_INFO.facebook} target="_blank" rel="noopener noreferrer" className="hover:text-blue-500 transition-colors">
-                  Facebook (@sami.samejo.75)
-                </a>
-              </li>
-              <li>
-                <a href={PERSONAL_INFO.instagram} target="_blank" rel="noopener noreferrer" className="hover:text-pink-400 transition-colors">
-                  Instagram (@sami_ubaidi)
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          <div className="md:col-span-4 space-y-3">
-            <span className="text-white font-bold text-xs uppercase block tracking-wider font-sans">Verified Credentials</span>
-            <ul className="space-y-2 text-[11px] text-white/45">
-              <li className="flex items-center gap-1.5">
-                <Mail className="w-3.5 h-3.5 text-cyan-400" />
-                devsamiubaidi@gmail.com
-              </li>
-              <li>
-                <span className="text-white/30 block">Sukkur Office:</span>
-                Sukkur, Sindh, Pakistan 🇵🇰
-              </li>
-            </ul>
-          </div>
-
-        </div>
-
-        {/* Brand visual dashboard info footer row */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="flex flex-wrap gap-8 items-center">
-            <div className="flex flex-col">
-              <span className="text-[10px] text-white/30 uppercase tracking-widest font-sans font-bold">Based In</span>
-              <span className="text-xs font-semibold text-white/80">Sukkur, Pakistan 🇵🇰</span>
+      {/* ========================================================================= */}
+      {/* FOOTER */}
+      {/* ========================================================================= */}
+      <footer className="border-t border-white/10 bg-[#05060a] py-12 relative z-10 text-xs text-slate-400 font-mono">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-cyan-400 to-purple-600 flex items-center justify-center text-black font-bold font-mono">
+              S
             </div>
-            <div className="hidden sm:block w-[1px] h-6 bg-white/10"></div>
-            <div className="flex flex-col">
-              <span className="text-[10px] text-white/30 uppercase tracking-widest font-sans font-bold">Github Activity</span>
-              <div className="flex gap-1 mt-1">
-                <div className="w-2.5 h-2.5 rounded bg-cyan-950"></div>
-                <div className="w-2.5 h-2.5 rounded bg-cyan-800"></div>
-                <div className="w-2.5 h-2.5 rounded bg-cyan-600"></div>
-                <div className="w-2.5 h-2.5 rounded bg-cyan-400"></div>
-                <div className="w-2.5 h-2.5 rounded bg-white/5"></div>
-                <div className="w-2.5 h-2.5 rounded bg-cyan-400"></div>
-                <div className="w-2.5 h-2.5 rounded bg-purple-500"></div>
-              </div>
+            <div>
+              <p className="text-white font-bold font-display text-sm">
+                Samiullah Samejo (SamiUbaidi)
+              </p>
+              <p className="text-slate-500 text-[11px]">
+                Founder & CEO of Ubaidi IT Community • Sukkur, Sindh 🇵🇰
+              </p>
             </div>
           </div>
 
-          <div className="flex flex-col sm:flex-row items-center gap-4 text-[10px] text-white/40">
-            <p>© {new Date().getFullYear()} SamiUbaidi (Samiullah Samejo). All rights reserved.</p>
-            <div className="flex items-center gap-2">
-              <span className="px-2 py-0.5 rounded bg-white/5 border border-white/10 text-white/40 font-mono">
-                Secure TLS Pipeline
-              </span>
-              <span className="text-cyan-400 font-bold">
-                Pakistan Active Tech 🇵🇰
-              </span>
-            </div>
+          <div className="flex flex-wrap items-center justify-center gap-4 text-xs">
+            <button onClick={() => scrollToSection("hero")} className="hover:text-white transition-colors cursor-pointer">Home</button>
+            <button onClick={() => scrollToSection("about")} className="hover:text-white transition-colors cursor-pointer">About</button>
+            <button onClick={() => scrollToSection("projects")} className="hover:text-white transition-colors cursor-pointer">Projects</button>
+            <button onClick={() => scrollToSection("certifications")} className="hover:text-white transition-colors cursor-pointer">Certificates</button>
+            <button onClick={() => setResumeModalOpen(true)} className="text-cyan-400 hover:text-cyan-300 transition-colors cursor-pointer">ATS Resume</button>
+            <button onClick={() => scrollToSection("contact")} className="hover:text-white transition-colors cursor-pointer">Contact</button>
           </div>
+
+          <p className="text-slate-500 text-[11px] text-center md:text-right">
+            © {new Date().getFullYear()} Samiullah Samejo. Built with React & Vite. All SEO & schema rights preserved.
+          </p>
         </div>
       </footer>
+
+      {/* 4. Interactive ATS Resume Modal */}
+      <ResumeModal
+        isOpen={resumeModalOpen}
+        onClose={() => setResumeModalOpen(false)}
+      />
     </div>
   );
 }

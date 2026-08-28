@@ -1,13 +1,14 @@
-import { useState, useEffect } from "react";
-import { Terminal, Download, ArrowUp, Menu, X, Landmark, Code2, Shield, CalendarDays } from "lucide-react";
+import React, { useState, useEffect } from "react";
+import { Terminal, Download, ArrowUp, Menu, X, Landmark, Code2, Shield, CalendarDays, FileText, Sparkles } from "lucide-react";
 import { PERSONAL_INFO } from "../data/portfolioData";
 
 interface NavProps {
   onNavigate: (sectionId: string) => void;
   activeSection: string;
+  onOpenResume: () => void;
 }
 
-export default function Navigation({ onNavigate, activeSection }: NavProps) {
+export default function Navigation({ onNavigate, activeSection, onOpenResume }: NavProps) {
   const [scrollProgress, setScrollProgress] = useState(0);
   const [showBackToTop, setShowBackToTop] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -15,24 +16,21 @@ export default function Navigation({ onNavigate, activeSection }: NavProps) {
   const navLinks = [
     { id: "hero", label: "Home" },
     { id: "about", label: "About" },
-    { id: "education", label: "Education" },
-    { id: "certifications", label: "Certifications" },
+    { id: "skills", label: "Skills" },
     { id: "projects", label: "Projects" },
+    { id: "certifications", label: "Certs" },
     { id: "experience", label: "Experience" },
-    { id: "testimonials", label: "Reviews" },
+    { id: "education", label: "Education" },
     { id: "blog", label: "Blog" },
-    { id: "contact", label: "Inquire" },
+    { id: "contact", label: "Hire Me" },
   ];
 
   useEffect(() => {
     const handleScroll = () => {
-      // 1. Progress calculation
       const totalScroll = document.documentElement.scrollHeight - window.innerHeight;
       if (totalScroll > 0) {
         setScrollProgress((window.scrollY / totalScroll) * 100);
       }
-
-      // 2. Back to top visibility
       setShowBackToTop(window.scrollY > 400);
     };
 
@@ -45,7 +43,6 @@ export default function Navigation({ onNavigate, activeSection }: NavProps) {
     onNavigate(id);
     const element = document.getElementById(id);
     if (element) {
-      // Offset for sticky nav
       const offset = 80;
       const bodyRect = document.body.getBoundingClientRect().top;
       const elementRect = element.getBoundingClientRect().top;
@@ -61,47 +58,52 @@ export default function Navigation({ onNavigate, activeSection }: NavProps) {
 
   return (
     <>
-      {/* 1. Glowing Scroll progress line */}
+      {/* 1. Ultra-thin glowing Scroll progress line */}
       <div
         id="scroll-progress-line"
-        className="fixed top-0 left-0 h-[3px] bg-gradient-to-r from-cyan-400 via-purple-500 to-emerald-400 z-50 transition-all duration-100"
+        className="fixed top-0 left-0 h-[2.5px] bg-gradient-to-r from-cyan-400 via-purple-500 to-emerald-400 z-50 transition-all duration-75"
         style={{ width: `${scrollProgress}%` }}
       />
 
       {/* 2. Top Glassmorphic Sticky Header */}
       <header
         id="main-sticky-navigation"
-        className="fixed top-0 inset-x-0 h-16 bg-[#050505]/75 border-b border-white/10 backdrop-blur-md z-40 transition-all duration-300"
+        className="fixed top-0 inset-x-0 h-16 bg-[#07080d]/80 border-b border-white/10 backdrop-blur-xl z-40 transition-all duration-300"
       >
         <div className="max-w-7xl mx-auto h-full px-4 sm:px-6 lg:px-8 flex items-center justify-between">
           
-          {/* Logo with gradient and text matching Elegant Dark */}
+          {/* Brand Logo */}
           <div
             onClick={() => triggerScroll("hero")}
-            className="flex items-center gap-3 cursor-pointer group"
+            className="flex items-center gap-3 cursor-pointer group select-none"
           >
-            <div className="w-9 h-9 bg-gradient-to-br from-cyan-400 to-purple-600 rounded-lg flex items-center justify-center font-bold text-black font-sans shadow-lg shadow-cyan-500/10">S</div>
+            <div className="w-9 h-9 bg-gradient-to-br from-cyan-400 to-purple-600 rounded-xl flex items-center justify-center font-bold text-black font-mono shadow-md group-hover:scale-105 transition-transform">
+              S
+            </div>
             <div>
-              <span className="text-lg font-bold tracking-tighter uppercase font-sans text-white group-hover:text-cyan-400 transition-colors">
-                Sami<span className="text-cyan-400">Ubaidi</span>
-              </span>
-              <span className="text-[8px] font-mono block text-white/40 tracking-widest font-bold group-hover:text-purple-400 transition-colors">
-                FULL-STACK • SECURE
+              <div className="flex items-center gap-1.5">
+                <span className="text-base sm:text-lg font-bold tracking-tight uppercase font-display text-white group-hover:text-cyan-400 transition-colors">
+                  Sami<span className="text-cyan-400">Ubaidi</span>
+                </span>
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" title="Available for hire" />
+              </div>
+              <span className="text-[9px] font-mono block text-slate-400 tracking-wider font-semibold group-hover:text-purple-400 transition-colors">
+                FULL-STACK & MOBILE DEV
               </span>
             </div>
           </div>
 
-          {/* Desktop Links */}
+          {/* Desktop Nav Links */}
           <nav className="hidden lg:flex items-center gap-1 p-1 bg-white/5 border border-white/10 backdrop-blur-md rounded-xl">
             {navLinks.map((link) => (
               <button
                 key={link.id}
                 id={`nav-link-${link.id}`}
                 onClick={() => triggerScroll(link.id)}
-                className={`px-3 py-1.5 rounded-lg text-xs font-mono font-medium transition-all cursor-pointer ${
+                className={`px-3 py-1.5 rounded-lg text-xs font-mono transition-all cursor-pointer ${
                   activeSection === link.id
-                    ? "text-cyan-400 bg-white/5 border border-white/10"
-                    : "text-white/60 hover:text-white"
+                    ? "bg-white/15 text-white font-bold shadow-sm"
+                    : "text-slate-400 hover:text-white"
                 }`}
               >
                 {link.label}
@@ -109,111 +111,88 @@ export default function Navigation({ onNavigate, activeSection }: NavProps) {
             ))}
           </nav>
 
-          {/* Action button */}
-          <div className="hidden lg:flex items-center gap-3">
+          {/* Right Actions */}
+          <div className="flex items-center gap-2 sm:gap-3">
+            {/* Resume Button */}
             <button
-              id="header-cta-booking"
-              onClick={() => triggerScroll("contact")}
-              className="px-5 py-2 bg-white/5 border border-white/10 backdrop-blur-md rounded-full text-xs font-semibold hover:bg-white/10 text-white transition-all cursor-pointer select-none"
+              onClick={onOpenResume}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/15 border border-white/12 text-xs font-mono text-cyan-300 hover:text-white transition-all cursor-pointer"
             >
-              Reserve Consultation
+              <FileText className="w-3.5 h-3.5" />
+              <span className="hidden sm:inline">ATS</span> Resume
+            </button>
+
+            {/* Inquire CTA */}
+            <button
+              onClick={() => triggerScroll("contact")}
+              className="hidden sm:flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-black font-bold text-xs font-mono transition-all shadow-md cursor-pointer"
+            >
+              <Sparkles className="w-3.5 h-3.5" />
+              Hire Me
+            </button>
+
+            {/* Mobile Menu Toggle */}
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="lg:hidden p-2 rounded-xl bg-white/5 border border-white/10 text-slate-300 hover:text-white transition-colors cursor-pointer"
+              aria-label="Toggle navigation menu"
+            >
+              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
           </div>
-
-          {/* Hamburger Mobile Toggle */}
-          <button
-            id="mobile-hamburger-toggle"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="lg:hidden p-2 text-slate-400 hover:text-white transition-colors"
-          >
-            {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-          </button>
         </div>
+
+        {/* Mobile Dropdown Drawer */}
+        {mobileMenuOpen && (
+          <div className="lg:hidden bg-[#0a0b12]/95 border-b border-white/15 backdrop-blur-2xl px-4 py-4 space-y-2 animate-fade-in shadow-2xl">
+            <div className="grid grid-cols-2 gap-2">
+              {navLinks.map((link) => (
+                <button
+                  key={link.id}
+                  onClick={() => triggerScroll(link.id)}
+                  className={`p-2.5 rounded-xl text-left text-xs font-mono transition-all ${
+                    activeSection === link.id
+                      ? "bg-cyan-500 text-black font-bold"
+                      : "bg-white/5 text-slate-300 hover:bg-white/10"
+                  }`}
+                >
+                  {link.label}
+                </button>
+              ))}
+            </div>
+
+            <div className="pt-2 border-t border-white/10 flex items-center justify-between gap-2">
+              <button
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  onOpenResume();
+                }}
+                className="w-full py-2.5 rounded-xl bg-white/10 border border-white/15 text-xs font-mono text-cyan-300 flex items-center justify-center gap-1.5"
+              >
+                <FileText className="w-4 h-4" /> View Resume
+              </button>
+              <button
+                onClick={() => triggerScroll("contact")}
+                className="w-full py-2.5 rounded-xl bg-cyan-500 text-black font-bold text-xs font-mono flex items-center justify-center gap-1.5"
+              >
+                <Sparkles className="w-4 h-4" /> Contact
+              </button>
+            </div>
+          </div>
+        )}
       </header>
 
-      {/* 3. Mobile Navigation Sidebar Drawer */}
-      {mobileMenuOpen && (
-        <div id="mobile-navigation-overlay" className="fixed inset-0 bg-black/95 z-30 flex flex-col pt-24 px-6 animate-fade-in lg:hidden">
-          <div className="space-y-3">
-            {navLinks.map((link) => (
-              <button
-                key={link.id}
-                id={`mobile-nav-link-${link.id}`}
-                onClick={() => triggerScroll(link.id)}
-                className={`w-full py-3.5 px-4 rounded-xl text-left text-sm font-mono tracking-wide border transition-all ${
-                  activeSection === link.id
-                    ? "bg-purple-950/40 border-purple-500/30 text-purple-300"
-                    : "bg-stone-950/30 border-slate-900 text-slate-400"
-                }`}
-              >
-                {link.label}
-              </button>
-            ))}
-            
-            <button
-              id="mobile-menu-consult"
-              onClick={() => triggerScroll("contact")}
-              className="w-full py-4 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-mono text-xs font-bold transition-all text-center mt-6 block cursor-pointer"
-            >
-              Book Consultation Session Now
-            </button>
-          </div>
-        </div>
-      )}
-
-      {/* 4. Scroll Back-To-Top button */}
+      {/* Back to Top floating button */}
       {showBackToTop && (
         <button
-          id="back-to-top-button"
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-          className="fixed bottom-24 right-6 w-10 h-10 rounded-full bg-cyan-950/80 hover:bg-cyan-900 border border-cyan-500/30 hover:border-cyan-400/50 text-cyan-400 flex items-center justify-center shadow-lg hover:shadow-[0_0_15px_rgba(6,182,212,0.3)] hover:-translate-y-1 transition-all z-45 cursor-pointer"
+          className="fixed bottom-6 right-6 z-40 w-11 h-11 rounded-2xl bg-cyan-500 text-black shadow-xl hover:scale-110 active:scale-95 transition-all flex items-center justify-center cursor-pointer font-bold border border-cyan-300"
           title="Back to top"
+          aria-label="Scroll back to top"
         >
-          <ArrowUp className="w-4 h-4" />
+          <ArrowUp className="w-5 h-5" />
         </button>
       )}
-
-      {/* 5. Mobile Dynamic Sticky Bottom CTA Deck */}
-      <div
-        id="sticky-mobile-dock"
-        className="fixed bottom-0 inset-x-0 h-16 bg-slate-950/90 border-t border-slate-900/80 backdrop-blur-md z-40 flex items-center justify-around px-4 lg:hidden"
-      >
-        <button
-          id="mobile-footer-home"
-          onClick={() => triggerScroll("hero")}
-          className="flex flex-col items-center justify-center text-slate-400 hover:text-cyan-400 text-[10px] font-mono gap-1 active:scale-95 transition-transform"
-        >
-          <Terminal className="w-4 h-4 text-cyan-400" />
-          Home
-        </button>
-
-        <button
-          id="mobile-footer-certs"
-          onClick={() => triggerScroll("certifications")}
-          className="flex flex-col items-center justify-center text-slate-400 hover:text-purple-400 text-[10px] font-mono gap-1 active:scale-95 transition-transform"
-        >
-          <Landmark className="w-4 h-4 text-purple-400" />
-          Certs
-        </button>
-
-        <button
-          id="mobile-footer-projects"
-          onClick={() => triggerScroll("projects")}
-          className="flex flex-col items-center justify-center text-slate-400 hover:text-emerald-400 text-[10px] font-mono gap-1 active:scale-95 transition-transform"
-        >
-          <Code2 className="w-4 h-4 text-emerald-400" />
-          Code
-        </button>
-
-        <button
-          id="mobile-footer-contact"
-          onClick={() => triggerScroll("contact")}
-          className="flex flex-col items-center justify-center text-slate-400 hover:text-amber-400 text-[10px] font-mono gap-1 active:scale-95 transition-transform"
-        >
-          <CalendarDays className="w-4 h-4 text-amber-400" />
-          Book
-        </button>
-      </div>
     </>
   );
 }

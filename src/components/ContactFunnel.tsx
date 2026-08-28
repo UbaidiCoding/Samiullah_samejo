@@ -1,45 +1,33 @@
 import React, { useState } from "react";
-import { Mail, MessageSquare, Sparkles, Send, CheckCircle2, ShieldAlert } from "lucide-react";
+import { Mail, MessageSquare, Sparkles, Send, CheckCircle2, ShieldCheck, Phone, MapPin, Copy, Check, ExternalLink } from "lucide-react";
 import { PERSONAL_INFO } from "../data/portfolioData";
 
-type ServiceType = "Full-Stack Development" | "Cybersecurity Consultation" | "Digital Marketing" | "Mentorship & Consulting";
+type ServiceType = "Full-Stack Web App" | "Android Mobile App (Kotlin)" | "Cybersecurity & Security Audit" | "Technical Mentorship / Consulting";
 
 export default function ContactFunnel() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
+    budget: "$500 - $2,000",
+    timeline: "2-4 weeks",
     message: "",
-    serviceType: "Full-Stack Development" as ServiceType,
+    serviceType: "Full-Stack Web App" as ServiceType,
   });
 
   const [submitted, setSubmitted] = useState(false);
-
-  // Prefilled service descriptions to prompt clients with ideas
-  const getServiceBrief = (type: ServiceType) => {
-    switch (type) {
-      case "Full-Stack Development":
-        return "Custom SaaS apps, React/Node codebases, database setups, and API structures.";
-      case "Cybersecurity Consultation":
-        return "OWASP baseline checks, vulnerability scanning, security audits, and penetration testing.";
-      case "Digital Marketing":
-        return "Conversion-driven funnel development, landing page optimizations, and technical SEO structure.";
-      case "Mentorship & Consulting":
-        return "Direct remote 1-on-1 coding tutorials, certification guidance, and portfolio audits.";
-    }
-  };
+  const [copiedEmail, setCopiedEmail] = useState(false);
 
   const cleanMessageValue = (val: string) => {
-    return val.trim() || "No custom message provided. Looking forward to talking soon!";
+    return val.trim() || "Let's discuss project scope, milestones, and deliverable targets.";
   };
 
   const handleBookWithEmail = (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.name || !formData.email) return;
 
-    // Build the mailto link structure
-    const emailSubject = encodeURIComponent(`[Appointment Request] ${formData.serviceType} - ${formData.name}`);
+    const emailSubject = encodeURIComponent(`[Project Inquiry] ${formData.serviceType} - ${formData.name}`);
     const emailBody = encodeURIComponent(
-      `Hello Samiullah,\n\nI hope you are doing well.\n\nI am contacting you to book a consult appointment for "${formData.serviceType}".\n\nClient Details:\n- Name: ${formData.name}\n- Contact Email: ${formData.email}\n- Inquired Service: ${formData.serviceType}\n\nProject Scope & Message:\n${cleanMessageValue(formData.message)}\n\nPlease let me know your availability for a discovery call.\n\nWarm regards,\n${formData.name}`
+      `Hello Samiullah,\n\nI would like to discuss an opportunity / project for: ${formData.serviceType}.\n\nClient / Recruiter Details:\n- Name: ${formData.name}\n- Contact Email: ${formData.email}\n- Estimated Budget: ${formData.budget}\n- Estimated Timeline: ${formData.timeline}\n\nProject Scope & Goals:\n${cleanMessageValue(formData.message)}\n\nPlease let me know your availability for a brief discovery call.\n\nWarm regards,\n${formData.name}`
     );
 
     const mailtoUrl = `mailto:${PERSONAL_INFO.email}?subject=${emailSubject}&body=${emailBody}`;
@@ -50,179 +38,258 @@ export default function ContactFunnel() {
   const handleBookWithWhatsApp = () => {
     if (!formData.name || !formData.email) return;
 
-    // Prefill direct text message
-    const formattedText = `Hello Samiullah! My name is ${formData.name} (${formData.email}). I am writing to book an appointment for your ${formData.serviceType} services. 
+    const formattedText = `Hello Samiullah! My name is ${formData.name} (${formData.email}). I am reaching out regarding your ${formData.serviceType} services. 
 
+Budget: ${formData.budget}
+Timeline: ${formData.timeline}
 Project Brief: ${cleanMessageValue(formData.message)}
 
-Let's schedule a brief conversation on this!`;
+Looking forward to connecting!`;
 
-    const whatsappUrl = `https://wa.me/923053424699?text=${encodeURIComponent(formattedText)}`; // Samiullah Pakistan routing number
+    // WhatsApp routing using Samiullah's official phone +92 342 0372799
+    const whatsappUrl = `https://wa.me/923420372799?text=${encodeURIComponent(formattedText)}`;
     window.open(whatsappUrl, "_blank");
     setSubmitted(true);
   };
 
-  return (
-    <div id="lead-conversion-funnel" className="max-w-2xl mx-auto">
-      <div className="glass-morph border border-slate-800/80 p-6 md:p-8 rounded-3xl relative overflow-hidden backdrop-blur-xl bg-black/50">
-        
-        {/* Subtle decorative glow */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-48 h-1 bg-gradient-to-r from-cyan-500/20 via-purple-500/30 to-emerald-500/20 blur-md" />
+  const copyEmail = () => {
+    navigator.clipboard.writeText(PERSONAL_INFO.email);
+    setCopiedEmail(true);
+    setTimeout(() => setCopiedEmail(false), 2000);
+  };
 
-        <div className="flex items-center gap-2 mb-6">
-          <Sparkles className="w-5 h-5 text-purple-400 animate-pulse" />
-          <h3 className="text-lg font-bold text-white tracking-tight font-display">
-            Interactive Project Builder & Appointment Funnel
-          </h3>
+  return (
+    <div id="lead-conversion-funnel" className="max-w-4xl mx-auto space-y-8">
+      {/* Direct Contact Cards Row */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div className="glass-morph p-4 rounded-2xl border border-white/10 flex items-center gap-3">
+          <div className="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 flex items-center justify-center">
+            <Mail className="w-5 h-5" />
+          </div>
+          <div className="flex-1 min-w-0">
+            <span className="text-[10px] font-mono text-slate-400 block uppercase">Direct Email</span>
+            <span className="text-xs font-mono text-white font-semibold truncate block">
+              {PERSONAL_INFO.email}
+            </span>
+          </div>
+          <button
+            onClick={copyEmail}
+            className="p-2 rounded-lg bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white transition-colors cursor-pointer"
+            title="Copy email"
+          >
+            {copiedEmail ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+          </button>
+        </div>
+
+        <div className="glass-morph p-4 rounded-2xl border border-white/10 flex items-center gap-3">
+          <div className="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center">
+            <Phone className="w-5 h-5" />
+          </div>
+          <div className="flex-1 min-w-0">
+            <span className="text-[10px] font-mono text-slate-400 block uppercase">Phone & WhatsApp</span>
+            <a
+              href="https://wa.me/923420372799"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xs font-mono text-white font-semibold hover:text-emerald-400 transition-colors block"
+            >
+              +92 342 0372799
+            </a>
+          </div>
+        </div>
+
+        <div className="glass-morph p-4 rounded-2xl border border-white/10 flex items-center gap-3">
+          <div className="w-10 h-10 rounded-xl bg-purple-500/10 border border-purple-500/20 text-purple-400 flex items-center justify-center">
+            <MapPin className="w-5 h-5" />
+          </div>
+          <div className="flex-1 min-w-0">
+            <span className="text-[10px] font-mono text-slate-400 block uppercase">HQ Location</span>
+            <span className="text-xs font-mono text-white font-semibold block">
+              Sukkur, Sindh, Pakistan 🇵🇰
+            </span>
+          </div>
+        </div>
+      </div>
+
+      {/* Main Interactive Form */}
+      <div className="glass-morph border border-white/12 p-6 sm:p-8 rounded-3xl relative overflow-hidden backdrop-blur-xl bg-[#090b14]/80 shadow-2xl">
+        <div className="flex items-center justify-between border-b border-white/10 pb-5 mb-6">
+          <div className="flex items-center gap-2.5">
+            <Sparkles className="w-5 h-5 text-cyan-400 animate-pulse" />
+            <div>
+              <h3 className="text-lg font-bold text-white tracking-tight font-display">
+                Project Estimator & Priority Consultation
+              </h3>
+              <p className="text-xs text-slate-400">
+                Choose service scope and dispatch your direct inquiry with 1-click
+              </p>
+            </div>
+          </div>
+          <span className="text-[10px] font-mono font-semibold px-2.5 py-1 rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 hidden sm:inline-block">
+            ⚡ Typical Response &lt; 4 Hours
+          </span>
         </div>
 
         {submitted ? (
-          <div className="text-center py-12 animate-fade-in">
-            <div className="w-12 h-12 bg-purple-950/40 border border-purple-500/20 text-purple-400 rounded-full flex items-center justify-center mx-auto mb-4 shadow-[0_0_15px_rgba(168,85,247,0.2)]">
-              <CheckCircle2 className="w-6 h-6 animate-pulse" />
+          <div className="text-center py-10 animate-fade-in space-y-4">
+            <div className="w-14 h-14 bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 rounded-2xl flex items-center justify-center mx-auto shadow-lg">
+              <CheckCircle2 className="w-8 h-8" />
             </div>
-            <h4 className="text-base font-bold text-white font-display mb-2">
-              Funnel Action Dispatched!
-            </h4>
-            <p className="text-xs text-slate-300 max-w-md mx-auto leading-relaxed mb-6">
-              Thank you {formData.name}, your structured inquiry has been loaded. Your system has launched direct email and WhatsApp message links. 
-            </p>
+            <div>
+              <h4 className="text-lg font-bold text-white font-display">
+                Inquiry Successfully Prepared!
+              </h4>
+              <p className="text-xs text-slate-300 max-w-md mx-auto mt-1 leading-relaxed">
+                Thank you {formData.name}, your structured inquiry has opened via your selected client. Samiullah will respond within 24 hours.
+              </p>
+            </div>
 
-            <div className="flex flex-wrap items-center justify-center gap-3">
+            <div className="pt-4">
               <button
-                id="reset-form-success"
-                onClick={() => {
-                  setSubmitted(false);
-                  setFormData({ name: "", email: "", message: "", serviceType: "Full-Stack Development" });
-                }}
-                className="px-4 py-2 border border-slate-800 hover:border-slate-700 bg-slate-950/60 rounded-xl text-xs font-mono text-slate-300 hover:text-white transition-colors cursor-pointer"
+                onClick={() => setSubmitted(false)}
+                className="px-5 py-2 border border-white/15 hover:border-white/25 bg-white/5 rounded-xl text-xs font-mono text-slate-300 hover:text-white transition-colors cursor-pointer"
               >
-                Inquire Another Service
-              </button>
-              
-              <button
-                id="direct-whatsapp-redirect"
-                onClick={handleBookWithWhatsApp}
-                className="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 rounded-xl text-xs font-mono text-white flex items-center gap-1.5 transition-colors cursor-pointer"
-              >
-                <MessageSquare className="w-4 h-4" />
-                Launch WhatsApp Line
+                Send Another Message
               </button>
             </div>
           </div>
         ) : (
           <form onSubmit={handleBookWithEmail} className="space-y-5">
-            {/* Service Selection Card Tabs */}
+            {/* Service Type Selection */}
             <div>
-              <label className="block text-[10px] font-mono font-semibold text-slate-400 uppercase tracking-widest mb-2.5">
-                1. Select Desired Service Category
+              <label className="block text-xs font-mono text-slate-300 font-semibold mb-2">
+                1. Select Desired Service / Role
               </label>
-              
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                {(["Full-Stack Development", "Cybersecurity Consultation", "Digital Marketing", "Mentorship & Consulting"] as const).map((service) => (
-                  <div
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                {(["Full-Stack Web App", "Android Mobile App (Kotlin)", "Cybersecurity & Security Audit", "Technical Mentorship / Consulting"] as ServiceType[]).map((service) => (
+                  <button
                     key={service}
-                    id={`service-select-${service.replace(/\W/g, "-").toLowerCase()}`}
+                    type="button"
                     onClick={() => setFormData({ ...formData, serviceType: service })}
-                    className={`cursor-pointer p-4 rounded-xl border text-left transition-all duration-200 ${
+                    className={`p-3 rounded-xl border text-left text-xs font-mono transition-all cursor-pointer ${
                       formData.serviceType === service
-                        ? "bg-purple-950/20 border-purple-500/50 shadow-[0_0_15px_rgba(168,85,247,0.06)]"
-                        : "bg-black/30 border-slate-800 hover:border-slate-700 hover:bg-black/50"
+                        ? "bg-cyan-500/15 border-cyan-500 text-white font-bold shadow-sm"
+                        : "bg-white/[0.02] border-white/10 text-slate-400 hover:border-white/20 hover:text-slate-200"
                     }`}
                   >
-                    <p className={`text-xs font-bold transition-all ${
-                      formData.serviceType === service ? "text-purple-300" : "text-white"
-                    }`}>
-                      {service}
-                    </p>
-                    <p className="text-[10px] text-slate-400 mt-1.5 leading-relaxed">
-                      {getServiceBrief(service)}
-                    </p>
-                  </div>
+                    <div className="flex items-center justify-between">
+                      <span>{service}</span>
+                      {formData.serviceType === service && (
+                        <CheckCircle2 className="w-4 h-4 text-cyan-400" />
+                      )}
+                    </div>
+                  </button>
                 ))}
               </div>
             </div>
 
-            {/* Input fields */}
+            {/* Client Details Row */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-[10px] font-mono text-slate-400 uppercase tracking-wider mb-1.5">
-                  Your Full Name
+                <label className="block text-xs font-mono text-slate-300 font-semibold mb-1.5">
+                  2. Your Full Name *
                 </label>
                 <input
-                  id="client-name-input"
                   type="text"
                   required
-                  placeholder="e.g. Richard Hendricks"
+                  placeholder="e.g. Alex Henderson"
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="w-full px-4 py-2 bg-black/60 border border-slate-800 rounded-xl text-xs text-white placeholder-slate-600 focus:outline-none focus:border-purple-500/50 font-mono transition-colors"
+                  className="w-full bg-[#0c0d14] border border-white/10 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder:text-slate-500 focus:outline-none focus:border-cyan-500/50 font-mono transition-colors"
                 />
               </div>
 
               <div>
-                <label className="block text-[10px] font-mono text-slate-400 uppercase tracking-wider mb-1.5">
-                  Your Best Contact Email
+                <label className="block text-xs font-mono text-slate-300 font-semibold mb-1.5">
+                  3. Your Email Address *
                 </label>
                 <input
-                  id="client-email-input"
                   type="email"
                   required
-                  placeholder="e.g. richard@piedpiper.com"
+                  placeholder="alex@company.com"
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="w-full px-4 py-2 bg-black/60 border border-slate-800 rounded-xl text-xs text-white placeholder-slate-600 focus:outline-none focus:border-purple-500/50 font-mono transition-colors"
+                  className="w-full bg-[#0c0d14] border border-white/10 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder:text-slate-500 focus:outline-none focus:border-cyan-500/50 font-mono transition-colors"
                 />
               </div>
             </div>
 
-            {/* Message */}
+            {/* Scope / Budget / Timeline Row */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-xs font-mono text-slate-300 font-semibold mb-1.5">
+                  4. Estimated Budget Range
+                </label>
+                <select
+                  value={formData.budget}
+                  onChange={(e) => setFormData({ ...formData, budget: e.target.value })}
+                  className="w-full bg-[#0c0d14] border border-white/10 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-cyan-500/50 font-mono transition-colors cursor-pointer"
+                >
+                  <option value="$300 - $1,000">$300 - $1,000 (Small / Component / Audit)</option>
+                  <option value="$1,000 - $3,000">$1,000 - $3,000 (Complete Full-Stack Web / App)</option>
+                  <option value="$3,000 - $8,000+">$3,000 - $8,000+ (Enterprise / SaaS Scale)</option>
+                  <option value="Full-Time Employment">Full-Time / Contract Employment</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-xs font-mono text-slate-300 font-semibold mb-1.5">
+                  5. Target Timeline
+                </label>
+                <select
+                  value={formData.timeline}
+                  onChange={(e) => setFormData({ ...formData, timeline: e.target.value })}
+                  className="w-full bg-[#0c0d14] border border-white/10 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-cyan-500/50 font-mono transition-colors cursor-pointer"
+                >
+                  <option value="Immediate / Urgent (1-2 weeks)">Immediate / Urgent (1-2 weeks)</option>
+                  <option value="Standard (2-4 weeks)">Standard (2-4 weeks)</option>
+                  <option value="Flexible (1-2 months)">Flexible (1-2 months)</option>
+                </select>
+              </div>
+            </div>
+
+            {/* Message Area */}
             <div>
-              <label className="block text-[10px] font-mono text-slate-400 uppercase tracking-wider mb-1.5">
-                Brief Project Scope or Inquiry (Optional)
+              <label className="block text-xs font-mono text-slate-300 font-semibold mb-1.5">
+                6. Project Goals & Context
               </label>
               <textarea
-                id="client-message-input"
                 rows={3}
-                placeholder="Briefly cover details like targets, specifications, timeframes or mentoring request..."
+                placeholder="Briefly describe your objectives, existing codebase, or timeline requirements..."
                 value={formData.message}
                 onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                className="w-full px-4 py-2 bg-black/60 border border-slate-800 rounded-xl text-xs text-white placeholder-slate-600 focus:outline-none focus:border-purple-500/50 font-mono transition-colors resize-none leading-relaxed"
+                className="w-full bg-[#0c0d14] border border-white/10 rounded-xl p-3 text-xs text-white placeholder:text-slate-500 focus:outline-none focus:border-cyan-500/50 font-mono transition-colors resize-none"
               />
             </div>
 
-            {/* Actions Panel */}
-            <div className="pt-3 border-t border-slate-900/60 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
-              <span className="text-[10px] font-mono text-slate-500 leading-snug max-w-xs flex items-center gap-1.5">
-                <ShieldAlert className="w-4 h-4 text-purple-500/60 shrink-0" />
-                This secure form is safe to use. Redirects bypass third-party logging engines entirely.
+            {/* Action Buttons */}
+            <div className="pt-2 flex flex-col sm:flex-row items-center justify-between gap-3">
+              <span className="text-[11px] font-mono text-slate-400 flex items-center gap-1.5">
+                <ShieldCheck className="w-3.5 h-3.5 text-cyan-400" />
+                Zero Spam • Direct Personal Routing
               </span>
 
-              <div className="flex flex-wrap items-center gap-2.5">
-                {/* Email dispatch */}
+              <div className="flex items-center gap-2 w-full sm:w-auto">
                 <button
-                  id="book-via-email-cta"
-                  type="submit"
-                  className="px-4 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-mono text-xs font-bold flex items-center justify-center gap-1.5 transition-all shadow-[0_4px_15px_rgba(168,85,247,0.3)] cursor-pointer"
-                >
-                  <Mail className="w-3.5 h-3.5" />
-                  E-Mail Proposal
-                </button>
-
-                {/* WhatsApp dispatch */}
-                <button
-                  id="book-via-whatsapp-cta"
                   type="button"
                   onClick={handleBookWithWhatsApp}
                   disabled={!formData.name || !formData.email}
-                  className="px-4 py-2.5 rounded-xl bg-slate-950/80 border border-slate-800 hover:bg-emerald-950/20 hover:border-emerald-500/30 disabled:opacity-50 disabled:hover:bg-slate-950/80 disabled:hover:border-slate-800 text-emerald-400 hover:text-emerald-300 font-mono text-xs font-semibold flex items-center justify-center gap-1.5 transition-all cursor-pointer"
+                  className="flex-1 sm:flex-initial px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 disabled:opacity-50 text-white font-bold text-xs font-mono flex items-center justify-center gap-1.5 transition-all shadow-md cursor-pointer"
                 >
-                  <MessageSquare className="w-3.5 h-3.5" />
-                  WhatsApp Direct
+                  <MessageSquare className="w-4 h-4" />
+                  WhatsApp
+                </button>
+
+                <button
+                  type="submit"
+                  disabled={!formData.name || !formData.email}
+                  className="flex-1 sm:flex-initial px-5 py-2.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 disabled:opacity-50 text-black font-bold text-xs font-mono flex items-center justify-center gap-1.5 transition-all shadow-md cursor-pointer"
+                >
+                  <Send className="w-4 h-4" />
+                  Send Structured Email
                 </button>
               </div>
             </div>
-            
           </form>
         )}
       </div>
