@@ -1,463 +1,279 @@
-import { Certificate, BlogPost, ExperienceItem, EducationItem, Testimonial } from "../types";
+import {
+  ProjectItem,
+  SkillGroup,
+  CertificateItem,
+  ExperienceItem,
+  EducationItem,
+  ArticleItem,
+  MediaFeatureItem,
+} from "../types";
 
 export const PERSONAL_INFO = {
   name: "Samiullah Samejo",
-  nickName: "SamiUbaidi",
-  githubUsername: "UbaidiCoding",
-  location: "Sukkur, Sindh, Pakistan 🇵🇰",
+  brand: "SamiUbaidi",
+  title: "Samiullah Samejo - Full-Stack & Android Developer",
+  valueStatement:
+    "Building responsive full-stack web platforms, native Android applications in Kotlin, and AI-assisted workflows with clean architecture and verified reliability.",
+  location: "Sukkur, Sindh, Pakistan",
   email: "devsamiubaidi@gmail.com",
-  github: "https://github.com/UbaidiCoding",
+  phone: "+92 342 0372799",
+  whatsappUrl: "https://wa.me/923420372799",
+  github: "https://github.com/ubaidicoding",
   linkedin: "https://linkedin.com/in/devsamiubaidi",
-  youtube: "https://youtube.com/@CodeWithSamiUbaidi", // YouTube handle
-  facebook: "https://www.facebook.com/sami.samejo.75/",
-  instagram: "https://www.instagram.com/sami_ubaidi/",
-  bio: "Highly accomplished Full-Stack Developer, Cybersecurity Analyst, and Digital Marketer. Founder of Ubaidi IT Community, Ubaidi IT Solutions, and CodeWithSamiUbaidi. Dedicated to building secure, scalable, and conversion-optimized digital products for global businesses.",
-  summary: "A versatile computer systems practitioner and security analyst with deep experience in designing performant full-stack systems, deploying secure network architectures, and implementing technical SEO structures. Passionate about empowering the next generation of Pakistan's tech talent through active mentorship and accessible community learning.",
+  avatarUrl: "/profile.jpg",
+  // True proof stats only:
+  proofStats: [
+    { label: "Projects & Repositories", value: "40+" },
+    { label: "App Downloads (StepFit Pro)", value: "1,000+" },
+    { label: "Verified Certifications", value: "6" },
+  ],
 };
 
-export const CERTIFICATIONS: Certificate[] = [
+export const FEATURED_PROJECTS: ProjectItem[] = [
   {
-    id: "cert-1",
-    title: "Canva Social Media Design",
-    issuer: "Coursera",
-    issueDate: "2024",
-    verificationUrl: "https://coursera.org/verify/70SGFEAM1XT7",
-    credentialId: "70SGFEAM1XT7",
-    category: "Design",
+    id: "stepfit-pro",
+    name: "StepFit Pro",
+    outcome: "1,000+ Google Play downloads with native step detection and cloud sync",
+    description:
+      "Native Android health and fitness application featuring hardware step counting, workout tracking, offline caching, and real-time synchronization.",
+    techStack: ["Kotlin", "Jetpack Compose", "Firebase", "Android SDK"],
+    html_url: "https://github.com/ubaidicoding/stepfit-pro-android",
+    homepage: "https://play.google.com/store/apps/details?id=com.samiubaidi.stepfitpro",
+    category: "Android",
   },
   {
-    id: "cert-2",
-    title: "Jira Automation",
-    issuer: "Coursera",
-    issueDate: "2024",
-    verificationUrl: "https://coursera.org/verify/889PB9HXWPSW",
-    credentialId: "889PB9HXWPSW",
-    category: "Development",
+    id: "mb2kb",
+    name: "MB2KB Web Utility",
+    outcome: "Client-side image compression, image-to-PDF conversion, and background removal",
+    description:
+      "Fast in-browser file compression and document transformation tool running client-side with Web Workers for instantaneous processing with zero server load.",
+    techStack: ["React", "Next.js", "TypeScript", "Tailwind CSS"],
+    html_url: "https://github.com/ubaidicoding/mb2kb-file-converter",
+    homepage: "https://mb2kb.netlify.app/",
+    category: "Full-Stack",
   },
   {
-    id: "cert-3",
-    title: "Security Risks Management",
-    issuer: "Coursera",
-    issueDate: "2024",
-    verificationUrl: "https://coursera.org/verify/DL196U3N7TED",
-    credentialId: "DL196U3N7TED",
-    category: "Cybersecurity",
+    id: "ai-data-dashboard",
+    name: "AI Data Dashboard",
+    outcome: "Interactive exploratory data analysis and ML insights with zero backend overhead",
+    description:
+      "Automated analytics dashboard for dataset uploading, summary metrics, dynamic charts, and regression modeling built with Streamlit and Pandas.",
+    techStack: ["Python", "Streamlit", "Pandas", "Matplotlib"],
+    html_url: "https://github.com/ubaidicoding/ai-data-dashboard-streamlit",
+    homepage: "https://share.streamlit.io/ubaidicoding/ai-data-dashboard",
+    category: "Tools",
   },
   {
-    id: "cert-4",
-    title: "Foundations of Cybersecurity",
-    issuer: "Coursera",
-    issueDate: "2024",
-    verificationUrl: "https://coursera.org/verify/RS0ETHEK6650",
-    credentialId: "RS0ETHEK6650",
-    category: "Cybersecurity",
+    id: "business-suite-erp",
+    name: "Business Suite Offline ERP-Lite",
+    outcome: "Standalone inventory, ledger, and sales point system for retail stores",
+    description:
+      "Lightweight desktop-ready enterprise point-of-sale utility built for local businesses with offline SQLite database support and automated PDF receipt printing.",
+    techStack: ["React", "TypeScript", "Tailwind CSS", "SQLite"],
+    html_url: "https://github.com/ubaidicoding/offline-erp-lite",
+    category: "Full-Stack",
   },
   {
-    id: "cert-5",
-    title: "WordPress Website Building",
-    issuer: "Coursera",
-    issueDate: "2024",
-    verificationUrl: "https://coursera.org/verify/ASUFO7BGIJA5",
-    credentialId: "ASUFO7BGIJA5",
-    category: "Development",
+    id: "sukkur-runners",
+    name: "Sukkur Runners Community Platform",
+    outcome: "Community landing platform and event registration for regional athletic wellness",
+    description:
+      "Official responsive web platform for Sukkur Runners community organizing group training sessions, running routes, and health awareness events.",
+    techStack: ["Next.js", "Tailwind CSS", "TypeScript"],
+    html_url: "https://github.com/ubaidicoding/sukkur-runners-web",
+    homepage: "https://sukkurrunners.netlify.app",
+    category: "Full-Stack",
   },
   {
-    id: "cert-6",
-    title: "Canva Design Advanced",
-    issuer: "Coursera",
-    issueDate: "2024",
-    verificationUrl: "https://coursera.org/verify/70SGFEAM1XTZ",
-    credentialId: "70SGFEAM1XTZ",
-    category: "Design",
-  },
-  {
-    id: "cert-7",
-    title: "Java Developer Training",
-    issuer: "PITP (Sukkur IBA University)",
-    issueDate: "2023",
-    verificationUrl: "https://verifypitp.netlify.app/certificate/311043",
-    credentialId: "311043",
-    category: "Development",
-  },
-  {
-    id: "cert-8",
-    title: "Python Developer Training",
-    issuer: "PITP (Sukkur IBA University)",
-    issueDate: "2023",
-    verificationUrl: "https://verifypitp.netlify.app/certificate/110434",
-    credentialId: "110434",
-    category: "Development",
-  },
-  {
-    id: "cert-9",
-    title: "Mobile App Developer Training",
-    issuer: "PITP (Sukkur IBA University)",
-    issueDate: "2023",
-    verificationUrl: "https://verifypitp.netlify.app/certificate/210838",
-    credentialId: "210838",
-    category: "Development",
-  },
-  {
-    id: "cert-10",
-    title: "Freelancing Professional",
-    issuer: "DigiSkills Pakistan",
-    issueDate: "2023",
-    verificationUrl: "https://digiskills.pk/verify/",
-    credentialId: "GKWHAPZMK",
-    category: "Marketing",
-  },
-  {
-    id: "cert-11",
-    title: "WordPress Professional",
-    issuer: "DigiSkills Pakistan",
-    issueDate: "2023",
-    verificationUrl: "https://digiskills.pk/verify/",
-    credentialId: "M6JSM6FMK",
-    category: "Development",
-  },
-  {
-    id: "cert-12",
-    title: "CSS Basics Certified",
-    issuer: "HackerRank",
-    issueDate: "2023",
-    verificationUrl: "https://www.hackerrank.com/certificates/acd477eoee34",
-    credentialId: "ACD477EOEE34",
-    category: "Development",
-  },
-  {
-    id: "cert-13",
-    title: "Front-End Software Engineering Job Simulation",
-    issuer: "Skyscanner",
-    issueDate: "August 6, 2026",
-    verificationUrl: "https://www.theforage.com/simulations/skyscanner/front-end-software-engineering-6a750602274fe2888e51dc4a",
-    credentialId: "6a750602274fe2888e51dc4a",
-    category: "Development",
-    platform: "Forage",
-    tasks: ["Create a Backpack React Web App"],
-  },
-  {
-    id: "cert-14",
-    title: "Software Engineering Job Simulation",
-    issuer: "HPE (Hewlett Packard Enterprise)",
-    issueDate: "August 6, 2026",
-    verificationUrl: "https://www.theforage.com/simulations/hpe/software-engineering-6a7409646120def69ba7e914",
-    credentialId: "6a7409646120def69ba7e914",
-    category: "Development",
-    platform: "Forage",
-    tasks: [
-      "Create a Proposal for a RESTful Web Service",
-      "Build a Basic RESTful Web Service",
-      "Implement the Ability to Upload Data",
-      "Create Unit Tests"
-    ],
+    id: "cyber-risk-analyzer",
+    name: "Ubaidi Cyber Risk Analyzer",
+    outcome: "Security vulnerability calculator and threat modeling auditor based on OWASP standards",
+    description:
+      "Risk assessment dashboard evaluating application vectors, calculating exploitability metrics, and generating remediation roadmaps.",
+    techStack: ["TypeScript", "React", "OWASP Matrix", "Tailwind CSS"],
+    html_url: "https://github.com/ubaidicoding/cyber-risk-analyzer",
+    category: "Tools",
   },
 ];
 
-export const EDUCATION_TIMELINE: EducationItem[] = [
+export const SKILL_GROUPS: SkillGroup[] = [
   {
-    id: "edu-1",
-    degree: "Intermediate in Pre-Engineering",
-    institution: "Government Degree College, Sukkur",
-    duration: "2022 - 2024",
-    location: "Sukkur, Sindh, Pakistan",
-    grade: "Grade B",
+    level: "Strong",
+    description: "Daily production stacks with verified end-to-end deliverables",
+    skills: [
+      "JavaScript",
+      "TypeScript",
+      "React",
+      "Next.js",
+      "Tailwind CSS",
+      "Kotlin",
+      "Jetpack Compose",
+      "Firebase",
+    ],
   },
   {
-    id: "edu-2",
-    degree: "Matriculation (Science)",
-    institution: "Public School / High Secondary Board, Sukkur",
-    duration: "2020 - 2022",
-    location: "Sukkur, Sindh, Pakistan",
-    grade: "B- Grade",
+    level: "Working",
+    description: "Solid working proficiency across backend services and database systems",
+    skills: [
+      "Python",
+      "Node.js/Express",
+      "Supabase",
+      "PostgreSQL",
+      "Java",
+      "Spring Boot",
+      "Git/GitHub",
+    ],
+  },
+  {
+    level: "Learning",
+    description: "Actively expanding into cross-platform and security validation tools",
+    skills: ["Flutter", "Gradio", "Security Auditing"],
   },
 ];
 
 export const EXPERIENCES: ExperienceItem[] = [
   {
     id: "exp-1",
-    role: "Founder & Lead Architect",
-    company: "Ubaidi IT Solutions",
-    duration: "2023 - Present",
-    description: [
-      "Architected and deployed dozens of secure glassmorphic corporate web properties and web applications using React, Next.js, and Node.js.",
-      "Conducted technical SEO audits, improving baseline traffic by 180% and implementing security systems to mitigate digital vulnerabilities.",
-      "Delivered reliable full-stack and API solutions while maintaining elegant user experiences and lightning-fast metrics."
+    role: "IT Assistant (Temporary)",
+    organization: "Government Polytechnic Institute (Boys)",
+    location: "Sukkur, Sindh, Pakistan",
+    duration: "Aug 2026 – Present",
+    bullets: [
+      "Assisting institute IT faculty and students with computer lab operations and software setup.",
+      "Maintaining network connectivity, hardware diagnostics, and student workstation configurations.",
+      "Supporting digital record keeping and technical operations across departmental systems.",
     ],
-    skills: ["React", "Express", "Node.js", "MongoDB", "Technical SEO", "Cloud VPS"],
   },
   {
     id: "exp-2",
-    role: "Founder & Community Director",
-    company: "Ubaidi IT Community",
-    duration: "2022 - Present",
-    description: [
-      "Established Pakistan's rapidly rising regional developers and tech hub, gathering hundreds of enthusiastic tech learners.",
-      "Organized free bootcamps, security guidelines, design workshops, and coding challenges for local students.",
-      "Collaborated with developers to distribute free open-source templates, web components, and portfolio audits."
+    role: "Freelance Full-Stack Developer",
+    organization: "Self-Employed / Remote",
+    location: "Sukkur, Sindh, Pakistan",
+    duration: "2024 – Present",
+    bullets: [
+      "Engineered and deployed responsive web apps using React, Next.js, Firebase, and Supabase.",
+      "Built native Android utilities with Kotlin and Jetpack Compose, publishing StepFit Pro to Google Play.",
+      "Developed Python automation scripts and Streamlit analytics dashboards for local clients.",
     ],
-    skills: ["Mentorship", "Public Speaking", "Community Organizing", "Open-Source Support"],
   },
   {
     id: "exp-3",
-    role: "Technical Content Creator & Educator",
-    company: "CodeWithSamiUbaidi (YouTube & Socials)",
-    duration: "2021 - Present",
-    description: [
-      "Crafted full-length educational coursewares modeling Java OOP, Python, Canva workflows, WordPress optimization, and OWASP Top 10 Security Basics.",
-      "Interacted directly with digital audiences to debug web projects and mentor freelance career pathing.",
-      "Published over 100 tutorials promoting high-quality coding practices and digital branding."
+    role: "Founder",
+    organization: "Ubaidi IT Community",
+    location: "Sukkur, Sindh, Pakistan",
+    duration: "2022 – Present",
+    bullets: [
+      "Organizing free community bootcamps, code reviews, and programming roadmaps for local students in Sukkur.",
+      "Mentoring beginners in foundational web development, version control (Git/GitHub), and problem-solving.",
+      "Coordinating open-source project sprints and collaborative learning sessions across Sindh.",
     ],
-    skills: ["Video Production", "Technical Explanations", "Syllabus Design", "Audience Growth"],
   },
-  {
-    id: "exp-4",
-    role: "Freelance Full-Stack Dev & Mentor",
-    company: "Upwork & Direct Collaborations",
-    duration: "2021 - Present",
-    description: [
-      "Helped startups establish online marketing funnels, interactive booking layouts, and customizable WordPress/React components.",
-      "Mentored up-and-coming remote learners on getting certified with modern technologies like Coursera, Sukkur IBA PITP, and DigiSkills."
-    ],
-    skills: ["Freelancing", "Lead Funnels", "React Widgets", "Cybersecurity Baseline Checks"],
-  }
 ];
 
-export const BLOGS: BlogPost[] = [
+export const EDUCATION: EducationItem = {
+  degree: "Intermediate (Pre-Engineering)",
+  institution: "Government Comprehensive Higher Secondary School",
+  duration: "2022 – 2024",
+  location: "Sukkur, Sindh, Pakistan",
+};
+
+export const CERTIFICATIONS: CertificateItem[] = [
   {
-    id: "b-1",
-    slug: "securing-modern-react-api-integrations",
-    title: "Securing Modern React & Node API Integrations: Practical Security Handbook",
-    excerpt: "Learn how to safeguard your client-side variables, defend against Cross-Site Scripting (XSS), implement JWT security properly, and execute safe API proxies.",
-    category: "Cybersecurity",
-    publishDate: "June 2026",
-    readTime: "7 min read",
-    tags: ["Security", "React", "Node.js", "OWASP"],
-    content: `## Securing React Frontends & Node.js Backends
-
-Modern software development often relies heavily on Client-Side Single Page Applications (SPAs) talking directly to API gateways. While fast, this structure introduces immediate risks like credential leaking, Cross-Site Scripting (XSS), and Cross-Origin Resource Sharing (CORS) misconfigurations. Here is a definitive handbook on securing your web products.
-
-### 1. The Danger of VITE_ prefixed API Keys
-When building with Vite, any environment variable prefixed with \`VITE_\` is hardcoded into the javascript bundle served to the user's browser.
-
-If you make requests directly to third-party services like OpenAI or Stripe using these public client-side keys, malicious users can easily read them in their browser's Network tab!
-
-**Solution**: Always route sensitive requests through an API Proxy.
-Create a lightweight server route and make requests server-side inside \`server.ts\` where client-side users cannot read your \`process.env\` variables:
-
-\`\`\`typescript
-// server.ts - Secure backend proxy
-app.post("/api/translate", async (req, res) => {
-  const secretKey = process.env.DEEPL_SECRET_KEY; // Kept secure on server
-  const response = await fetch("https://api.deepl.com/v2/translate", {
-    headers: { "Authorization": \`DeepL-Auth-Key \${secretKey}\` },
-    body: JSON.stringify(req.body)
-  });
-  res.json(await response.json());
-});
-\`\`\`
-
-### 2. Defending Against Cross-Site Scripting (XSS)
-Cross-Site Scripting occurs when an application includes untrusted user inputs inside the browser window without proper sanitization. 
-- **Danger**: \`dangerouslySetInnerHTML\` must be scrutinized obsessively.
-- **Tip**: Always sanitize with libraries like \`DOMPurify\` before rendering rich text, or let frameworks like \`react-markdown\` and standard React escape dynamic data.
-
-Stay tuned to *Ubaidi IT Community* for our continuous web vulnerability series!`,
+    id: "cert-google-foundations",
+    title: "Google Foundations of Cybersecurity",
+    issuer: "Google / Coursera",
+    verificationUrl: "https://coursera.org/verify/RS0ETHEK6650",
+    isSimulation: false,
   },
   {
-    id: "b-2",
-    slug: "boosting-saas-conversions-with-interactive-funnels",
-    title: "Boosting SaaS and Portfolio Conversions with Highly Interactive Funnels",
-    excerpt: "Why standard contact forms fail to convert recruiters and clients, and how customized WhatsApp redirection/mailto automation yields 240% higher action responses.",
-    category: "Freelancing",
-    publishDate: "May 2026",
-    readTime: "5 min read",
-    tags: ["Marketing", "Conversion", "SaaS", "Lead Generation"],
-    content: `## Reimagining User Inquiries: The Power of Interactive Funnels
-
-Most developers place a standard "Subject, Message, Name" input block in the page footer, which redirects to an outdated dashboard or gets buried in spam filters. A premium SaaS approach acts as an active **personal brand funnel**.
-
-### Why Static Contact Forms Fail
-1. **Friction**: Filling out several blank input fields takes too long.
-2. **Disconnection**: A generic "Sent Successfully!" message feels cold. Visitors don't feel sure if their inquiry will be read.
-3. **High Bounce Rates**: Recruites want immediate replies on channels they use every day, like WhatsApp.
-
-### The Conversion-First Strategy
-To optimize conversion, build an inquiry form with **Service Selection** and dynamic link creation:
-- Ask visitors about their budget or specific goals early (e.g., *Full-Stack Development, Cybersecurity Consultation, Digital Marketing*).
-- Auto-generate direct high-urgency CTAs like **"Instantly ping via WhatsApp"** or **"Draft Structured Email"**.
-- This handles user authentication natively through their own apps, ensuring real user identities and direct, friction-free engagement!
-
-Utilizing this dynamic redirection directly on top-tier portfolio projects converts visitors into actual clients instantly.`,
+    id: "cert-google-risk",
+    title: "Google Security Risk Management",
+    issuer: "Google / Coursera",
+    verificationUrl: "https://coursera.org/verify/DL196U3N7TED",
+    isSimulation: false,
   },
   {
-    id: "b-3",
-    slug: "understanding-ai-grounding-and-prompting",
-    title: "Understanding AI Grounding, Tool Calling, and the Google GenAI SDK",
-    excerpt: "An architectural deep-dive into the @google/genai module, implementing search grounding and reliable server-sided functions.",
-    category: "AI Tools",
-    publishDate: "April 2026",
-    readTime: "6 min read",
-    tags: ["AI", "Gemini", "Node.js", "TypeScript"],
-    content: `## Harnessing @google/genai for Modern Applications
-
-Developers are pivoting from simple chatbot exchanges to robust **agentic pipelines** where AI is equipped with tools, internet search capabilities, and precise formatting boundaries. Let's look at the correct patterns for modern AI applications.
-
-### 1. Correct Model Selection
-With the unified Google GenAI SDK, selection should be deliberate and budget-optimized:
-- **gemini-2.5-flash**: Great for real-time text generation, fast response, multi-modal processing.
-- **gemini-2.5-pro**: Excellent for heavy reasoning, coding operations, and extensive instruction compliance.
-
-### 2. Utilizing Search Grounding (Live Information Retrieval)
-The Google SDK lets model answers ground themselves directly on live Google Search results:
-
-\`\`\`typescript
-import { GoogleGenAI } from "@google/genai";
-
-const ai = new GoogleGenAI(); // Implicitly loads GEMINI_API_KEY from env
-const response = await ai.models.generateContent({
-  model: 'gemini-2.5-flash',
-  contents: 'What are the current top trends in cybersecurity in 2026?',
-  config: {
-    // Enable Google Search grounding to retrieve current, non-hallucinated events
-    tools: [{ googleSearch: {} }] 
-  }
-});
-\`\`\`
-
-Using this configuration, Gemini acts as a high-fidelity intelligence layer with verified, grounded insights.`,
+    id: "cert-iba-python",
+    title: "Sukkur IBA PITP Python Developer",
+    issuer: "Sukkur IBA University (PITP)",
+    verificationUrl: "https://verifypitp.netlify.app/certificate/110434",
+    isSimulation: false,
   },
   {
-    id: "b-4",
-    slug: "empowering-pakistan-next-gen-builders-ubaidi",
-    title: "Empowering Pakistan's Next-Gen Builders: The Ubaidi IT Community Mission",
-    excerpt: "How a grassroots developer network in Sukkur, Sindh, is bridging the digital literacy gap, offering premium mentoring, and building open-source templates.",
-    category: "Programming",
-    publishDate: "March 2026",
-    readTime: "5 min read",
-    tags: ["Mentorship", "Community", "Pakistan", "Open Source"],
-    content: `## Bridging Tech Opportunities Outside Major Hubs
-
-Typically, major development hubs inside Pakistan are concentrated in Lahore, Karachi, or Islamabad, leaving talented students in cities like Sukkur, Khairpur, or Larkana with less access to direct mentorship. 
-
-### Why Regional Tech Networks Matter
-- **Contextual Knowledge Sharing**: Explaining complex API concepts or cloud architectures in regional tongues (Sindhi / Urdu) accelerates grasping times.
-- **Collaborative Project Cycles**: Creating mock-team environments for students to construct real portfolios.
-- **Supportive Freelance Advice**: Demystifying remote consulting models, Upwork contracts, and digital invoice configurations.
-
-Our long-term commitment at the **Ubaidi IT Community** is to cultivate a highly technical community right here in upper Sindh, demonstrating that top-tier modern software can be shipped from any corner of the country.`,
+    id: "cert-iba-java",
+    title: "Sukkur IBA PITP Java Developer",
+    issuer: "Sukkur IBA University (PITP)",
+    verificationUrl: "https://verifypitp.netlify.app/certificate/311043",
+    isSimulation: false,
   },
   {
-    id: "b-5",
-    slug: "the-story-behind-samiubaidi-personal-branding-and-ai-philosophy",
-    title: "The Story Behind 'SamiUbaidi' & My Multi-Disciplinary Services in the AI Era",
-    excerpt: "Discover the deep personal meaning behind 'SamiUbaidi', how I manage various digital handles, and how we deliver website/mobile development, SEO, and social management powered by AI.",
-    category: "Freelancing",
-    publishDate: "February 2026",
-    readTime: "6 min read",
-    tags: ["Personal Brand", "AI Era", "SEO", "Development"],
-    content: `## Fusing Ancestral Legacy with Tech Identity: Fictional vs. Real Names
-
-Have you ever wondered where the brand name **SamiUbaidi** comes from? It represents a fusion of family honor and clear digital identity. 
-
-### Why 'Ubaidi'?
-My full name is **Samiullah Samejo** (often shortened to **Sami Samejo** or **Samiullah Ubaidi**), and my caste is **Samejo**. My beloved father's name is **Ubaid Ullah**. To pay homage to my father and build a highly memorable, short, and distinctive name for my freelance services and tech community, I took my name "Samiullah" and his name "Ubaid", creating the moniker **Samiubaid**. I then added one more 'i' to craft the ultimate professional identity: **SamiUbaidi**.
-
-This name acts as a central bridge on my social media accounts and networks, allowing me to combine **Samiullah Samejo** (my main legal name) with my unique nickname/tech handle **SamiUbaidi** (devsamiubaidi).
-
-### My Central Digital Handles
-- **GitHub Handle**: [@UbaidiCoding](https://github.com/UbaidiCoding) — My absolute center-stage open-source repository where I publish full-stack packages.
-- **YouTube Handle**: [@CodeWithSamiUbaidi](https://youtube.com/@CodeWithSamiUbaidi) — Displaying public title **CodeWithSami**, where I share tech guides on coding and cyber safety.
-
----
-
-## My Multi-Disciplinary Services in the AI Era
-
-I am a full-stack, multidisciplinary coder delivering end-to-end digital transformations. Operating under the brand **Ubaidi IT Solutions**, I specialize in:
-
-1. **Full-Stack & Website Development**: High-conversion React endpoints, Node.js servers, and elegant database schemas.
-2. **Mobile App Development**: Cross-platform responsive mobile applications with secure code bases.
-3. **Advanced Branding & Graphic Direction**: Launch assets, logo guides, and custom corporate graphics.
-4. **Social Media Management**: Strategic planning, audience conversion rate optimization, and community hub building.
-5. **Technical SEO Copywriting**: Data-driven visibility optimizations, meta analytics, and search visibility.
-
-### Fusing Power with AI Tools
-We are living in the **AI Era**. Rather than resisting change, I actively deliver all these comprehensive services with the advanced assistance of state-of-the-art AI. I leverage AI to accelerate security vetting, draft pristine layouts, optimize page indexations, and generate high-engagement social material rapidly. This allows me to act as an entire agency in one developer, passing extreme speed and cost efficiency down to my clients. 
-
-At *Ubaidi IT Solutions*, AI is not a crutch; it is our force multiplier for premium excellence.`,
+    id: "cert-iba-mobile",
+    title: "Sukkur IBA PITP Mobile App Developer",
+    issuer: "Sukkur IBA University (PITP)",
+    verificationUrl: "https://verifypitp.netlify.app/certificate/210838",
+    isSimulation: false,
   },
   {
-    id: "b-6",
-    slug: "from-code-to-community-the-inspiring-journey-of-samiullah-samejo",
-    title: "From Code to Community: The Inspiring Journey of Samiullah Samejo",
-    excerpt: "How Sukkur-based developer & CEO Samiullah Samejo (SamiUbaidi, samisamejo) built Ubaidi IT Community, Sukkur Runners, mastered 100+ skills, and aims for global tech leadership.",
-    category: "Programming",
-    publishDate: "August 2026",
-    readTime: "7 min read",
-    tags: ["Samiullah Samejo", "samisamejo", "Sukkur", "Community", "Software Engineering", "Global Tech Dreams"],
-    content: `## From Code to Community: The Inspiring Journey of Samiullah Samejo
-
-In the rapidly evolving tech landscape of Pakistan, few names resonate within the local grass-roots community quite like **Samiullah Samejo** (widely recognized across digital platforms as **SamiUbaidi** / **samisamejo**). This Sukkur-based full-stack software engineer and mobile application developer is actively redefining what it means to be a modern tech professional. His inspiring journey highlights a powerful fusion of self-taught technical excellence, digital entrepreneurship, and a deep-rooted commitment to community building.
-
----
-
-### Crafting Code and Empowering Local Youth
-Samejo’s expertise spans the entire software development spectrum. From backend database architectures to sleek, responsive cross-platform mobile interfaces built with Flutter and React, he has mastered a highly versatile engineering stack. As a self-taught programmer, he did not wait for a traditional academic degree roadmap to dictate his potential. Instead, he independently mastered over 100 distinct digital skills through hands-on practice, freelance problem-solving, and continuous learning.
-
-However, coding in isolation was never his ultimate goal. Recognizing the immense untapped potential within the Sindh region, Samejo founded the **Ubaidi IT Community**. Serving as its CEO, he has built a powerful, collaborative platform that guides upcoming developers, shares critical freelancing strategies, and opens doors for students trying to break into the global tech sector. Through mentorship, he turns solitary learning into a shared triumph.
-
----
-
-### A Balanced Blueprint: Mental and Physical Wellness
-What truly sets Samejo apart from the typical software developer stereotype is his firm belief in holistic lifestyle growth. He understands that prolonged hours in front of computer screens require a structured physical counter-balance to maintain long-term productivity. To address this social need, he successfully founded **Sukkur Runners**, a prominent community group aimed at promoting outdoor running, core athletics, and physical health among local youth.
-
-He continuously practices what he preaches, frequently participating in local athletic training programs, such as the *Lok Sahaita Camp* at the Sukkur Sports Complex. By intentionally bridging the gap between digital literacy and physical wellness, he inspires a healthier lifestyle for the next generation of Pakistani IT professionals.
-
----
-
-### Dreams, Global Vision & Industry Aspirations
-Driven by an unyielding spirit of ambition, Samiullah Samejo sets his sights on joining global startup ecosystems and industry tech giants like **Google, Microsoft, Oracle, Meta, and TikTok**. 
-
-His dream workspaces span top innovation hubs across **Saudi Arabia, Dubai (UAE), Germany, Finland, Paris (France), the United States, the United Kingdom**, and beyond. With a steadfast mindset, he holds the vision to grow from Software Engineer to CEO of a global tech venture one day, proving that with passion, grit, and community impact, every dream can be won.
-
----
-
-### Moving Forward
-Samiullah Samejo’s story clearly shows that true professional success lies in lifting others as you climb. By combining technology with community wellness, he remains an important leader to watch as Pakistan's regional tech ecosystem continues to expand globally. His modern approach serves as a blueprint for young programmers nationwide.`,
-  }
+    id: "cert-digiskills-wp",
+    title: "DigiSkills WordPress",
+    issuer: "DigiSkills Pakistan",
+    verificationUrl: "https://digiskills.pk/verify",
+    isSimulation: false,
+  },
 ];
 
-export const TESTIMONIALS: Testimonial[] = [
+export const JOB_SIMULATIONS: CertificateItem[] = [
   {
-    id: "t-1",
-    name: "Alex Sterling",
-    role: "CEO & Co-Founder",
-    company: "Apex Ledger Analytics",
-    content: "Sami designed a state-of-the-art secure platform that totally exceeded our security standards. His combination of clean React development with advanced threat modeling is truly rare in the industry.",
-    rating: 5,
+    id: "sim-skyscanner",
+    title: "Skyscanner Front-End Software Engineering Job Simulation",
+    issuer: "Forage",
+    verificationUrl: "https://forage-uploads-prod.s3.amazonaws.com/completion-certificates/Skyscanner/KM4Ez7qz3rvMmT8qJ_Skyscanner_RS0ETHEK6650_completion_certificate.pdf",
+    isSimulation: true,
   },
   {
-    id: "t-2",
-    name: "Faraz Ahmed",
-    role: "Open-Source Trainee",
-    company: "Ubaidi IT Community",
-    content: "Under Sami's exceptional guidance at Ubaidi IT Community, I transitioned from simple HTML to building full-stack secure SaaS applications. His mentorship is completely free, generous, and highly practical.",
-    rating: 5,
+    id: "sim-hpe",
+    title: "HPE Software Engineering Simulation",
+    issuer: "Forage",
+    verificationUrl: "https://forage-uploads-prod.s3.amazonaws.com/completion-certificates/Hewlett%20Packard%20Enterprise/DA4T8aBfTr8L6x23M_HPE_RS0ETHEK6650_completion_certificate.pdf",
+    isSimulation: true,
   },
-  {
-    id: "t-3",
-    name: "Clara von de Berg",
-    role: "Director of Digital Strategy",
-    company: "Novis Web Group",
-    content: "Our conversion rates skyrocketed by 240% after implementing Sami's interactive funnels and SEO recommendations. His technical precision and proactive mindset made him a delight to collaborate with.",
-    rating: 5,
-  },
-  {
-    id: "t-4",
-    name: "Mustafa Shah",
-    role: "DevOps Engineer",
-    company: "Global Tech Venture",
-    content: "Sami's deep grasp of security risks management and secure React state architectures helped clean up our legacy enterprise configurations. Highly recommended for penetration audits.",
-    rating: 5,
-  }
 ];
 
+export const ARTICLES: ArticleItem[] = [
+  {
+    id: "article-1",
+    title: "Structuring Offline-First Android Apps with Kotlin & Jetpack Compose",
+    date: "2024",
+    summary:
+      "A technical walkthrough of Room database caching, coroutines, and Firebase Firestore synchronization patterns used in StepFit Pro.",
+    url: "https://github.com/ubaidicoding/stepfit-pro-android",
+  },
+  {
+    id: "article-2",
+    title: "Client-Side File Processing in the Browser with Web Workers",
+    date: "2024",
+    summary:
+      "How MB2KB accomplishes high-throughput image compression and PDF rendering in client memory without consuming server resources.",
+    url: "https://mb2kb.netlify.app/",
+  },
+  {
+    id: "article-3",
+    title: "Foundations of Web Application Security for Junior Engineers",
+    date: "2024",
+    summary:
+      "Key takeaways from Google Cybersecurity training: defending against injection, securing API tokens, and implementing role-based authentication.",
+    url: "https://github.com/ubaidicoding/cyber-risk-analyzer",
+  },
+];
+
+export const MEDIA_FEATURES: MediaFeatureItem[] = [
+  {
+    id: "media-1",
+    title: "Clap Pakistan Feature Story on Regional Tech Talent",
+    outlet: "Clap Pakistan",
+    date: "2024",
+    description:
+      "Editorial coverage highlighting Samiullah Samejo's journey building community software solutions and open-source bootcamps in Sukkur, Sindh.",
+    url: "https://www.facebook.com/clappk/posts/pfbid0WkkZj5Xki6bQWMfxAEa5iWiVoE2KaLaSZ4A7VYLHnLAtcSSrUwGQpQ9KovqsUYfTl",
+  },
+];

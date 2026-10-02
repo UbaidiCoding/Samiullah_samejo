@@ -1,64 +1,58 @@
-export interface Certificate {
+export interface ProjectItem {
+  id: string;
+  name: string;
+  outcome: string;
+  description: string;
+  techStack: string[];
+  html_url: string;
+  homepage?: string;
+  category: "Android" | "Full-Stack" | "Tools";
+}
+
+export interface SkillGroup {
+  level: "Strong" | "Working" | "Learning";
+  description: string;
+  skills: string[];
+}
+
+export interface CertificateItem {
   id: string;
   title: string;
   issuer: string;
-  issueDate: string;
+  issueDate?: string;
   verificationUrl: string;
-  credentialId?: string;
-  category: "Development" | "Cybersecurity" | "Design" | "Marketing";
-  tasks?: string[];
-  platform?: string;
-}
-
-export interface Project {
-  id: number;
-  name: string;
-  description: string;
-  html_url: string;
-  homepage?: string;
-  stargazers_count: number;
-  language: string;
-  topics?: string[];
-  category: "Web" | "Cybersecurity" | "AI" | "SaaS";
-}
-
-export interface BlogPost {
-  id: string;
-  slug: string;
-  title: string;
-  excerpt: string;
-  content: string;
-  category: "Programming" | "Cybersecurity" | "AI Tools" | "Freelancing";
-  publishDate: string;
-  readTime: string;
-  tags: string[];
+  isSimulation?: boolean;
 }
 
 export interface ExperienceItem {
   id: string;
   role: string;
-  company: string;
+  organization: string;
+  location: string;
   duration: string;
-  description: string[];
-  skills: string[];
+  bullets: string[];
 }
 
 export interface EducationItem {
-  id: string;
   degree: string;
   institution: string;
   duration: string;
   location: string;
-  grade?: string;
 }
 
-export interface Testimonial {
+export interface ArticleItem {
   id: string;
-  name: string;
-  role: string;
-  company: string;
-  content: string;
-  avatarUrl?: string;
-  rating: number;
+  title: string;
+  date: string;
+  summary: string;
+  url: string;
 }
 
+export interface MediaFeatureItem {
+  id: string;
+  title: string;
+  outlet: string;
+  date: string;
+  description: string;
+  url: string;
+}
