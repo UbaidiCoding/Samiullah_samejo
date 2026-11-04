@@ -24,6 +24,13 @@ export interface CertificateItem {
   isSimulation?: boolean;
 }
 
+export interface MicrosoftLearnBadgeGroup {
+  id: string;
+  title: string;
+  date: string;
+  badges: string[];
+}
+
 export interface ExperienceItem {
   id: string;
   role: string;

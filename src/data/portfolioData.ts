@@ -6,6 +6,7 @@ import {
   EducationItem,
   ArticleItem,
   MediaFeatureItem,
+  MicrosoftLearnBadgeGroup,
 } from "../types";
 
 export const PERSONAL_INFO = {
@@ -127,7 +128,12 @@ export const SKILL_GROUPS: SkillGroup[] = [
   {
     level: "Learning",
     description: "Actively expanding into cross-platform and security validation tools",
-    skills: ["Flutter", "Gradio", "Security Auditing"],
+    skills: [
+      "Flutter",
+      "Gradio",
+      "Security Auditing",
+      "Microsoft security stack (Entra, Defender XDR, Sentinel, Purview) - fundamentals",
+    ],
   },
 ];
 
@@ -222,19 +228,84 @@ export const CERTIFICATIONS: CertificateItem[] = [
   },
 ];
 
+export const MICROSOFT_LEARN_PROFILE_URL = "https://learn.microsoft.com/users/devsamiubaidi/";
+
+export const MICROSOFT_LEARN_GROUPS: MicrosoftLearnBadgeGroup[] = [
+  {
+    id: "cloud-basics",
+    title: "Cloud basics",
+    date: "13 Aug 2026",
+    badges: [
+      "Describe cloud computing",
+      "Describe the benefits of using cloud services",
+      "Describe cloud service types",
+    ],
+  },
+  {
+    id: "security-concepts",
+    title: "Security concepts",
+    date: "23 Sep 2026",
+    badges: [
+      "Describe security and compliance concepts",
+      "Describe identity concepts",
+    ],
+  },
+  {
+    id: "microsoft-entra",
+    title: "Microsoft Entra",
+    date: "23 Sep 2026",
+    badges: [
+      "Describe the function and identity types of Microsoft Entra ID",
+      "Describe the authentication capabilities of Microsoft Entra ID",
+      "Describe access management capabilities of Microsoft Entra",
+      "Describe the identity protection and governance capabilities of Microsoft Entra",
+    ],
+  },
+  {
+    id: "azure-security-siem-xdr",
+    title: "Azure security, SIEM and XDR",
+    date: "22-23 Sep 2026",
+    badges: [
+      "Describe the security management capabilities in Azure",
+      "Describe security capabilities of Microsoft Sentinel",
+      "Describe threat protection with Microsoft Defender XDR",
+      "Introduction to Microsoft Defender XDR threat protection (module assessment passed)",
+    ],
+  },
+  {
+    id: "security-copilot",
+    title: "Security Copilot",
+    date: "23 Sep 2026",
+    badges: ["Describe Microsoft Security Copilot"],
+  },
+  {
+    id: "purview-and-trust",
+    title: "Microsoft Purview and trust",
+    date: "23 Sep 2026",
+    badges: [
+      "Describe the data security solutions of Microsoft Purview",
+      "Describe the data compliance solutions of Microsoft Purview",
+      "Describe the data governance solutions of Microsoft Purview",
+      "Describe Microsoft's Service Trust portal and privacy principles",
+    ],
+  },
+];
+
 export const JOB_SIMULATIONS: CertificateItem[] = [
   {
     id: "sim-skyscanner",
     title: "Skyscanner Front-End Software Engineering Job Simulation",
     issuer: "Forage",
-    verificationUrl: "https://forage-uploads-prod.s3.amazonaws.com/completion-certificates/Skyscanner/KM4Ez7qz3rvMmT8qJ_Skyscanner_RS0ETHEK6650_completion_certificate.pdf",
+    verificationUrl:
+      "https://forage-uploads-prod.s3.amazonaws.com/completion-certificates/Skyscanner/KM4Ez7qz3rvMmT8qJ_Skyscanner_RS0ETHEK6650_completion_certificate.pdf",
     isSimulation: true,
   },
   {
     id: "sim-hpe",
     title: "HPE Software Engineering Simulation",
     issuer: "Forage",
-    verificationUrl: "https://forage-uploads-prod.s3.amazonaws.com/completion-certificates/Hewlett%20Packard%20Enterprise/DA4T8aBfTr8L6x23M_HPE_RS0ETHEK6650_completion_certificate.pdf",
+    verificationUrl:
+      "https://forage-uploads-prod.s3.amazonaws.com/completion-certificates/Hewlett%20Packard%20Enterprise/DA4T8aBfTr8L6x23M_HPE_RS0ETHEK6650_completion_certificate.pdf",
     isSimulation: true,
   },
 ];
