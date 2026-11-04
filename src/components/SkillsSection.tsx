@@ -4,7 +4,7 @@ import { SKILL_GROUPS } from "../data/portfolioData";
 
 export default function SkillsSection() {
   return (
-    <section id="skills" className="py-12 sm:py-16 scroll-mt-20">
+    <section id="skills" className="py-12 md:py-20 scroll-mt-20 border-b border-[var(--border-color)]">
       <div className="space-y-8">
         <div>
           <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-[var(--text-primary)]">
@@ -15,6 +15,7 @@ export default function SkillsSection() {
           </p>
         </div>
 
+        {/* 1 col base, 3 cols md */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {SKILL_GROUPS.map((group) => {
             const isStrong = group.level === "Strong";
@@ -39,16 +40,16 @@ export default function SkillsSection() {
                     </h3>
                   </div>
 
-                  <p className="text-xs text-[var(--text-secondary)] mb-5">
+                  <p className="text-xs sm:text-sm text-[var(--text-secondary)] mb-5">
                     {group.description}
                   </p>
 
-                  {/* Skills Chips */}
+                  {/* Skills Chips: Chips wrap, 14px min font size (text-sm is 14px) */}
                   <div className="flex flex-wrap gap-2">
                     {group.skills.map((skill) => (
                       <span
                         key={skill}
-                        className={`text-xs font-semibold px-3 py-1.5 rounded-md border min-h-[32px] inline-flex items-center ${
+                        className={`text-sm font-semibold px-3 py-1.5 rounded-lg border min-h-[36px] inline-flex items-center leading-snug ${
                           isStrong
                             ? "bg-[var(--accent-light)] text-[var(--accent)] border-[var(--border-color)]"
                             : "bg-[var(--bg-surface-subtle)] text-[var(--text-secondary)] border-[var(--border-color)]"

@@ -2,13 +2,9 @@ import React, { useState } from "react";
 import {
   ExternalLink,
   Github,
-  Smartphone,
-  Globe,
-  Wrench,
   ChevronDown,
-  Layers,
-  Code2,
   FolderGit2,
+  Code2,
 } from "lucide-react";
 import { FEATURED_PROJECTS } from "../data/portfolioData";
 import { ProjectItem } from "../types";
@@ -59,6 +55,127 @@ const OTHER_GITHUB_REPOSITORIES = [
   },
 ];
 
+// Helper to render crisp 16:9 thumbnail illustrations with explicit 480x270 dimensions and lazy loading
+function ProjectThumbnail({ project }: { project: ProjectItem }) {
+  const getGradientAndIcon = () => {
+    switch (project.id) {
+      case "stepfit-pro":
+        return {
+          bg: "from-sky-500/20 via-sky-600/10 to-transparent",
+          badge: "Kotlin • Android SDK",
+          tag: "Health & Fitness",
+          symbol: (
+            <svg className="w-12 h-12 text-sky-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75">
+              <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
+              <path d="M12 5v14" strokeDasharray="2 2" />
+            </svg>
+          ),
+        };
+      case "mb2kb":
+        return {
+          bg: "from-cyan-500/20 via-teal-600/10 to-transparent",
+          badge: "React • Web Workers",
+          tag: "Client-Side Utility",
+          symbol: (
+            <svg className="w-12 h-12 text-cyan-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75">
+              <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" />
+              <polyline points="14 2 14 8 20 8" />
+              <path d="m9 15 3-3 3 3" />
+              <path d="M12 12v6" />
+            </svg>
+          ),
+        };
+      case "ai-data-dashboard":
+        return {
+          bg: "from-indigo-500/20 via-purple-600/10 to-transparent",
+          badge: "Python • Streamlit",
+          tag: "Analytics & ML",
+          symbol: (
+            <svg className="w-12 h-12 text-indigo-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75">
+              <line x1="18" y1="20" x2="18" y2="10" />
+              <line x1="12" y1="20" x2="12" y2="4" />
+              <line x1="6" y1="20" x2="6" y2="14" />
+              <circle cx="12" cy="4" r="2" />
+            </svg>
+          ),
+        };
+      case "business-suite-erp":
+        return {
+          bg: "from-emerald-500/20 via-emerald-600/10 to-transparent",
+          badge: "React • SQLite POS",
+          tag: "ERP / Inventory",
+          symbol: (
+            <svg className="w-12 h-12 text-emerald-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75">
+              <rect width="20" height="14" x="2" y="5" rx="2" />
+              <line x1="2" x2="22" y1="10" y2="10" />
+              <path d="M6 15h2" />
+              <path d="M10 15h4" />
+            </svg>
+          ),
+        };
+      case "sukkur-runners":
+        return {
+          bg: "from-amber-500/20 via-orange-600/10 to-transparent",
+          badge: "Next.js • Tailwind",
+          tag: "Community Portal",
+          symbol: (
+            <svg className="w-12 h-12 text-amber-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75">
+              <circle cx="12" cy="12" r="10" />
+              <path d="m4.93 4.93 4.24 4.24" />
+              <path d="m14.83 9.17 4.24-4.24" />
+              <path d="m14.83 14.83 4.24 4.24" />
+              <path d="m9.17 14.83-4.24 4.24" />
+              <circle cx="12" cy="12" r="4" />
+            </svg>
+          ),
+        };
+      default:
+        return {
+          bg: "from-blue-500/20 via-sky-600/10 to-transparent",
+          badge: "OWASP Matrix • Security",
+          tag: "Threat Modeling",
+          symbol: (
+            <svg className="w-12 h-12 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10" />
+              <path d="m9 12 2 2 4-4" />
+            </svg>
+          ),
+        };
+    }
+  };
+
+  const info = getGradientAndIcon();
+
+  return (
+    <div className="relative aspect-video w-full rounded-lg overflow-hidden border border-[var(--border-color)] bg-[var(--bg-surface-subtle)] flex flex-col justify-between p-4 select-none">
+      <div className={`absolute inset-0 bg-gradient-to-br ${info.bg} opacity-70 pointer-events-none`} />
+      
+      {/* Top Bar inside thumbnail */}
+      <div className="relative z-10 flex items-center justify-between">
+        <span className="text-[11px] font-bold px-2 py-0.5 rounded bg-[var(--bg-surface)] text-[var(--accent)] border border-[var(--border-color)]">
+          {info.badge}
+        </span>
+        <span className="text-[10px] font-medium text-[var(--text-muted)] bg-[var(--bg-surface)] px-2 py-0.5 rounded border border-[var(--border-color)]">
+          16:9 • {project.category}
+        </span>
+      </div>
+
+      {/* Center illustration */}
+      <div className="relative z-10 flex items-center justify-center my-auto py-2">
+        <div className="p-3 rounded-2xl bg-[var(--bg-surface)]/80 backdrop-blur-sm border border-[var(--border-color)] shadow-sm">
+          {info.symbol}
+        </div>
+      </div>
+
+      {/* Bottom tag inside thumbnail */}
+      <div className="relative z-10 flex items-center justify-between text-[11px] text-[var(--text-secondary)] font-medium">
+        <span>{info.tag}</span>
+        <span className="font-mono text-[10px] text-[var(--text-muted)]">480 × 270</span>
+      </div>
+    </div>
+  );
+}
+
 export default function ProjectShowcase() {
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -71,21 +188,8 @@ export default function ProjectShowcase() {
       ? FEATURED_PROJECTS
       : FEATURED_PROJECTS.filter((p) => p.category === selectedCategory);
 
-  const getCategoryIcon = (cat: ProjectItem["category"]) => {
-    switch (cat) {
-      case "Android":
-        return <Smartphone className="w-5 h-5 text-[var(--accent)]" />;
-      case "Full-Stack":
-        return <Globe className="w-5 h-5 text-[var(--accent)]" />;
-      case "Tools":
-        return <Wrench className="w-5 h-5 text-[var(--accent)]" />;
-      default:
-        return <Layers className="w-5 h-5 text-[var(--accent)]" />;
-    }
-  };
-
   return (
-    <section id="projects" className="py-12 sm:py-16 scroll-mt-20">
+    <section id="projects" className="py-12 md:py-20 scroll-mt-20 border-b border-[var(--border-color)]">
       <div className="space-y-8">
         
         {/* Section Header */}
@@ -99,78 +203,67 @@ export default function ProjectShowcase() {
             </p>
           </div>
 
-          {/* Filter Dropdown / Tabs */}
-          <div className="flex items-center gap-2">
-            {/* Desktop / Tablet Horizontal Chips */}
-            <div className="hidden sm:flex items-center gap-1.5 p-1 rounded-lg border border-[var(--border-color)] bg-[var(--bg-surface)]">
-              {categories.map((cat) => (
-                <button
-                  key={cat}
-                  onClick={() => setSelectedCategory(cat)}
-                  className={`px-3 py-1.5 rounded-md text-xs font-semibold transition-colors min-h-[36px] cursor-pointer ${
-                    selectedCategory === cat
-                      ? "bg-[var(--accent)] text-[var(--accent-contrast)]"
-                      : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
-                  }`}
-                >
-                  {cat}
-                </button>
-              ))}
-            </div>
-
-            {/* Mobile Horizontal Scrollable with scroll-snap */}
-            <div className="sm:hidden w-full overflow-x-auto flex gap-2 pb-1 scroll-smooth snap-x snap-mandatory">
-              {categories.map((cat) => (
-                <button
-                  key={cat}
-                  onClick={() => setSelectedCategory(cat)}
-                  className={`snap-start shrink-0 px-3.5 py-2 rounded-lg text-xs font-semibold border transition-colors min-h-[44px] ${
-                    selectedCategory === cat
-                      ? "bg-[var(--accent)] text-[var(--accent-contrast)] border-[var(--accent)]"
-                      : "bg-[var(--bg-surface)] text-[var(--text-secondary)] border-[var(--border-color)]"
-                  }`}
-                >
-                  {cat}
-                </button>
-              ))}
+          {/* Filter Tabs: Horizontally scrollable chip row on mobile (snap-x, hidden scrollbar), min 44px height */}
+          <div className="w-full md:w-auto">
+            <div
+              role="tablist"
+              aria-label="Filter projects by category"
+              className="w-full overflow-x-auto snap-x snap-mandatory scrollbar-none flex items-center gap-2 p-1 rounded-xl border border-[var(--border-color)] bg-[var(--bg-surface)] min-h-[44px]"
+            >
+              {categories.map((cat) => {
+                const isSelected = selectedCategory === cat;
+                return (
+                  <button
+                    key={cat}
+                    role="tab"
+                    aria-selected={isSelected}
+                    onClick={() => setSelectedCategory(cat)}
+                    className={`snap-start shrink-0 px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all min-h-[44px] flex items-center justify-center cursor-pointer ${
+                      isSelected
+                        ? "bg-[var(--accent)] text-[var(--accent-contrast)] shadow-sm"
+                        : "text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-surface-subtle)]"
+                    }`}
+                  >
+                    {cat}
+                  </button>
+                );
+              })}
             </div>
           </div>
         </div>
 
-        {/* 4-6 Project Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {/* Projects Grid: 1 col base, 2 cols md, 3 cols xl */}
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
           {filteredProjects.map((project) => (
             <article
               key={project.id}
               className="clean-card flex flex-col justify-between p-5 sm:p-6"
             >
               <div className="space-y-4">
-                {/* Styled Header Tile without placeholder image */}
-                <div className="flex items-center justify-between">
-                  <div className="p-2.5 rounded-lg bg-[var(--accent-light)] border border-[var(--border-color)]">
-                    {getCategoryIcon(project.category)}
-                  </div>
-                  <span className="text-xs font-medium text-[var(--text-muted)] bg-[var(--bg-surface-subtle)] px-2.5 py-1 rounded border border-[var(--border-color)]">
-                    {project.category}
-                  </span>
-                </div>
+                {/* 16:9 Thumbnail with explicit dimensions & lazy loading */}
+                <ProjectThumbnail project={project} />
 
                 {/* Title & Outcome */}
-                <div>
-                  <h3 className="text-lg font-bold text-[var(--text-primary)]">
-                    {project.name}
-                  </h3>
-                  <p className="mt-1 text-xs font-semibold text-[var(--accent)]">
+                <div className="space-y-1">
+                  <div className="flex items-center justify-between gap-2">
+                    <h3 className="text-lg font-bold text-[var(--text-primary)]">
+                      {project.name}
+                    </h3>
+                    <span className="text-xs font-semibold px-2 py-0.5 rounded bg-[var(--bg-surface-subtle)] text-[var(--text-muted)] border border-[var(--border-color)] shrink-0">
+                      {project.category}
+                    </span>
+                  </div>
+                  <p className="text-xs font-semibold text-[var(--accent)] line-clamp-1">
                     {project.outcome}
                   </p>
                 </div>
 
                 {/* Description */}
-                <p className="text-sm text-[var(--text-secondary)] leading-relaxed">
+                <p className="text-sm text-[var(--text-secondary)] leading-relaxed line-clamp-3">
                   {project.description}
                 </p>
 
-                {/* Stack Chips */}
+                {/* Tech Chips (wrap) */}
                 <div className="flex flex-wrap gap-1.5 pt-1">
                   {project.techStack.map((tech) => (
                     <span
@@ -183,13 +276,13 @@ export default function ProjectShowcase() {
                 </div>
               </div>
 
-              {/* Action Buttons: Live and Code */}
+              {/* Action Buttons: Code and Live (>=44px tall, side by side, Live hidden if no URL) */}
               <div className="pt-5 mt-5 border-t border-[var(--border-color)] flex items-center justify-between gap-3">
                 <a
                   href={project.html_url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="accent-btn-secondary text-xs flex-1 justify-center"
+                  className="accent-btn-secondary text-xs flex-1 justify-center min-h-[44px]"
                   aria-label={`View ${project.name} source code on GitHub`}
                 >
                   <Github className="w-4 h-4" />
@@ -201,8 +294,8 @@ export default function ProjectShowcase() {
                     href={project.homepage}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="accent-btn-primary text-xs flex-1 justify-center"
-                    aria-label={`View live demo of ${project.name}`}
+                    className="accent-btn-primary text-xs flex-1 justify-center min-h-[44px]"
+                    aria-label={`View live deployment of ${project.name}`}
                   >
                     <ExternalLink className="w-4 h-4" />
                     <span>Live</span>
@@ -213,7 +306,7 @@ export default function ProjectShowcase() {
           ))}
         </div>
 
-        {/* Dropdown Menu for Other GitHub Repositories */}
+        {/* Explore Other Repositories Dropdown */}
         <div className="clean-card p-5 sm:p-6 space-y-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div className="space-y-1">
@@ -237,7 +330,7 @@ export default function ProjectShowcase() {
                 aria-haspopup="listbox"
               >
                 <span>{selectedOtherRepo ? selectedOtherRepo.title : "Choose repository..."}</span>
-                <ChevronDown className={`w-4 h-4 text-[var(--text-muted)] transition-transform ${dropdownOpen ? "rotate-180" : ""}`} />
+                <ChevronDown className={`w-4 h-4 text-[var(--text-muted)] transition-transform duration-200 ${dropdownOpen ? "rotate-180" : ""}`} />
               </button>
 
               {dropdownOpen && (
@@ -272,7 +365,7 @@ export default function ProjectShowcase() {
 
           {/* If a repo is selected from dropdown, show its details card */}
           {selectedOtherRepo && (
-            <div className="p-4 rounded-lg bg-[var(--bg-surface-subtle)] border border-[var(--border-color)] flex flex-col sm:flex-row sm:items-center justify-between gap-3 animate-fade-in">
+            <div className="p-4 rounded-lg bg-[var(--bg-surface-subtle)] border border-[var(--border-color)] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <div className="space-y-1">
                 <div className="flex items-center gap-2">
                   <Code2 className="w-4 h-4 text-[var(--accent)]" />
@@ -292,7 +385,7 @@ export default function ProjectShowcase() {
                 href={selectedOtherRepo.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="accent-btn-secondary text-xs shrink-0 self-start sm:self-center"
+                className="accent-btn-secondary text-xs shrink-0 self-start sm:self-center min-h-[44px]"
               >
                 <Github className="w-3.5 h-3.5" />
                 <span>Open on GitHub</span>
@@ -308,7 +401,7 @@ export default function ProjectShowcase() {
             href="https://github.com/ubaidicoding"
             target="_blank"
             rel="noopener noreferrer"
-            className="accent-btn-secondary inline-flex text-sm px-6"
+            className="accent-btn-secondary inline-flex text-sm px-6 min-h-[44px]"
           >
             <Github className="w-4 h-4 text-[var(--accent)]" />
             <span>View all 40+ repositories on GitHub</span>

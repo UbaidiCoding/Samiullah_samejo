@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Award, ExternalLink, Briefcase, Shield, ChevronDown, CheckCircle2 } from "lucide-react";
+import { Award, ExternalLink, Briefcase, Shield, ChevronDown } from "lucide-react";
 import {
   CERTIFICATIONS,
   JOB_SIMULATIONS,
@@ -8,10 +8,8 @@ import {
 } from "../data/portfolioData";
 
 export default function CertificatesSection() {
-  // First group ("cloud-basics") open by default
-  const [openGroups, setOpenGroups] = useState<Record<string, boolean>>({
-    "cloud-basics": true,
-  });
+  // Collapsed by default into a single accordion with summary count
+  const [openGroups, setOpenGroups] = useState<Record<string, boolean>>({});
 
   const toggleGroup = (groupId: string) => {
     setOpenGroups((prev) => ({
@@ -26,7 +24,7 @@ export default function CertificatesSection() {
   );
 
   return (
-    <section id="certifications" className="py-12 sm:py-16 scroll-mt-20">
+    <section id="certifications" className="py-12 md:py-20 scroll-mt-20 border-b border-[var(--border-color)]">
       <div className="space-y-12">
         <div>
           <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-[var(--text-primary)]">
@@ -39,6 +37,7 @@ export default function CertificatesSection() {
 
         {/* ========================================================================= */}
         {/* 1. ACCREDITED CERTIFICATIONS */}
+        {/* Grid: 1 col base, 2 cols sm, 3 cols lg */}
         {/* ========================================================================= */}
         <div className="space-y-4">
           <h3 className="text-lg font-bold text-[var(--text-primary)] flex items-center gap-2">
@@ -46,7 +45,7 @@ export default function CertificatesSection() {
             <span>Accredited Certifications</span>
           </h3>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {CERTIFICATIONS.map((cert) => (
               <div
                 key={cert.id}
@@ -62,12 +61,12 @@ export default function CertificatesSection() {
                 </div>
 
                 <div className="pt-4 mt-4 border-t border-[var(--border-color)] flex items-center justify-between">
-                  <span className="text-xs text-[var(--text-muted)]">Verified</span>
+                  <span className="text-xs text-[var(--text-muted)]">Verified Credential</span>
                   <a
                     href={cert.verificationUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 text-xs font-semibold text-[var(--accent)] hover:underline min-h-[36px]"
+                    className="inline-flex items-center gap-1 text-xs font-semibold text-[var(--accent)] hover:underline min-h-[44px]"
                     aria-label={`Verify ${cert.title}`}
                   >
                     <span>Verify</span>
@@ -82,10 +81,10 @@ export default function CertificatesSection() {
         {/* ========================================================================= */}
         {/* 2. MICROSOFT LEARN - SECURITY, COMPLIANCE & IDENTITY FUNDAMENTALS */}
         {/* ========================================================================= */}
-        <div className="space-y-4 pt-4 border-t border-[var(--border-color)]">
+        <div className="space-y-4 pt-6 border-t border-[var(--border-color)]">
           {/* Header block with Title, Subtitle, Total Badges Chip, and Verify Button */}
           <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
-            <div className="space-y-1 max-w-2xl">
+            <div className="space-y-1.5 max-w-2xl">
               <div className="flex flex-wrap items-center gap-2.5">
                 <Shield className="w-5 h-5 text-[var(--accent)] shrink-0" aria-hidden="true" />
                 <h3 className="text-lg sm:text-xl font-bold text-[var(--text-primary)]">
@@ -112,7 +111,7 @@ export default function CertificatesSection() {
             </a>
           </div>
 
-          {/* Single Accordion Card with 6 Collapsible Groups */}
+          {/* Single Accordion Card with 6 Collapsible Groups (Collapsed by default, rows min-h-12) */}
           <div className="clean-card divide-y divide-[var(--border-color)] overflow-hidden shadow-sm">
             {MICROSOFT_LEARN_GROUPS.map((group) => {
               const isOpen = !!openGroups[group.id];
@@ -121,14 +120,14 @@ export default function CertificatesSection() {
 
               return (
                 <div key={group.id} className="transition-colors">
-                  {/* Accordion Group Header Button */}
+                  {/* Accordion Group Header Button: min-h-12 (48px), aria-expanded, aria-controls */}
                   <button
                     type="button"
                     id={buttonId}
                     aria-expanded={isOpen}
                     aria-controls={panelId}
                     onClick={() => toggleGroup(group.id)}
-                    className="w-full p-4 sm:p-5 flex items-center justify-between gap-3 text-left hover:bg-[var(--bg-surface-subtle)] transition-colors cursor-pointer select-none focus-visible:outline-2 focus-visible:outline-[var(--accent)]"
+                    className="w-full min-h-12 px-4 py-3 sm:px-5 sm:py-3.5 flex items-center justify-between gap-3 text-left hover:bg-[var(--bg-surface-subtle)] transition-colors cursor-pointer select-none focus-visible:outline-2 focus-visible:outline-[var(--accent)]"
                   >
                     <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3 min-w-0">
                       <span className="text-sm font-bold text-[var(--text-primary)]">
@@ -158,9 +157,9 @@ export default function CertificatesSection() {
                       id={panelId}
                       role="region"
                       aria-labelledby={buttonId}
-                      className="px-4 pb-5 pt-1 sm:px-5 sm:pb-6 bg-[var(--bg-surface-subtle)]/40 border-t border-[var(--border-color)]/60"
+                      className="px-4 pb-5 pt-2 sm:px-5 sm:pb-6 bg-[var(--bg-surface-subtle)]/40 border-t border-[var(--border-color)]/60"
                     >
-                      <p className="text-[11px] font-semibold text-[var(--text-muted)] uppercase tracking-wider mb-3">
+                      <p className="text-xs font-semibold text-[var(--text-muted)] uppercase tracking-wider mb-3">
                         Completed Badges • {group.date}
                       </p>
                       <ul className="space-y-2.5" role="list">
@@ -188,7 +187,7 @@ export default function CertificatesSection() {
         {/* ========================================================================= */}
         {/* 3. JOB SIMULATIONS */}
         {/* ========================================================================= */}
-        <div className="space-y-4 pt-4 border-t border-[var(--border-color)]">
+        <div className="space-y-4 pt-6 border-t border-[var(--border-color)]">
           <div className="space-y-1">
             <h3 className="text-lg font-bold text-[var(--text-primary)] flex items-center gap-2">
               <Briefcase className="w-5 h-5 text-[var(--accent)]" />
@@ -220,7 +219,7 @@ export default function CertificatesSection() {
                     href={sim.verificationUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 text-xs font-semibold text-[var(--accent)] hover:underline min-h-[36px]"
+                    className="inline-flex items-center gap-1 text-xs font-semibold text-[var(--accent)] hover:underline min-h-[44px]"
                     aria-label={`View ${sim.title} certificate of completion`}
                   >
                     <span>View Completion</span>
