@@ -103,7 +103,7 @@ export default function App() {
               >
                 <div className="w-28 h-28 sm:w-36 sm:h-36 lg:w-60 lg:h-60 rounded-2xl lg:rounded-3xl overflow-hidden border-2 border-[var(--border-color)] bg-[var(--bg-surface)] shadow-md group-hover:border-[var(--accent)] transition-all">
                   <img
-                    src={PERSONAL_INFO.avatarUrl}
+                    src="/assets/aistudio/IMG-20261121-WA0107_0380b495.jpg"
                     alt="Samiullah Samejo developer portrait"
                     className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300"
                     width={240}

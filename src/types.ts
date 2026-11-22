@@ -20,7 +20,9 @@ export interface CertificateItem {
   title: string;
   issuer: string;
   issueDate?: string;
+  serialNumber?: string;
   verificationUrl: string;
+  certificateImage?: string;
   isSimulation?: boolean;
 }
 

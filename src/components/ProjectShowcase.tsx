@@ -113,19 +113,18 @@ function ProjectThumbnail({ project }: { project: ProjectItem }) {
             </svg>
           ),
         };
+      case "sukkur-runner":
       case "sukkur-runners":
         return {
-          bg: "from-amber-500/20 via-orange-600/10 to-transparent",
+          bg: "from-sky-500/20 via-blue-600/10 to-transparent",
           badge: "Next.js • Tailwind",
           tag: "Community Portal",
           symbol: (
-            <svg className="w-12 h-12 text-amber-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75">
-              <circle cx="12" cy="12" r="10" />
-              <path d="m4.93 4.93 4.24 4.24" />
-              <path d="m14.83 9.17 4.24-4.24" />
-              <path d="m14.83 14.83 4.24 4.24" />
-              <path d="m9.17 14.83-4.24 4.24" />
-              <circle cx="12" cy="12" r="4" />
+            <svg className="w-12 h-12 text-sky-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75">
+              <path d="M3 18c4-8 10-11 18-5" strokeLinecap="round" strokeDasharray="2 2" />
+              <circle cx="17" cy="5" r="2" />
+              <path d="m14 10-2.5 2.5-2.5-1-3 2.5" />
+              <path d="m11.5 12.5 2 3.5 3.5-1.5" />
             </svg>
           ),
         };

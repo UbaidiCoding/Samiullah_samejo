@@ -26,7 +26,7 @@ export const PERSONAL_INFO = {
   proofStats: [
     { label: "Projects & Repositories", value: "40+" },
     { label: "App Downloads (StepFit Pro)", value: "1,000+" },
-    { label: "Verified Certifications", value: "6" },
+    { label: "Verified Certifications", value: "7" },
   ],
 };
 
@@ -82,7 +82,7 @@ export const FEATURED_PROJECTS: ProjectItem[] = [
       "Official responsive web platform for Sukkur Runners community organizing group training sessions, running routes, and health awareness events.",
     techStack: ["Next.js", "Tailwind CSS", "TypeScript"],
     html_url: "https://github.com/ubaidicoding/sukkur-runners-web",
-    homepage: "https://sukkurrunners.netlify.app",
+    homepage: "https://sukkurrunner.netlify.app/",
     category: "Full-Stack",
   },
   {
@@ -143,7 +143,7 @@ export const EXPERIENCES: ExperienceItem[] = [
     role: "IT Assistant (Temporary)",
     organization: "Government Polytechnic Institute (Boys)",
     location: "Sukkur, Sindh, Pakistan",
-    duration: "Aug 2026 – Present",
+    duration: "Aug 2026 – 28 Oct 2026",
     bullets: [
       "Assisting institute IT faculty and students with computer lab operations and software setup.",
       "Maintaining network connectivity, hardware diagnostics, and student workstation configurations.",
@@ -184,6 +184,16 @@ export const EDUCATION: EducationItem = {
 };
 
 export const CERTIFICATIONS: CertificateItem[] = [
+  {
+    id: "cert-pkcert-jcd",
+    title: "Junior Cyber Defender - Online Course",
+    issuer: "National CERT (PKCERT), Government of Pakistan",
+    issueDate: "Nov 20, 2026",
+    serialNumber: "PKC-26-FVQwYsEgX4",
+    verificationUrl: "https://www.pkcert.gov.pk",
+    certificateImage: "/assets/aistudio/IMG-20261120-WA0002_031da085.jpg",
+    isSimulation: false,
+  },
   {
     id: "cert-google-foundations",
     title: "Google Foundations of Cybersecurity",

@@ -1,15 +1,28 @@
-import React, { useState } from "react";
-import { Award, ExternalLink, Briefcase, Shield, ChevronDown } from "lucide-react";
+import React, { useState, useEffect } from "react";
+import { Award, ExternalLink, Briefcase, Shield, ChevronDown, Eye, X } from "lucide-react";
 import {
   CERTIFICATIONS,
   JOB_SIMULATIONS,
   MICROSOFT_LEARN_GROUPS,
   MICROSOFT_LEARN_PROFILE_URL,
 } from "../data/portfolioData";
+import { CertificateItem } from "../types";
 
 export default function CertificatesSection() {
   // Collapsed by default into a single accordion with summary count
   const [openGroups, setOpenGroups] = useState<Record<string, boolean>>({});
+  const [selectedCert, setSelectedCert] = useState<CertificateItem | null>(null);
+
+  useEffect(() => {
+    if (!selectedCert) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setSelectedCert(null);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [selectedCert]);
 
   const toggleGroup = (groupId: string) => {
     setOpenGroups((prev) => ({
@@ -58,20 +71,41 @@ export default function CertificatesSection() {
                   <h4 className="text-sm font-bold text-[var(--text-primary)] leading-snug">
                     {cert.title}
                   </h4>
+                  {(cert.issueDate || cert.serialNumber) && (
+                    <div className="mt-2 space-y-0.5 text-xs text-[var(--text-muted)]">
+                      {cert.issueDate && <p>Issued: {cert.issueDate}</p>}
+                      {cert.serialNumber && (
+                        <p className="font-mono">Sr # {cert.serialNumber}</p>
+                      )}
+                    </div>
+                  )}
                 </div>
 
-                <div className="pt-4 mt-4 border-t border-[var(--border-color)] flex items-center justify-between">
+                <div className="pt-4 mt-4 border-t border-[var(--border-color)] flex items-center justify-between gap-2">
                   <span className="text-xs text-[var(--text-muted)]">Verified Credential</span>
-                  <a
-                    href={cert.verificationUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 text-xs font-semibold text-[var(--accent)] hover:underline min-h-[44px]"
-                    aria-label={`Verify ${cert.title}`}
-                  >
-                    <span>Verify</span>
-                    <ExternalLink className="w-3.5 h-3.5" />
-                  </a>
+                  <div className="flex items-center gap-3">
+                    {cert.certificateImage && (
+                      <button
+                        type="button"
+                        onClick={() => setSelectedCert(cert)}
+                        className="inline-flex items-center gap-1 text-xs font-semibold text-[var(--text-primary)] hover:text-[var(--accent)] transition-colors min-h-[44px] cursor-pointer"
+                        aria-label={`View ${cert.title} certificate image`}
+                      >
+                        <Eye className="w-3.5 h-3.5 text-[var(--accent)]" />
+                        <span>View</span>
+                      </button>
+                    )}
+                    <a
+                      href={cert.verificationUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 text-xs font-semibold text-[var(--accent)] hover:underline min-h-[44px]"
+                      aria-label={`Verify ${cert.title}`}
+                    >
+                      <span>Verify</span>
+                      <ExternalLink className="w-3.5 h-3.5" />
+                    </a>
+                  </div>
                 </div>
               </div>
             ))}
@@ -232,6 +266,75 @@ export default function CertificatesSection() {
         </div>
 
       </div>
+
+      {/* Certificate Image Preview Modal */}
+      {selectedCert && selectedCert.certificateImage && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="certificate-preview-title"
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
+          onClick={() => setSelectedCert(null)}
+        >
+          <div
+            className="clean-card max-w-3xl w-full p-4 sm:p-6 space-y-4 bg-[var(--bg-surface)] max-h-[92vh] flex flex-col"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-start justify-between gap-3 border-b border-[var(--border-color)] pb-3">
+              <div>
+                <span className="text-xs font-semibold text-[var(--accent)] block">
+                  {selectedCert.issuer}
+                </span>
+                <h4
+                  id="certificate-preview-title"
+                  className="text-base sm:text-lg font-bold text-[var(--text-primary)]"
+                >
+                  {selectedCert.title}
+                </h4>
+              </div>
+              <button
+                type="button"
+                onClick={() => setSelectedCert(null)}
+                className="min-h-[44px] min-w-[44px] flex items-center justify-center rounded-lg hover:bg-[var(--bg-surface-subtle)] text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors shrink-0 cursor-pointer"
+                aria-label="Close certificate preview"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <div className="overflow-auto rounded-lg border border-[var(--border-color)] bg-white flex items-center justify-center">
+              <img
+                src={selectedCert.certificateImage}
+                alt={`${selectedCert.title} issued by ${selectedCert.issuer}`}
+                className="w-full h-auto max-h-[65vh] object-contain"
+                loading="lazy"
+              />
+            </div>
+
+            <div className="flex flex-wrap items-center justify-between gap-3 text-xs text-[var(--text-secondary)] pt-1">
+              <div className="flex flex-wrap items-center gap-3">
+                {selectedCert.issueDate && (
+                  <span>Issued: {selectedCert.issueDate}</span>
+                )}
+                {selectedCert.serialNumber && (
+                  <span className="font-mono">
+                    Serial: {selectedCert.serialNumber}
+                  </span>
+                )}
+              </div>
+              <a
+                href={selectedCert.verificationUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 font-semibold text-[var(--accent)] hover:underline min-h-[44px]"
+              >
+                <span>Visit Issuer Website</span>
+                <ExternalLink className="w-3.5 h-3.5" />
+              </a>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
